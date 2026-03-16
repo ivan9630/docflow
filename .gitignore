@@ -1,0 +1,37 @@
+# Secrets
+.env
+*.env.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/build/
+
+# Dataset généré
+data_generator/dataset/
+
+# Logs
+*.log
+logs/
+airflow/logs/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Tmp
+tmp/
+uploads/
+*.tmp

@@ -1,0 +1,5 @@
+faker==25.2.0
+reportlab==4.2.2
+Pillow==10.3.0
+numpy==1.26.4
+requests==2.32.3

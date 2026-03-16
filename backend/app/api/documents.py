@@ -1,5 +1,5 @@
 """API Documents"""
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, BackgroundTasks, Query
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
 from typing import List, Optional
@@ -84,9 +84,15 @@ async def get_doc(doc_id: str, db: AsyncSession = Depends(get_db)):
 async def doc_status(doc_id: str, db: AsyncSession = Depends(get_db)):
     doc = await db.get(Document, uuid.UUID(doc_id))
     if not doc: raise HTTPException(404)
-    return {"doc_id": doc_id, "statut": str(doc.statut), "zone": str(doc.zone_actuelle),
-            "type": str(doc.type_document), "score_fraude": doc.score_fraude,
-            "anomalies": len(doc.anomalies or []), "pipeline_steps": doc.pipeline_steps}
+    return {
+        "doc_id": doc_id,
+        "statut": doc.statut.value if doc.statut else None,
+        "zone": doc.zone_actuelle.value if doc.zone_actuelle else None,
+        "type": doc.type_document.value if doc.type_document else None,
+        "score_fraude": doc.score_fraude,
+        "anomalies": len(doc.anomalies or []),
+        "pipeline_steps": doc.pipeline_steps,
+    }
 
 
 @router.patch("/{doc_id}/validate")
@@ -108,27 +114,44 @@ async def reject(doc_id: str, db: AsyncSession = Depends(get_db)):
 
 
 def _ser(d: Document, full=False) -> dict:
+    """Sérialise un document — utilise .value pour les enums."""
     base = {
-        "id": str(d.id), "nom_fichier": d.nom_fichier,
-        "type_document": str(d.type_document) if d.type_document else None,
-        "statut": str(d.statut), "zone": str(d.zone_actuelle),
-        "nom_fournisseur": d.nom_fournisseur, "numero_siren": d.numero_siren,
-        "montant_ttc": d.montant_ttc, "date_document": d.date_document,
-        "score_fraude": d.score_fraude, "est_frauduleux": d.est_frauduleux,
-        "anomalies_count": len(d.anomalies or []), "created_at": d.created_at.isoformat() if d.created_at else None,
+        "id": str(d.id),
+        "nom_fichier": d.nom_fichier,
+        "type_document": d.type_document.value if d.type_document else None,
+        "statut": d.statut.value if d.statut else None,
+        "zone": d.zone_actuelle.value if d.zone_actuelle else None,
+        "nom_fournisseur": d.nom_fournisseur,
+        "numero_siren": d.numero_siren,
+        "montant_ttc": d.montant_ttc,
+        "date_document": d.date_document,
+        "score_fraude": d.score_fraude,
+        "est_frauduleux": d.est_frauduleux,
+        "anomalies_count": len(d.anomalies or []),
+        "created_at": d.created_at.isoformat() if d.created_at else None,
     }
     if full:
         base.update({
-            "numero_siret": d.numero_siret, "numero_tva": d.numero_tva,
-            "montant_ht": d.montant_ht, "montant_tva_val": d.montant_tva_val,
-            "taux_tva": d.taux_tva, "iban": d.iban, "bic": d.bic,
-            "numero_document": d.numero_document, "date_expiration": d.date_expiration,
-            "score_ocr": d.score_ocr, "methode_ocr": d.methode_ocr,
+            "numero_siret": d.numero_siret,
+            "numero_tva": d.numero_tva,
+            "montant_ht": d.montant_ht,
+            "montant_tva_val": d.montant_tva_val,
+            "taux_tva": d.taux_tva,
+            "iban": d.iban,
+            "bic": d.bic,
+            "numero_document": d.numero_document,
+            "date_expiration": d.date_expiration,
+            "score_ocr": d.score_ocr,
+            "methode_ocr": d.methode_ocr,
             "score_classification": d.score_classification,
-            "anomalies": d.anomalies, "donnees_extraites": d.donnees_extraites,
+            "anomalies": d.anomalies,
+            "donnees_extraites": d.donnees_extraites,
             "donnees_enrichies": d.donnees_enrichies,
-            "chemin_raw": d.chemin_raw, "chemin_clean": d.chemin_clean,
-            "chemin_curated": d.chemin_curated, "hash_sha256": d.hash_sha256,
-            "pipeline_steps": d.pipeline_steps, "airflow_run_id": d.airflow_run_id,
+            "chemin_raw": d.chemin_raw,
+            "chemin_clean": d.chemin_clean,
+            "chemin_curated": d.chemin_curated,
+            "hash_sha256": d.hash_sha256,
+            "pipeline_steps": d.pipeline_steps,
+            "airflow_run_id": d.airflow_run_id,
         })
     return base

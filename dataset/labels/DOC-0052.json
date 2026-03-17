@@ -1,0 +1,30 @@
+{
+  "doc_id": "DOC-0052",
+  "doc_type": "rib",
+  "variant": "standard",
+  "expected_class": "rib",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "supplier_name": "Étienne Grégoire S.A. SA",
+  "supplier_siren": "251353462",
+  "iban": "FR1817099917381684602235697",
+  "bic": "DWECFRL9LCQ",
+  "bank_name": "Société Générale",
+  "group_member_names_used": [
+    "David CIRAKAZA",
+    "Hajar MOUSSAOUI"
+  ],
+  "filename": "doc-0052_rib_standard.jpg",
+  "text_source_file": "doc-0052_rib_standard.txt",
+  "label_file": "DOC-0052.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_0.97",
+    "contrast_0.98",
+    "rotation_-5.0",
+    "gaussian_blur_2.42",
+    "low_resolution_0.54"
+  ],
+  "scenario_name": "rib",
+  "generated_at": "2026-03-17T15:47:31"
+}

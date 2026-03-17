@@ -1,0 +1,36 @@
+{
+  "doc_id": "DOC-0057",
+  "doc_type": "attestation_urssaf",
+  "variant": "expiree",
+  "expected_class": "attestation_urssaf",
+  "expected_fraud": true,
+  "fraud_reasons": [
+    "attestation_expiree"
+  ],
+  "attestation_number": "ATT-408467",
+  "issue_date": "2026-01-20",
+  "valid_until": "2025-03-27",
+  "expired": true,
+  "supplier_name": "Delannoy Le Roux S.A.R.L. SARL",
+  "supplier_siren": "684608102",
+  "supplier_siret": "68460810262001",
+  "group_member_names_used": [
+    "Boubaker OMRI",
+    "Romain PINTRE"
+  ],
+  "filename": "doc-0057_attestation_urssaf_expiree.png",
+  "text_source_file": "doc-0057_attestation_urssaf_expiree.txt",
+  "label_file": "DOC-0057.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_1.09",
+    "contrast_0.92",
+    "rotation_5.4",
+    "gaussian_blur_0.81",
+    "gaussian_noise_12.6",
+    "salt_pepper_0.0019",
+    "low_resolution_0.81"
+  ],
+  "scenario_name": "attestation_urssaf_expiree",
+  "generated_at": "2026-03-17T15:47:45"
+}

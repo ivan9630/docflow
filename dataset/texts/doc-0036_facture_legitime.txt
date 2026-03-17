@@ -1,0 +1,30 @@
+                                    FACTURE
+
+Émetteur :
+  De Sousa SASU
+  61, chemin Margot Adam, 47256 MercierBourg
+  SIREN : 793564659
+  SIRET : 79356465919399
+  N° TVA intracommunautaire : FR00793564659
+  IBAN : FR07 8073 7416 7243 4266 1797 968
+  BIC  : NXROFR2M6TW
+  Responsable dossier : David CIRAKAZA
+
+Destinataire :
+  Mace SARL
+  boulevard Thierry Benard, 14691 Lecomte-les-Bains
+  Contact : Jules Araud
+
+Numéro de facture : FAC-2026-8052
+Date d'émission   : 23/01/2026
+Date d'échéance   : 22/02/2026
+
+Détail des prestations :
+  - Prestation de développement logiciel x1 @ 2 145,44 € = 2 145,44 €
+
+Montant total H.T.        : 2 145,44 €
+TVA 5.5%               : 118,00 €
+Montant total T.T.C.      : 2 263,44 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : Hajar MOUSSAOUI

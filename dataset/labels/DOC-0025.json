@@ -1,0 +1,33 @@
+{
+  "doc_id": "DOC-0025",
+  "doc_type": "attestation_urssaf",
+  "variant": "valide",
+  "expected_class": "attestation_urssaf",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "attestation_number": "ATT-305837",
+  "issue_date": "2025-12-20",
+  "valid_until": "2026-04-21",
+  "expired": false,
+  "supplier_name": "Gomes SARL SASU",
+  "supplier_siren": "258313238",
+  "supplier_siret": "25831323870583",
+  "group_member_names_used": [
+    "Romain PINTRE",
+    "Ivan Noël"
+  ],
+  "filename": "doc-0025_attestation_urssaf_valide.png",
+  "text_source_file": "doc-0025_attestation_urssaf_valide.txt",
+  "label_file": "DOC-0025.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_0.96",
+    "contrast_0.99",
+    "rotation_-6.7",
+    "gaussian_blur_0.72",
+    "gaussian_noise_11.5",
+    "low_resolution_0.79"
+  ],
+  "scenario_name": "attestation_urssaf_valide",
+  "generated_at": "2026-03-17T15:46:37"
+}

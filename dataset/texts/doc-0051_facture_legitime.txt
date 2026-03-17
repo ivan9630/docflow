@@ -1,0 +1,32 @@
+                                    FACTURE
+
+Émetteur :
+  Lemaître SA
+  31, chemin de Chauvin, 40765 Menard
+  SIREN : 346800725
+  SIRET : 34680072529034
+  N° TVA intracommunautaire : FR72346800725
+  IBAN : FR10 4665 7437 4896 9108 5899 441
+  BIC  : MIHIFRJX8XG
+  Responsable dossier : Hajar MOUSSAOUI
+
+Destinataire :
+  Legrand Sauvage S.A. SNC
+  61, chemin de Lacombe, 09663 Charpentier-la-Forêt
+  Contact : Ivan Noël
+
+Numéro de facture : FAC-2025-9148
+Date d'émission   : 19/09/2025
+Date d'échéance   : 04/10/2025
+
+Détail des prestations :
+  - Licence SaaS mensuelle x4 @ 694,65 € = 2 778,60 €
+  - Intégration API et connecteurs x5 @ 3 803,08 € = 19 015,40 €
+  - Assistance technique x5 @ 1 514,82 € = 7 574,10 €
+
+Montant total H.T.        : 29 368,10 €
+TVA 10.0%               : 2 936,81 €
+Montant total T.T.C.      : 32 304,91 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : Mathieu CHRETIEN

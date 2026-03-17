@@ -1,0 +1,29 @@
+                                    FACTURE
+
+Émetteur :
+  Faure SARL
+  7, chemin de Texier, 32126 Saint MargotVille
+  SIREN : 284511540
+  SIRET : 28451154047966
+  N° TVA intracommunautaire : FR10284511540
+
+Destinataire :
+  Lebrun SAS
+  3, avenue Marine Costa, 36778 SamsonVille
+
+Numéro de facture : FAC-2026-9176
+Date d'émission   : 12/01/2026
+Date d'échéance   : 11/02/2026
+
+Détail des prestations :
+  - Maintenance applicative x2 @ 2 492,00 € = 4 984,00 €
+  - Audit de conformité documentaire x3 @ 3 337,13 € = 10 011,39 €
+  - Assistance technique x4 @ 560,28 € = 2 241,12 €
+  - Intégration API et connecteurs x2 @ 4 396,59 € = 8 793,18 €
+
+Montant total H.T.        : 26 029,69 €
+TVA 10.0%               : 2 602,97 €
+Montant total T.T.C.      : 28 858,85 €
+
+Règlement : virement bancaire
+Établi par : Mathieu CHRETIEN

@@ -1,0 +1,32 @@
+                                      DEVIS
+
+Prestataire :
+  Gomes Mathieu et Fils SNC
+  43, avenue de Baron, 92703 Godard-la-Forêt
+  SIREN : 492519251
+  SIRET : 49251925146294
+  N° TVA : FR27492519251
+  Conseiller commercial : Romain PINTRE
+
+Client :
+  Baudry SARL SNC
+  67, rue Fleury, 61216 Sainte ClaudineBourg
+  Contact projet : David CIRAKAZA
+
+Numéro devis    : DEV-2026-4891
+Date d'émission : 08/01/2026
+Valable jusqu'au: 22/02/2026
+
+Prestations proposées :
+  - Licence SaaS mensuelle x2 @ 536,53 € = 1 073,06 €
+  - Assistance technique x3 @ 1 746,67 € = 5 240,01 €
+  - Formation équipe métier x4 @ 2 027,15 € = 8 108,60 €
+  - Intégration API et connecteurs x2 @ 2 408,15 € = 4 816,30 €
+
+Total H.T.      : 19 237,97 €
+TVA 5.5%       : 1 058,09 €
+Total T.T.C.    : 20 296,06 €
+
+Bon pour accord :
+Nom du consultant : Jules Araud
+Signature client : _______________________

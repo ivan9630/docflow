@@ -1,0 +1,36 @@
+{
+  "doc_id": "DOC-0039",
+  "doc_type": "devis",
+  "variant": "standard",
+  "expected_class": "devis",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "quote_number": "DEV-2025-3174",
+  "issue_date": "2025-12-16",
+  "valid_until": "2026-01-15",
+  "supplier_name": "Faivre Blanchet SA SASU",
+  "supplier_siren": "279788194",
+  "supplier_siret": "27978819414851",
+  "amount_ht": 16668.81,
+  "vat_rate": 5.5,
+  "amount_tva": 916.78,
+  "amount_ttc": 17585.59,
+  "group_member_names_used": [
+    "Jules Araud",
+    "Boubaker OMRI",
+    "Hajar MOUSSAOUI"
+  ],
+  "filename": "doc-0039_devis_standard.png",
+  "text_source_file": "doc-0039_devis_standard.txt",
+  "label_file": "DOC-0039.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_1.03",
+    "rotation_-5.9",
+    "gaussian_blur_0.82",
+    "salt_pepper_0.0029",
+    "low_resolution_0.71"
+  ],
+  "scenario_name": "devis",
+  "generated_at": "2026-03-17T15:47:03"
+}

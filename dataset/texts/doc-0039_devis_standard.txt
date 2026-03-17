@@ -1,0 +1,30 @@
+                                      DEVIS
+
+Prestataire :
+  Faivre Blanchet SA SASU
+  51, boulevard de Coulon, 67783 Lambert
+  SIREN : 279788194
+  SIRET : 27978819414851
+  N° TVA : FR23279788194
+  Conseiller commercial : Boubaker OMRI
+
+Client :
+  Dumont Gillet S.A.S. SARL
+  98, chemin de Guérin, 50982 Sainte Alfred
+  Contact projet : Hajar MOUSSAOUI
+
+Numéro devis    : DEV-2025-3174
+Date d'émission : 16/12/2025
+Valable jusqu'au: 15/01/2026
+
+Prestations proposées :
+  - Audit de conformité documentaire x3 @ 3 848,23 € = 11 544,69 €
+  - Formation équipe métier x4 @ 1 281,03 € = 5 124,12 €
+
+Total H.T.      : 16 668,81 €
+TVA 5.5%       : 916,78 €
+Total T.T.C.    : 17 585,59 €
+
+Bon pour accord :
+Nom du consultant : Jules Araud
+Signature client : _______________________

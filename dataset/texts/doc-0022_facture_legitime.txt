@@ -1,0 +1,31 @@
+                                    FACTURE
+
+Émetteur :
+  Fernandes S.A. SAS
+  41, boulevard Salmon, 53720 Maurice-sur-Jean
+  SIREN : 412478265
+  SIRET : 41247826513754
+  N° TVA intracommunautaire : FR84412478265
+  IBAN : FR47 0685 3615 3051 5220 4727 790
+  BIC  : XAFDFR7VP1I
+  Responsable dossier : Romain PINTRE
+
+Destinataire :
+  Giraud Courtois SA SAS
+  7, boulevard Charlotte Klein, 05337 Munoz
+  Contact : James MBA FONGANG
+
+Numéro de facture : FAC-2025-1269
+Date d'émission   : 06/11/2025
+Date d'échéance   : 21/12/2025
+
+Détail des prestations :
+  - Audit de conformité documentaire x4 @ 705,94 € = 2 823,76 €
+  - Paramétrage OCR & NER x3 @ 1 369,81 € = 4 109,43 €
+
+Montant total H.T.        : 6 933,19 €
+TVA 10.0%               : 693,32 €
+Montant total T.T.C.      : 7 626,51 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : David CIRAKAZA

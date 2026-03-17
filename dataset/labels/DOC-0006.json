@@ -1,0 +1,41 @@
+{
+  "doc_id": "DOC-0006",
+  "doc_type": "facture",
+  "variant": "fake_amounts",
+  "expected_class": "facture",
+  "expected_fraud": true,
+  "fraud_reasons": [
+    "montants_incoherents_ht_tva_ttc"
+  ],
+  "supplier_name": "Guérin et Fils SA",
+  "supplier_siren": "850142944",
+  "supplier_siret": "85014294401962",
+  "invoice_number": "FAC-2025-5700",
+  "issue_date": "2025-10-24",
+  "vat_rate": 10.0,
+  "real_amount_ht": 12215.53,
+  "real_amount_tva": 1221.55,
+  "real_amount_ttc": 13437.08,
+  "shown_amount_ht": 12295.37,
+  "shown_amount_tva": 1221.55,
+  "shown_amount_ttc": 13437.08,
+  "anomaly_subtype": "wrong_ht",
+  "group_member_names_used": [
+    "Romain PINTRE"
+  ],
+  "filename": "doc-0006_facture_fake_amounts.png",
+  "text_source_file": "doc-0006_facture_fake_amounts.txt",
+  "label_file": "DOC-0006.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_0.93",
+    "contrast_0.99",
+    "rotation_11.3",
+    "gaussian_blur_1.25",
+    "gaussian_noise_11.1",
+    "salt_pepper_0.0014",
+    "low_resolution_0.65"
+  ],
+  "scenario_name": "facture_fake_amounts",
+  "generated_at": "2026-03-17T15:46:03"
+}

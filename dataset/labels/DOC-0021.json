@@ -1,0 +1,38 @@
+{
+  "doc_id": "DOC-0021",
+  "doc_type": "devis",
+  "variant": "standard",
+  "expected_class": "devis",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "quote_number": "DEV-2026-4891",
+  "issue_date": "2026-01-08",
+  "valid_until": "2026-02-22",
+  "supplier_name": "Gomes Mathieu et Fils SNC",
+  "supplier_siren": "492519251",
+  "supplier_siret": "49251925146294",
+  "amount_ht": 19237.97,
+  "vat_rate": 5.5,
+  "amount_tva": 1058.09,
+  "amount_ttc": 20296.06,
+  "group_member_names_used": [
+    "Jules Araud",
+    "Romain PINTRE",
+    "David CIRAKAZA"
+  ],
+  "filename": "doc-0021_devis_standard.jpg",
+  "text_source_file": "doc-0021_devis_standard.txt",
+  "label_file": "DOC-0021.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_1.00",
+    "contrast_0.87",
+    "rotation_-7.0",
+    "gaussian_blur_2.62",
+    "gaussian_noise_20.7",
+    "salt_pepper_0.0058",
+    "low_resolution_0.53"
+  ],
+  "scenario_name": "devis",
+  "generated_at": "2026-03-17T15:46:30"
+}

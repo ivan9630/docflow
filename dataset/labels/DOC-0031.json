@@ -1,0 +1,37 @@
+{
+  "doc_id": "DOC-0031",
+  "doc_type": "facture",
+  "variant": "fake_siret",
+  "expected_class": "facture",
+  "expected_fraud": true,
+  "fraud_reasons": [
+    "siret_invalide"
+  ],
+  "supplier_name": "Collet SARL SASU",
+  "supplier_siren": "656766185",
+  "supplier_siret_real": "65676618525124",
+  "supplier_siret_displayed": "55676618526874",
+  "invoice_number": "FAC-2025-6224",
+  "issue_date": "2025-12-11",
+  "amount_ht": 26201.84,
+  "vat_rate": 5.5,
+  "amount_tva": 1441.1,
+  "amount_ttc": 27642.94,
+  "group_member_names_used": [
+    "Boubaker OMRI"
+  ],
+  "filename": "doc-0031_facture_fake_siret.jpg",
+  "text_source_file": "doc-0031_facture_fake_siret.txt",
+  "label_file": "DOC-0031.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_0.97",
+    "contrast_0.94",
+    "rotation_12.5",
+    "gaussian_blur_2.59",
+    "gaussian_noise_23.9",
+    "low_resolution_0.58"
+  ],
+  "scenario_name": "facture_fake_siret",
+  "generated_at": "2026-03-17T15:46:47"
+}

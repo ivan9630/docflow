@@ -1,0 +1,32 @@
+                                    FACTURE
+
+Émetteur :
+  Jacques Rossi SARL SAS
+  84, rue Lopes, 71405 Léger
+  SIREN : 613861202
+  SIRET : 61386120275010
+  N° TVA intracommunautaire : FR12613861202
+  IBAN : FR85 2481 9346 6766 5061 8091 901
+  BIC  : JNHRFRVK7N3
+  Responsable dossier : Hajar MOUSSAOUI
+
+Destinataire :
+  Dupont SARL
+  6, chemin Océane Voisin, 27306 Dupuy-la-Forêt
+  Contact : Hajar MOUSSAOUI
+
+Numéro de facture : FAC-2025-5883
+Date d'émission   : 11/09/2025
+Date d'échéance   : 26/09/2025
+
+Détail des prestations :
+  - Prestation de développement logiciel x2 @ 1 440,82 € = 2 881,64 €
+  - Licence SaaS mensuelle x1 @ 566,72 € = 566,72 €
+  - Assistance technique x4 @ 1 082,59 € = 4 330,36 €
+
+Montant total H.T.        : 7 778,72 €
+TVA 20.0%               : 1 555,74 €
+Montant total T.T.C.      : 9 334,46 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : Romain PINTRE

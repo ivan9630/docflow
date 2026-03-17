@@ -1,0 +1,24 @@
+{
+  "doc_id": "DOC-0003",
+  "doc_type": "rib",
+  "variant": "standard",
+  "expected_class": "rib",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "supplier_name": "Gillet SNC",
+  "supplier_siren": "301031050",
+  "iban": "FR6138299737631165667010651",
+  "bic": "GELKFRKI7P5",
+  "bank_name": "BNP Paribas",
+  "group_member_names_used": [
+    "James MBA FONGANG",
+    "David CIRAKAZA"
+  ],
+  "filename": "doc-0003_rib_standard.png",
+  "text_source_file": "doc-0003_rib_standard.txt",
+  "label_file": "DOC-0003.json",
+  "degradation_level": "clean",
+  "degradations_applied": [],
+  "scenario_name": "rib",
+  "generated_at": "2026-03-17T15:45:58"
+}

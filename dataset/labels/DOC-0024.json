@@ -1,0 +1,39 @@
+{
+  "doc_id": "DOC-0024",
+  "doc_type": "facture",
+  "variant": "fake_amounts",
+  "expected_class": "facture",
+  "expected_fraud": true,
+  "fraud_reasons": [
+    "montants_incoherents_ht_tva_ttc"
+  ],
+  "supplier_name": "Faure SARL",
+  "supplier_siren": "284511540",
+  "supplier_siret": "28451154047966",
+  "invoice_number": "FAC-2026-9176",
+  "issue_date": "2026-01-12",
+  "vat_rate": 10.0,
+  "real_amount_ht": 26029.69,
+  "real_amount_tva": 2602.97,
+  "real_amount_ttc": 28632.66,
+  "shown_amount_ht": 26029.69,
+  "shown_amount_tva": 2602.97,
+  "shown_amount_ttc": 28858.85,
+  "anomaly_subtype": "wrong_ttc",
+  "group_member_names_used": [
+    "Mathieu CHRETIEN"
+  ],
+  "filename": "doc-0024_facture_fake_amounts.png",
+  "text_source_file": "doc-0024_facture_fake_amounts.txt",
+  "label_file": "DOC-0024.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "rotation_-11.7",
+    "gaussian_blur_1.04",
+    "gaussian_noise_7.7",
+    "salt_pepper_0.0024",
+    "low_resolution_0.77"
+  ],
+  "scenario_name": "facture_fake_amounts",
+  "generated_at": "2026-03-17T15:46:34"
+}

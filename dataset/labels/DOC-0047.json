@@ -1,0 +1,40 @@
+{
+  "doc_id": "DOC-0047",
+  "doc_type": "facture",
+  "variant": "legitime",
+  "expected_class": "facture",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "supplier_name": "Rousseau S.A. EI",
+  "supplier_siren": "539264424",
+  "supplier_siret": "53926442420966",
+  "supplier_tva": "FR27539264424",
+  "iban": "FR7329593917251355215704331",
+  "bic": "JUSBFRPPFO5",
+  "invoice_number": "FAC-2025-1547",
+  "issue_date": "2025-08-15",
+  "due_date": "2025-08-30",
+  "amount_ht": 12103.28,
+  "vat_rate": 5.5,
+  "amount_tva": 665.68,
+  "amount_ttc": 12768.96,
+  "group_member_names_used": [
+    "Mathieu CHRETIEN",
+    "Romain PINTRE",
+    "Boubaker OMRI"
+  ],
+  "filename": "doc-0047_facture_legitime.jpg",
+  "text_source_file": "doc-0047_facture_legitime.txt",
+  "label_file": "DOC-0047.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_1.19",
+    "rotation_12.0",
+    "gaussian_blur_2.32",
+    "gaussian_noise_20.1",
+    "salt_pepper_0.0040",
+    "low_resolution_0.59"
+  ],
+  "scenario_name": "facture_legitime",
+  "generated_at": "2026-03-17T15:47:23"
+}

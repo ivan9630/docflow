@@ -1,0 +1,32 @@
+{
+  "doc_id": "DOC-0033",
+  "doc_type": "attestation_urssaf",
+  "variant": "valide",
+  "expected_class": "attestation_urssaf",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "attestation_number": "ATT-933551",
+  "issue_date": "2026-01-03",
+  "valid_until": "2026-05-07",
+  "expired": false,
+  "supplier_name": "Huet EI",
+  "supplier_siren": "522872803",
+  "supplier_siret": "52287280380106",
+  "group_member_names_used": [
+    "Romain PINTRE",
+    "Jules Araud"
+  ],
+  "filename": "doc-0033_attestation_urssaf_valide.png",
+  "text_source_file": "doc-0033_attestation_urssaf_valide.txt",
+  "label_file": "DOC-0033.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_1.01",
+    "rotation_-7.3",
+    "gaussian_blur_1.28",
+    "gaussian_noise_12.7",
+    "low_resolution_0.67"
+  ],
+  "scenario_name": "attestation_urssaf_valide",
+  "generated_at": "2026-03-17T15:46:52"
+}

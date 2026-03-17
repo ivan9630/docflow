@@ -1,0 +1,33 @@
+                                    FACTURE
+
+Émetteur :
+  Étienne SNC
+  88, rue Masson, 20742 Bazin
+  SIREN : 736026063
+  SIRET : 73602606347461
+  N° TVA intracommunautaire : FR77736026063
+  IBAN : FR59 2343 0980 5009 7882 0812 191
+  BIC  : RGDXFRIVWPV
+  Responsable dossier : James MBA FONGANG
+
+Destinataire :
+  De Sousa Bernard et Fils SARL
+  38, rue de Toussaint, 38961 Raynaud-sur-Mer
+  Contact : Romain PINTRE
+
+Numéro de facture : FAC-2025-5915
+Date d'émission   : 17/09/2025
+Date d'échéance   : 01/11/2025
+
+Détail des prestations :
+  - Formation équipe métier x4 @ 1 518,09 € = 6 072,36 €
+  - Assistance technique x5 @ 1 793,95 € = 8 969,75 €
+  - Prestation de développement logiciel x1 @ 3 595,70 € = 3 595,70 €
+  - Paramétrage OCR & NER x5 @ 1 448,64 € = 7 243,20 €
+
+Montant total H.T.        : 25 881,01 €
+TVA 10.0%               : 2 588,10 €
+Montant total T.T.C.      : 28 469,11 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : Hajar MOUSSAOUI

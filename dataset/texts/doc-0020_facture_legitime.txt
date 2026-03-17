@@ -1,0 +1,30 @@
+                                    FACTURE
+
+Émetteur :
+  Germain SA
+  63, chemin Roger Godard, 89382 Dubois-sur-Mer
+  SIREN : 292127792
+  SIRET : 29212779297991
+  N° TVA intracommunautaire : FR28292127792
+  IBAN : FR30 2717 7449 0581 4770 0541 199
+  BIC  : NMOUFR6Q3XL
+  Responsable dossier : Ivan Noël
+
+Destinataire :
+  Reynaud SAS
+  956, chemin Martine De Sousa, 34413 Grondin
+  Contact : Ivan Noël
+
+Numéro de facture : FAC-2025-3827
+Date d'émission   : 04/09/2025
+Date d'échéance   : 19/10/2025
+
+Détail des prestations :
+  - Intégration API et connecteurs x4 @ 4 963,04 € = 19 852,16 €
+
+Montant total H.T.        : 19 852,16 €
+TVA 5.5%               : 1 091,87 €
+Montant total T.T.C.      : 20 944,03 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : James MBA FONGANG

@@ -1,0 +1,38 @@
+{
+  "doc_id": "DOC-0013",
+  "doc_type": "devis",
+  "variant": "standard",
+  "expected_class": "devis",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "quote_number": "DEV-2025-2121",
+  "issue_date": "2025-12-12",
+  "valid_until": "2025-12-27",
+  "supplier_name": "Bertrand EI",
+  "supplier_siren": "727875585",
+  "supplier_siret": "72787558586751",
+  "amount_ht": 2431.31,
+  "vat_rate": 5.5,
+  "amount_tva": 133.72,
+  "amount_ttc": 2565.03,
+  "group_member_names_used": [
+    "David CIRAKAZA",
+    "Hajar MOUSSAOUI",
+    "Ivan Noël"
+  ],
+  "filename": "doc-0013_devis_standard.jpg",
+  "text_source_file": "doc-0013_devis_standard.txt",
+  "label_file": "DOC-0013.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_0.81",
+    "contrast_0.84",
+    "rotation_8.6",
+    "gaussian_blur_1.74",
+    "gaussian_noise_23.5",
+    "salt_pepper_0.0035",
+    "low_resolution_0.50"
+  ],
+  "scenario_name": "devis",
+  "generated_at": "2026-03-17T15:46:17"
+}

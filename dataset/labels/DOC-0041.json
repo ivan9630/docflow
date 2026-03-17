@@ -1,0 +1,40 @@
+{
+  "doc_id": "DOC-0041",
+  "doc_type": "facture",
+  "variant": "legitime",
+  "expected_class": "facture",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "supplier_name": "Diallo Lévêque SARL",
+  "supplier_siren": "938700515",
+  "supplier_siret": "93870051562712",
+  "supplier_tva": "FR79938700515",
+  "iban": "FR8011155426221890927532697",
+  "bic": "WCCTFRVN8LF",
+  "invoice_number": "FAC-2025-5942",
+  "issue_date": "2025-08-24",
+  "due_date": "2025-10-08",
+  "amount_ht": 10257.72,
+  "vat_rate": 20.0,
+  "amount_tva": 2051.54,
+  "amount_ttc": 12309.26,
+  "group_member_names_used": [
+    "Jules Araud",
+    "David CIRAKAZA",
+    "Romain PINTRE"
+  ],
+  "filename": "doc-0041_facture_legitime.png",
+  "text_source_file": "doc-0041_facture_legitime.txt",
+  "label_file": "DOC-0041.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_0.91",
+    "rotation_5.1",
+    "gaussian_blur_0.85",
+    "gaussian_noise_12.6",
+    "salt_pepper_0.0021",
+    "low_resolution_0.68"
+  ],
+  "scenario_name": "facture_legitime",
+  "generated_at": "2026-03-17T15:47:07"
+}

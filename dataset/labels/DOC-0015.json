@@ -1,0 +1,38 @@
+{
+  "doc_id": "DOC-0015",
+  "doc_type": "devis",
+  "variant": "standard",
+  "expected_class": "devis",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "quote_number": "DEV-2026-9807",
+  "issue_date": "2026-01-30",
+  "valid_until": "2026-03-01",
+  "supplier_name": "Hamel SA SNC",
+  "supplier_siren": "232858845",
+  "supplier_siret": "23285884524745",
+  "amount_ht": 16959.85,
+  "vat_rate": 5.5,
+  "amount_tva": 932.79,
+  "amount_ttc": 17892.64,
+  "group_member_names_used": [
+    "James MBA FONGANG",
+    "Jules Araud",
+    "David CIRAKAZA"
+  ],
+  "filename": "doc-0015_devis_standard.png",
+  "text_source_file": "doc-0015_devis_standard.txt",
+  "label_file": "DOC-0015.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_1.13",
+    "contrast_1.13",
+    "rotation_-7.8",
+    "gaussian_blur_1.70",
+    "gaussian_noise_17.3",
+    "salt_pepper_0.0059",
+    "low_resolution_0.44"
+  ],
+  "scenario_name": "devis",
+  "generated_at": "2026-03-17T15:46:24"
+}

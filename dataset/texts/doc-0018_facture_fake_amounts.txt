@@ -1,0 +1,27 @@
+                                    FACTURE
+
+Émetteur :
+  Dupuis Marchand S.A.R.L. SA
+  4, chemin Pauline Tessier, 21720 Letellier-sur-Wagner
+  SIREN : 689980944
+  SIRET : 68998094402447
+  N° TVA intracommunautaire : FR92689980944
+
+Destinataire :
+  Pottier SA
+  1, boulevard Aurélie Peltier, 47170 Jourdanboeuf
+
+Numéro de facture : FAC-2025-1744
+Date d'émission   : 24/07/2025
+Date d'échéance   : 23/08/2025
+
+Détail des prestations :
+  - Assistance technique x1 @ 261,91 € = 261,91 €
+  - Licence SaaS mensuelle x3 @ 857,35 € = 2 572,05 €
+
+Montant total H.T.        : 2 833,96 €
+TVA 20.0%               : 626,00 €
+Montant total T.T.C.      : 3 459,96 €
+
+Règlement : virement bancaire
+Établi par : Romain PINTRE

@@ -1,0 +1,14 @@
+                     RELEVÉ D'IDENTITÉ BANCAIRE / IBAN
+
+Titulaire du compte : Guérin SA
+Interlocuteur       : Ivan Noël
+Adresse             : 44, rue Émilie Jean, 82252 Blanchard
+SIREN               : 518888805
+
+Banque              : Caisse d'Épargne
+IBAN                : FR64 0515 3195 2058 5277 2217 043
+BIC                 : BFBYFRS9TJ1
+Domiciliation       : Agence Blanchard
+Référence dossier   : RIB-230521
+
+Conseiller bancaire : Mathieu CHRETIEN

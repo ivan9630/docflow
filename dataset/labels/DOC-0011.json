@@ -1,0 +1,40 @@
+{
+  "doc_id": "DOC-0011",
+  "doc_type": "facture",
+  "variant": "legitime",
+  "expected_class": "facture",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "supplier_name": "Guillon EURL",
+  "supplier_siren": "334123288",
+  "supplier_siret": "33412328812068",
+  "supplier_tva": "FR06334123288",
+  "iban": "FR1240344713493618324210249",
+  "bic": "TOHDFRYZ7SR",
+  "invoice_number": "FAC-2025-1339",
+  "issue_date": "2025-10-16",
+  "due_date": "2025-10-31",
+  "amount_ht": 25660.64,
+  "vat_rate": 10.0,
+  "amount_tva": 2566.06,
+  "amount_ttc": 28226.7,
+  "group_member_names_used": [
+    "Jules Araud",
+    "James MBA FONGANG",
+    "Romain PINTRE"
+  ],
+  "filename": "doc-0011_facture_legitime.png",
+  "text_source_file": "doc-0011_facture_legitime.txt",
+  "label_file": "DOC-0011.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "brightness_0.98",
+    "contrast_0.92",
+    "rotation_6.6",
+    "gaussian_blur_1.00",
+    "gaussian_noise_8.6",
+    "low_resolution_0.66"
+  ],
+  "scenario_name": "facture_legitime",
+  "generated_at": "2026-03-17T15:46:13"
+}

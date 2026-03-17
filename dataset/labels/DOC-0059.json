@@ -1,0 +1,40 @@
+{
+  "doc_id": "DOC-0059",
+  "doc_type": "facture",
+  "variant": "legitime",
+  "expected_class": "facture",
+  "expected_fraud": false,
+  "fraud_reasons": [],
+  "supplier_name": "Jacques Rossi SARL SAS",
+  "supplier_siren": "613861202",
+  "supplier_siret": "61386120275010",
+  "supplier_tva": "FR12613861202",
+  "iban": "FR8524819346676650618091901",
+  "bic": "JNHRFRVK7N3",
+  "invoice_number": "FAC-2025-5883",
+  "issue_date": "2025-09-11",
+  "due_date": "2025-09-26",
+  "amount_ht": 7778.72,
+  "vat_rate": 20.0,
+  "amount_tva": 1555.74,
+  "amount_ttc": 9334.46,
+  "group_member_names_used": [
+    "Romain PINTRE",
+    "Hajar MOUSSAOUI",
+    "Hajar MOUSSAOUI"
+  ],
+  "filename": "doc-0059_facture_legitime.png",
+  "text_source_file": "doc-0059_facture_legitime.txt",
+  "label_file": "DOC-0059.json",
+  "degradation_level": "medium",
+  "degradations_applied": [
+    "contrast_0.97",
+    "rotation_-11.5",
+    "gaussian_blur_0.73",
+    "gaussian_noise_12.5",
+    "salt_pepper_0.0014",
+    "low_resolution_0.79"
+  ],
+  "scenario_name": "facture_legitime",
+  "generated_at": "2026-03-17T15:47:52"
+}

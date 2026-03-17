@@ -1,0 +1,31 @@
+                                    FACTURE
+
+Émetteur :
+  Diallo Lévêque SARL
+  23, chemin Philippe, 22716 Samson
+  SIREN : 938700515
+  SIRET : 93870051562712
+  N° TVA intracommunautaire : FR79938700515
+  IBAN : FR80 1115 5426 2218 9092 7532 697
+  BIC  : WCCTFRVN8LF
+  Responsable dossier : David CIRAKAZA
+
+Destinataire :
+  Benard S.A.S. SASU
+  avenue Catherine Morel, 08477 Garnier
+  Contact : Romain PINTRE
+
+Numéro de facture : FAC-2025-5942
+Date d'émission   : 24/08/2025
+Date d'échéance   : 08/10/2025
+
+Détail des prestations :
+  - Intégration API et connecteurs x4 @ 2 111,72 € = 8 446,88 €
+  - Formation équipe métier x1 @ 1 810,84 € = 1 810,84 €
+
+Montant total H.T.        : 10 257,72 €
+TVA 20.0%               : 2 051,54 €
+Montant total T.T.C.      : 12 309,26 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : Jules Araud

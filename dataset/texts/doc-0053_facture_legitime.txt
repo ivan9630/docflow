@@ -1,0 +1,32 @@
+                                    FACTURE
+
+Émetteur :
+  Bazin SAS
+  92, boulevard de Vidal, 97326 GaudinVille
+  SIREN : 033542168
+  SIRET : 03354216889426
+  N° TVA intracommunautaire : FR74033542168
+  IBAN : FR12 4478 9856 2575 3260 3323 098
+  BIC  : EJQAFR5JTB9
+  Responsable dossier : Boubaker OMRI
+
+Destinataire :
+  Marchand SAS
+  99, boulevard Clerc, 21706 Brunet-sur-Picard
+  Contact : James MBA FONGANG
+
+Numéro de facture : FAC-2026-3024
+Date d'émission   : 12/03/2026
+Date d'échéance   : 11/04/2026
+
+Détail des prestations :
+  - Paramétrage OCR & NER x2 @ 2 824,61 € = 5 649,22 €
+  - Formation équipe métier x1 @ 942,01 € = 942,01 €
+  - Maintenance applicative x1 @ 1 757,46 € = 1 757,46 €
+
+Montant total H.T.        : 8 348,69 €
+TVA 10.0%               : 834,87 €
+Montant total T.T.C.      : 9 183,56 €
+
+Conditions de règlement : virement bancaire à 30 jours fin de mois
+Établi par : Hajar MOUSSAOUI

@@ -1,0 +1,37 @@
+{
+  "doc_id": "DOC-0010",
+  "doc_type": "facture",
+  "variant": "fake_siret",
+  "expected_class": "facture",
+  "expected_fraud": true,
+  "fraud_reasons": [
+    "siret_invalide"
+  ],
+  "supplier_name": "Martineau S.A.S. SASU",
+  "supplier_siren": "770143634",
+  "supplier_siret_real": "77014363449579",
+  "supplier_siret_displayed": "77011363402297",
+  "invoice_number": "FAC-2025-8690",
+  "issue_date": "2025-08-02",
+  "amount_ht": 20350.39,
+  "vat_rate": 5.5,
+  "amount_tva": 1119.27,
+  "amount_ttc": 21469.66,
+  "group_member_names_used": [
+    "Romain PINTRE"
+  ],
+  "filename": "doc-0010_facture_fake_siret.jpg",
+  "text_source_file": "doc-0010_facture_fake_siret.txt",
+  "label_file": "DOC-0010.json",
+  "degradation_level": "hard",
+  "degradations_applied": [
+    "brightness_1.12",
+    "contrast_0.99",
+    "rotation_9.5",
+    "gaussian_blur_2.60",
+    "salt_pepper_0.0049",
+    "low_resolution_0.50"
+  ],
+  "scenario_name": "facture_fake_siret",
+  "generated_at": "2026-03-17T15:46:09"
+}

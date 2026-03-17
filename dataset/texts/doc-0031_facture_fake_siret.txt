@@ -1,0 +1,29 @@
+                                    FACTURE
+
+Émetteur :
+  Collet SARL SASU
+  42, boulevard Poulain, 67613 Gaillard
+  SIREN : 656766185
+  SIRET : 55676618526874
+  N° TVA intracommunautaire : FR35656766185
+  IBAN : FR83 8230 0478 6863 3752 4310 690
+  BIC  : GBPLFRY5IBP
+
+Destinataire :
+  Regnier SARL
+  chemin Margot Bouvet, 86368 Weber-sur-Diaz
+
+Numéro de facture : FAC-2025-6224
+Date d'émission   : 11/12/2025
+Date d'échéance   : 10/01/2026
+
+Détail des prestations :
+  - Intégration API et connecteurs x5 @ 1 806,28 € = 9 031,40 €
+  - Audit de conformité documentaire x3 @ 1 745,58 € = 5 236,74 €
+  - Maintenance applicative x5 @ 2 386,74 € = 11 933,70 €
+
+Montant total H.T.        : 26 201,84 €
+TVA 5.5%               : 1 441,10 €
+Montant total T.T.C.      : 27 642,94 €
+
+Établi par : Boubaker OMRI

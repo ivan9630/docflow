@@ -1,0 +1,29 @@
+                                      DEVIS
+
+Prestataire :
+  Legendre SA SASU
+  698, rue Marguerite Auger, 40344 Delaunay
+  SIREN : 124190497
+  SIRET : 12419049766312
+  N° TVA : FR32124190497
+  Conseiller commercial : Romain PINTRE
+
+Client :
+  Payet EURL
+  4, chemin Hugues Navarro, 69820 Raymond
+  Contact projet : Boubaker OMRI
+
+Numéro devis    : DEV-2026-6511
+Date d'émission : 21/02/2026
+Valable jusqu'au: 22/04/2026
+
+Prestations proposées :
+  - Paramétrage OCR & NER x3 @ 1 181,89 € = 3 545,67 €
+
+Total H.T.      : 3 545,67 €
+TVA 20.0%       : 709,13 €
+Total T.T.C.    : 4 254,80 €
+
+Bon pour accord :
+Nom du consultant : David CIRAKAZA
+Signature client : _______________________

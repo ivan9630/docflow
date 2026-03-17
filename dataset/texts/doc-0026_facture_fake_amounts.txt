@@ -1,0 +1,29 @@
+                                    FACTURE
+
+Émetteur :
+  Courtois S.A.R.L. EURL
+  rue Pinto, 16763 Didier
+  SIREN : 900109430
+  SIRET : 90010943096909
+  N° TVA intracommunautaire : FR10900109430
+
+Destinataire :
+  Leblanc SASU
+  50, chemin de Coste, 74775 Gérarddan
+
+Numéro de facture : FAC-2026-3610
+Date d'émission   : 14/02/2026
+Date d'échéance   : 16/03/2026
+
+Détail des prestations :
+  - Paramétrage OCR & NER x1 @ 888,16 € = 888,16 €
+  - Intégration API et connecteurs x4 @ 2 972,32 € = 11 889,28 €
+  - Audit de conformité documentaire x2 @ 1 517,55 € = 3 035,10 €
+  - Assistance technique x3 @ 325,42 € = 976,26 €
+
+Montant total H.T.        : 16 788,80 €
+TVA 10.0%               : 1 790,46 €
+Montant total T.T.C.      : 18 579,26 €
+
+Règlement : virement bancaire
+Établi par : Boubaker OMRI

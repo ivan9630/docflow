@@ -19,6 +19,7 @@ frontend/build/
 
 # Dataset généré
 data_generator/dataset/
+dataset/
 
 # Logs
 *.log

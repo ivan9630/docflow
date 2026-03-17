@@ -85,7 +85,14 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
 
         # ── ÉTAPE 3 : Classification + Extraction entités ────────
         t = time.time()
-        classification = await ai_service.classify_document(ocr["text"])
+        from app.services import classifier_service
+        local_clf = classifier_service.classify_local(ocr["text"])
+        if local_clf and local_clf["confidence"] > 0.6:
+            classification = local_clf
+            logger.info(f"[{doc_id[:8]}] Classification locale : {local_clf['type_document']} (conf={local_clf['confidence']:.2f})")
+        else:
+            classification = await ai_service.classify_document(ocr["text"])
+            logger.info(f"[{doc_id[:8]}] Classification Claude fallback : {classification.get('type_document')}")
         doc.type_document = classification.get("type_document", "autre")
         doc.score_classification = classification.get("confidence", 0.0)
 

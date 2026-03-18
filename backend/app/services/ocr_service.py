@@ -203,21 +203,53 @@ def extract_doc_number(text: str) -> Optional[str]:
 
 def extract_company(text: str) -> Optional[str]:
     for p in [
+        r'(?:Société|Entreprise|Raison\s+sociale|Émetteur|Emetteur|Prestataire|Fournisseur)\s*:?\s*\n?\s*([^\n]{3,80})',
         r'^([A-Z][A-Z&\s\.\-]{5,60}(?:SAS|SARL|SA|EURL|SNC|EI|SASU))\s*$',
-        r'(?:Société|Entreprise|Raison\s+sociale)\s*:?\s*([^\n]{5,80})',
+        r'(?:De|From)\s*:?\s*([^\n]{3,80})',
     ]:
         m = re.search(p, text, re.I | re.M)
-        if m and 5 < len(m.group(1).strip()) < 200:
-            return m.group(1).strip()
+        if m:
+            name = m.group(1).strip()
+            # Nettoyer : pas de lignes qui ressemblent à des adresses ou numéros
+            if 3 < len(name) < 100 and not re.match(r'^\d', name):
+                return name
     return None
+
+
+def extract_address(text: str) -> dict:
+    """Extrait adresse, code postal et ville."""
+    addr = {"adresse": None, "code_postal": None, "ville": None}
+    # Code postal + ville
+    m = re.search(r'\b(\d{5})\s+([A-ZÀ-Ü][a-zà-ü\-\s]{2,40})\b', text)
+    if m:
+        addr["code_postal"] = m.group(1)
+        addr["ville"] = m.group(2).strip()
+    # Adresse (ligne avant le code postal)
+    for p in [
+        r'(?:Adresse|Siège|Domicil)\s*:?\s*\n?\s*([^\n]{5,100})',
+        r'(\d{1,4}[\s,]+(?:rue|avenue|boulevard|place|chemin|impasse|allée|passage|route)[^\n]{3,80})',
+    ]:
+        m = re.search(p, text, re.I)
+        if m:
+            addr["adresse"] = m.group(1).strip()
+            break
+    return addr
 
 
 def extract_all(text: str) -> dict:
     amounts = extract_amounts(text)
     ner = extract_ner(text)
+    siren = extract_siren(text)
+    siret = extract_siret(text)
+    address = extract_address(text)
+
+    # Déduire SIREN du SIRET si pas trouvé
+    if not siren and siret and len(siret) == 14:
+        siren = siret[:9]
+
     return {
-        "siren":          extract_siren(text),
-        "siret":          extract_siret(text),
+        "siren":          siren,
+        "siret":          siret,
         "tva_number":     extract_tva(text),
         "company_name":   extract_company(text) or (ner["organizations"][0] if ner["organizations"] else None),
         "iban":           extract_iban(text),
@@ -228,6 +260,9 @@ def extract_all(text: str) -> dict:
         "montant_tva":    amounts["tva"],
         "montant_ttc":    amounts["ttc"],
         "taux_tva":       amounts["taux_tva"],
+        "adresse":        address["adresse"],
+        "code_postal":    address["code_postal"],
+        "ville":          address["ville"],
         "ner":            ner,
     }
 

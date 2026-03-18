@@ -5,6 +5,7 @@ const api = axios.create({ baseURL: '/api', timeout: 30000 })
 // Documents
 export const uploadDocuments  = (formData) => api.post('/documents/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 export const listDocuments    = (params)   => api.get('/documents/', { params })
+export const listDocsFull     = (params)   => api.get('/documents/', { params })
 export const getDocument      = (id)       => api.get(`/documents/${id}`)
 export const getDocStatus     = (id)       => api.get(`/documents/${id}/status`)
 export const validateDoc      = (id)       => api.patch(`/documents/${id}/validate`)

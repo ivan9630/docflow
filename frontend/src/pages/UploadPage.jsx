@@ -9,6 +9,9 @@ const STAGES = ['uploade','en_traitement','ocr_ok','extrait','verifie','valide']
 const STAGE_LABELS = { uploade:'Upload', en_traitement:'OCR', ocr_ok:'Extraction NER', extrait:'Zone Clean', verifie:'Vérification IA', valide:'Zone Curated' }
 const ZONE_PCT = { raw:20, clean:60, curated:95, uploade:5 }
 
+// Le backend renvoie "DocumentStatus.VALIDE" — on normalise
+const norm = (s) => s ? s.replace('DocumentStatus.','').replace('DataZone.','').toLowerCase() : ''
+
 export default function UploadPage() {
   const [queue, setQueue]   = useState([])
   const [uploading, setUploading] = useState(false)
@@ -42,7 +45,7 @@ export default function UploadPage() {
 
   // Polling des statuts
   useEffect(() => {
-    const processing = queue.filter(q => !['valide','anomalie','rejete','error'].includes(q.status))
+    const processing = queue.filter(q => !['valide','anomalie','rejete','error'].includes(norm(q.status)))
     if (!processing.length) return
     const t = setInterval(async () => {
       for (const item of processing) {
@@ -50,15 +53,19 @@ export default function UploadPage() {
         try {
           const r = await getDocStatus(item.id)
           const d = r.data
+          const status = norm(d.statut)
+          const zone = norm(d.zone)
+          const stageIdx = STAGES.indexOf(status)
+          const progress = ZONE_PCT[zone] || (stageIdx >= 0 ? Math.round((stageIdx + 1) / STAGES.length * 100) : 10)
           setQueue(prev => prev.map(q => q.id === item.id ? {
-            ...q, status: d.statut, zone: d.zone,
+            ...q, status, zone,
             score_fraude: d.score_fraude, anomalies: d.anomalies,
-            progress: ZONE_PCT[d.zone] || STAGE_LABELS[d.statut] ? STAGES.indexOf(d.statut)/STAGES.length*100 : q.progress,
+            progress,
             pipeline: d.pipeline_steps,
           } : q))
         } catch {}
       }
-    }, 3000)
+    }, 2000)
     return () => clearInterval(t)
   }, [queue])
 
@@ -103,9 +110,9 @@ export default function UploadPage() {
                 <div key={item.id || item.filename} className="px-5 py-4">
                   <div className="flex items-center gap-4 mb-2">
                     <div className="text-2xl">
-                      {item.status === 'valide'  ? '✅' :
-                       item.status === 'anomalie'? '⚠️' :
-                       item.status === 'error'   ? '❌' : '⚙️'}
+                      {norm(item.status) === 'valide'  ? '✅' :
+                       norm(item.status) === 'anomalie'? '⚠️' :
+                       norm(item.status) === 'error'   ? '❌' : '⚙️'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-sm truncate">{item.filename}</div>
@@ -127,7 +134,7 @@ export default function UploadPage() {
                     </div>
                   </div>
                   {/* Barre de progression */}
-                  {!['valide','anomalie','rejete','error'].includes(item.status) && (
+                  {!['valide','anomalie','rejete','error'].includes(norm(item.status)) && (
                     <div className="h-1.5 rounded-full mt-2 overflow-hidden" style={{ background: 'var(--border)' }}>
                       <div className="h-full rounded-full transition-all duration-700"
                            style={{ width: `${item.progress || 10}%`, background: 'linear-gradient(90deg, var(--accent), var(--accent2))' }} />

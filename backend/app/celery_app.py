@@ -47,12 +47,18 @@ def process_document(self, doc_id: str, content_hex: str, filename: str, mime: s
 
 
 async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
-    from app.db.database import AsyncSessionLocal
+    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+    import os
     from app.models.models import Document, DocumentStatus, DataZone, AnomalyReport
     from app.services import ocr_service, ai_service, minio_service
     import uuid as _uuid
 
-    async with AsyncSessionLocal() as db:
+    # Créer un engine frais par task pour éviter les conflits asyncpg
+    _url = os.getenv("DATABASE_URL", "postgresql+asyncpg://docuflow:docuflow@localhost:5432/docuflow")
+    _engine = create_async_engine(_url, echo=False, pool_size=1, max_overflow=0)
+    _Session = async_sessionmaker(_engine, class_=AsyncSession, expire_on_commit=False)
+
+    async with _Session() as db:
         doc = await db.get(Document, _uuid.UUID(doc_id))
         if not doc: return
 
@@ -87,7 +93,7 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         t = time.time()
         from app.services import classifier_service
         local_clf = classifier_service.classify_local(ocr["text"])
-        if local_clf and local_clf["confidence"] > 0.6:
+        if local_clf and local_clf["confidence"] > 0.3:
             classification = local_clf
             logger.info(f"[{doc_id[:8]}] Classification locale : {local_clf['type_document']} (conf={local_clf['confidence']:.2f})")
         else:
@@ -109,16 +115,33 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.montant_tva_val   = entities.get("montant_tva")
         doc.montant_ttc       = entities.get("montant_ttc")
         doc.taux_tva          = entities.get("taux_tva")
+        doc.adresse_fournisseur = entities.get("adresse")
         doc.donnees_extraites = entities
         doc.statut = DocumentStatus.EXTRAIT
 
-        # Lier fournisseur
+        # Lier ou créer fournisseur
         if doc.numero_siren:
             from sqlalchemy import select
             from app.models.models import Supplier
             res = await db.execute(select(Supplier).where(Supplier.siren == doc.numero_siren))
             sup = res.scalar_one_or_none()
-            if sup: doc.supplier_id = sup.id
+            if not sup:
+                sup = Supplier(
+                    id=_uuid.uuid4(),
+                    siren=doc.numero_siren,
+                    siret_siege=doc.numero_siret,
+                    nom=doc.nom_fournisseur or f"Fournisseur {doc.numero_siren}",
+                    numero_tva=doc.numero_tva,
+                    iban=doc.iban,
+                    adresse=entities.get("adresse"),
+                    code_postal=entities.get("code_postal"),
+                    ville=entities.get("ville"),
+                    score_conformite=100.0,
+                )
+                db.add(sup)
+                await db.flush()
+                logger.info(f"[{doc_id[:8]}] Fournisseur créé : {sup.nom} (SIREN {sup.siren})")
+            doc.supplier_id = sup.id
 
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"extraction","statut":"ok","ms":duration,"type":str(doc.type_document)})
@@ -141,25 +164,15 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
             if sup:
                 supplier_data = {"siren":sup.siren,"siret":sup.siret_siege,"tva":sup.numero_tva,"iban":sup.iban}
 
-        # Validations locales instantanées
-        local_anomalies = []
-        if doc.numero_siren and doc.numero_siret:
-            ok, msg = ai_service.validate_siret_siren(doc.numero_siren, doc.numero_siret)
-            if not ok: local_anomalies.append({"type":"incoherence_siret_siren","description":msg,"severite":"critique","champ":"siret"})
-        if doc.numero_siren and doc.numero_tva:
-            ok, msg = ai_service.validate_tva_local(doc.numero_siren, doc.numero_tva)
-            if not ok: local_anomalies.append({"type":"incoherence_tva","description":msg,"severite":"elevee","champ":"tva"})
-        if doc.montant_ht and doc.montant_ttc:
-            ok, msg = ai_service.validate_amounts(doc.montant_ht, doc.montant_tva_val, doc.montant_ttc, doc.taux_tva)
-            if not ok: local_anomalies.append({"type":"montant_incoherent","description":msg,"severite":"elevee","champ":"montants"})
-
-        # Vérification IA (anomalies complexes)
-        fraud = await ai_service.detect_anomalies(
-            str(doc.type_document), entities, supplier_data, []
+        # Vérification locale (sans API) — modèle local en premier
+        fraud = ai_service.detect_anomalies_local(
+            str(doc.type_document), entities, supplier_data
         )
-        all_anomalies = local_anomalies + fraud.get("anomalies", [])
-        doc.score_fraude = max(fraud.get("score_fraude", 0.0), len(local_anomalies) * 0.2)
-        doc.est_frauduleux = fraud.get("est_frauduleux", False) or doc.score_fraude > 0.7
+        logger.info(f"[{doc_id[:8]}] Vérification locale : {len(fraud['anomalies'])} anomalie(s), score={fraud['score_fraude']}")
+
+        all_anomalies = fraud.get("anomalies", [])
+        doc.score_fraude = fraud.get("score_fraude", 0.0)
+        doc.est_frauduleux = fraud.get("est_frauduleux", False)
         doc.anomalies = all_anomalies
 
         # Sauvegarder rapports d'anomalies
@@ -182,7 +195,7 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
 
         # ── ÉTAPE 6 : CURATED + Enrichissement ──────────────────
         t = time.time()
-        enriched = await ai_service.enrich_for_crm(str(doc.type_document), entities, fraud)
+        enriched = ai_service.enrich_local(str(doc.type_document), entities, fraud)
         curated_payload = {
             "doc_id": doc_id, "type": str(doc.type_document),
             "entities": entities, "fraud": fraud,
@@ -203,7 +216,10 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         else:                  doc.statut = DocumentStatus.VALIDE
 
         await db.commit()
-        logger.info(f"[{doc_id[:8]}] 🏁 Pipeline terminé — statut={doc.statut}")
+        logger.info(f"[{doc_id[:8]}] Pipeline termine — statut={doc.statut}")
 
-        return {"doc_id":doc_id,"statut":str(doc.statut),"type":str(doc.type_document),
+        result = {"doc_id":doc_id,"statut":str(doc.statut),"type":str(doc.type_document),
                 "score_fraude":doc.score_fraude,"anomalies":len(all_anomalies)}
+
+    await _engine.dispose()
+    return result

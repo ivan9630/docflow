@@ -28,25 +28,41 @@ def _load_model():
         return None
 
 
+REJECTION_THRESHOLD = 0.4  # en dessous, le document est considéré hors sujet
+
+
 def classify_local(text: str) -> dict | None:
     """Classifie un document avec le modèle local.
-    Retourne {"type_document": str, "confidence": float} ou None si le modèle n'est pas dispo."""
+    Retourne {"type_document": str, "confidence": float} ou None si le modèle n'est pas dispo.
+    Si la confiance est sous le seuil, retourne type_document="autre" (rejet)."""
     model = _load_model()
     if model is None:
         return None
     try:
+        import numpy as np
         prediction = model.predict([text])[0]
         # LinearSVC a decision_function, pas predict_proba
         scores = model.decision_function([text])[0]
         # Convertir en pseudo-probabilités via softmax
-        import numpy as np
         exp_scores = np.exp(scores - np.max(scores))
         probs = exp_scores / exp_scores.sum()
         confidence = float(np.max(probs))
+
+        # Rejet si confiance trop basse (document hors sujet)
+        if confidence < REJECTION_THRESHOLD:
+            logger.warning(f"Document rejeté par le classifieur (conf={confidence:.2f} < {REJECTION_THRESHOLD})")
+            return {
+                "type_document": "autre",
+                "confidence": round(confidence, 4),
+                "method": "local_svm",
+                "rejected": True,
+            }
+
         return {
             "type_document": prediction,
             "confidence": round(confidence, 4),
             "method": "local_svm",
+            "rejected": False,
         }
     except Exception as e:
         logger.error(f"Classification locale erreur : {e}")

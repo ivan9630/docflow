@@ -22,9 +22,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Télécharger modèle spaCy pour NER
-RUN python -m spacy download fr_core_news_sm || true
-RUN python -m spacy download en_core_web_sm || true
+# Vérifier que pydantic v1 n'est pas en conflit puis télécharger modèles spaCy
+RUN pip install --no-cache-dir --force-reinstall pydantic>=2.7 \
+    && python -m spacy download fr_core_news_sm \
+    && python -m spacy download en_core_web_sm
 
 COPY . .
 

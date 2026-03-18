@@ -26,14 +26,13 @@ def _run(coro):
     finally: loop.close()
 
 
-def _log_step(db_session, doc_id, step, status, msg, duration_ms=0):
+def _log_step(db, doc_id, step, status, msg, duration_ms=0):
     from app.models.models import PipelineLog
-    import uuid
-    log = PipelineLog(
-        id=uuid.uuid4(), document_id=doc_id,
+    import uuid as _u
+    db.add(PipelineLog(
+        id=_u.uuid4(), document_id=doc_id if isinstance(doc_id, _u.UUID) else _u.UUID(doc_id),
         etape=step, statut=status, message=msg, duree_ms=duration_ms
-    )
-    db_session.add(log)
+    ))
 
 
 @celery_app.task(bind=True, max_retries=3, name="process_document", queue="docuflow")
@@ -73,7 +72,8 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.hash_sha256 = minio_service.sha256(content)
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"raw","statut":"ok","ms":duration})
-        logger.info(f"[{doc_id[:8]}] ✅ RAW stored")
+        _log_step(db, doc.id, "raw", "ok", f"Fichier stocké: {filename}", duration)
+        logger.info(f"[{doc_id[:8]}] RAW stored")
 
         # ── ÉTAPE 2 : OCR ────────────────────────────────────────
         t = time.time()
@@ -87,7 +87,8 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.statut = DocumentStatus.OCR_OK
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"ocr","statut":"ok","ms":duration,"method":ocr["method"],"conf":ocr["confidence"]})
-        logger.info(f"[{doc_id[:8]}] ✅ OCR done ({ocr['method']}, conf={ocr['confidence']:.2f})")
+        _log_step(db, doc.id, "ocr", "ok", f"{ocr['method']} conf={ocr['confidence']:.2f}", duration)
+        logger.info(f"[{doc_id[:8]}] OCR done ({ocr['method']}, conf={ocr['confidence']:.2f})")
 
         # ── ÉTAPE 3 : Classification + Extraction entités ────────
         t = time.time()
@@ -145,7 +146,8 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
 
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"extraction","statut":"ok","ms":duration,"type":str(doc.type_document)})
-        logger.info(f"[{doc_id[:8]}] ✅ Extraction done (type={doc.type_document})")
+        _log_step(db, doc.id, "extraction", "ok", f"type={doc.type_document}", duration)
+        logger.info(f"[{doc_id[:8]}] Extraction done (type={doc.type_document})")
 
         # ── ÉTAPE 4 : CLEAN zone ─────────────────────────────────
         t = time.time()
@@ -205,7 +207,8 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"verification","statut":"ok","ms":duration,
                        "score_fraude":doc.score_fraude,"anomalies":len(all_anomalies)})
-        logger.info(f"[{doc_id[:8]}] ✅ Vérification done (score_fraude={doc.score_fraude:.2f})")
+        _log_step(db, doc.id, "verification", "ok", f"score={doc.score_fraude:.2f} anomalies={len(all_anomalies)}", duration)
+        logger.info(f"[{doc_id[:8]}] Verification done (score_fraude={doc.score_fraude:.2f})")
 
         # ── ÉTAPE 6 : CURATED + Enrichissement ──────────────────
         t = time.time()
@@ -223,6 +226,7 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.pipeline_steps = steps
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"curated","statut":"ok","ms":duration})
+        _log_step(db, doc.id, "curated", "ok", f"Enrichissement terminé", duration)
 
         # Statut final
         if doc.est_frauduleux: doc.statut = DocumentStatus.ANOMALIE

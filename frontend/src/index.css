@@ -3,43 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --surface2: #1a1a24;
-  --border: #2a2a38;
-  --accent: #6c63ff;
-  --accent2: #00d4aa;
-  --warn: #ff6b35;
-  --danger: #ff3366;
-  --text: #e8e8f0;
-  --text2: #8888a8;
-  --gold: #ffd166;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface2: #f0f1f4;
+  --border: #e2e4ea;
+  --accent: #3b5bdb;
+  --accent2: #0ca678;
+  --warn: #e67700;
+  --danger: #e03131;
+  --text: #1c1c28;
+  --text2: #6b7084;
+  --gold: #e8a500;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
   margin: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-.font-display { font-family: 'Syne', sans-serif; }
-.font-mono    { font-family: 'DM Mono', monospace; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-.pulse { animation: pulse-dot 2s infinite; }
-
 @keyframes slide-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.slide-in { animation: slide-in 0.3s ease; }
+.slide-in { animation: slide-in 0.25s ease; }

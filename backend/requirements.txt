@@ -50,6 +50,7 @@ pandas==2.2.2
 python-magic==0.4.27
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 structlog==24.1.0
 
 # ── Tests ─────────────────────────────────────────────────────────

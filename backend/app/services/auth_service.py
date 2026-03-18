@@ -48,7 +48,7 @@ async def get_current_user(
     user_id = payload.get("sub")
     if not user_id:
         raise HTTPException(status_code=401, detail="Token invalide")
-    user = await db.get(User, user_id)
+    user = await db.get(User, int(user_id))
     if not user or not user.is_active:
         raise HTTPException(status_code=401, detail="Utilisateur introuvable ou inactif")
     return user
@@ -65,7 +65,7 @@ def require_role(*roles):
         user_id = payload.get("sub")
         if not user_id:
             raise HTTPException(status_code=401, detail="Token invalide")
-        user = await db.get(User, user_id)
+        user = await db.get(User, int(user_id))
         if not user or not user.is_active:
             raise HTTPException(status_code=401, detail="Utilisateur introuvable")
         if user.role not in roles and "admin" not in [user.role]:

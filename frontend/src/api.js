@@ -61,6 +61,7 @@ export const datalakeZone     = (zone)     => api.get(`/datalake/${zone}`)
 
 // Stats
 export const dashboardStats   = ()         => api.get('/stats/dashboard')
+export const adminStats       = ()         => api.get('/stats/admin')
 
 // Airflow
 export const triggerDAG       = (dag_id)   => api.post(`/airflow/trigger/${dag_id}`)

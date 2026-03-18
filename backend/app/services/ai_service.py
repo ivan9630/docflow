@@ -213,7 +213,7 @@ def validate_montants_aberrants(ht: float, ttc: float) -> tuple[bool, str]:
 
 
 def detect_anomalies_local(doc_type: str, entities: dict,
-                           supplier: dict = None) -> dict:
+                           supplier: dict = None, skip_amounts: bool = False) -> dict:
     """Détection d'anomalies 100% locale, sans appel API."""
     anomalies = []
     score = 0.0
@@ -246,8 +246,8 @@ def detect_anomalies_local(doc_type: str, entities: dict,
                               "valeur_trouvee": tva, "valeur_attendue": "Clé TVA cohérente avec SIREN"})
             score += 0.2
 
-    # 3. Montants HT/TVA/TTC
-    if ht and ttc:
+    # 3. Montants HT/TVA/TTC (skip si OCR de mauvaise qualité)
+    if not skip_amounts and ht and ttc:
         ok, msg = validate_amounts(ht, tva_val, ttc, taux)
         if not ok:
             anomalies.append({"type": "montant_incoherent", "description": msg,
@@ -257,7 +257,7 @@ def detect_anomalies_local(doc_type: str, entities: dict,
             score += 0.25
 
     # 4. Montants aberrants
-    if ht is not None or ttc is not None:
+    if not skip_amounts and (ht is not None or ttc is not None):
         ok, msg = validate_montants_aberrants(ht, ttc)
         if not ok:
             anomalies.append({"type": "montant_aberrant", "description": msg,

@@ -33,6 +33,7 @@ Usage :
 
 import os
 import re
+import csv
 import json
 import math
 import random
@@ -265,15 +266,75 @@ def gen_bic() -> str:
     return bank + country + location + branch
 
 
+# ── Chargement des données INSEE SIRENE ──────────────────────────────────────
+
+INSEE_CSV = Path(__file__).parent / "insee_sirene_extract.csv"
+_INSEE_COMPANIES = []
+
+def _load_insee():
+    global _INSEE_COMPANIES
+    if _INSEE_COMPANIES:
+        return
+    if not INSEE_CSV.exists():
+        print(f"⚠  Fichier INSEE introuvable ({INSEE_CSV}), fallback sur données synthétiques")
+        return
+    with open(INSEE_CSV, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            _INSEE_COMPANIES.append(row)
+    random.shuffle(_INSEE_COMPANIES)
+    print(f"✅ {len(_INSEE_COMPANIES)} entreprises INSEE chargées depuis {INSEE_CSV.name}")
+
+_load_insee()
+_insee_idx = 0
+
+
+def _next_insee():
+    """Retourne la prochaine entreprise INSEE, boucle si épuisé."""
+    global _insee_idx
+    if not _INSEE_COMPANIES:
+        return None
+    company = _INSEE_COMPANIES[_insee_idx % len(_INSEE_COMPANIES)]
+    _insee_idx += 1
+    return company
+
+
 # Génération entreprises / personnes / clients
 
 def gen_company():
-    siren = gen_siren()
-    siret = gen_siret(siren)
-    legal_form = random.choice(FORMES_JURIDIQUES)
-    company_name = fake.company()
-    if legal_form not in company_name.upper():
-        company_name = f"{company_name} {legal_form}"
+    insee = _next_insee()
+
+    if insee:
+        # Données réelles de l'INSEE pour SIREN/SIRET/nom/forme juridique/NAF
+        siren = insee["siren"]
+        siret = insee["siret"]
+        company_name = insee["nom"]
+        legal_form = insee.get("forme_juridique") or random.choice(FORMES_JURIDIQUES)
+        code_naf = insee.get("code_naf") or random.choice(CODES_NAF)
+        ville = insee.get("ville") or fake.city()
+        cp = insee.get("code_postal") or fake.postcode()
+        adresse = insee.get("adresse") or fake.street_address()
+        date_creation_str = insee.get("date_creation")
+        if date_creation_str:
+            try:
+                date_creation = datetime.strptime(date_creation_str, "%Y-%m-%d").date()
+            except ValueError:
+                date_creation = fake.date_between(start_date="-12y", end_date="-6m")
+        else:
+            date_creation = fake.date_between(start_date="-12y", end_date="-6m")
+    else:
+        # Fallback synthétique si pas de CSV INSEE
+        siren = gen_siren()
+        siret = gen_siret(siren)
+        legal_form = random.choice(FORMES_JURIDIQUES)
+        company_name = fake.company()
+        if legal_form not in company_name.upper():
+            company_name = f"{company_name} {legal_form}"
+        code_naf = random.choice(CODES_NAF)
+        ville = fake.city()
+        cp = fake.postcode()
+        adresse = fake.street_address()
+        date_creation = fake.date_between(start_date="-12y", end_date="-6m")
 
     manager = pick_member()
     iban = gen_iban_fr()
@@ -286,16 +347,16 @@ def gen_company():
         "iban": pretty_iban(iban),
         "iban_raw": iban,
         "bic": gen_bic(),
-        "adresse": fake.street_address(),
-        "cp": fake.postcode(),
-        "ville": fake.city(),
+        "adresse": adresse,
+        "cp": cp,
+        "ville": ville,
         "email": fake.company_email(),
         "telephone": fake.phone_number(),
         "capital_social": round(random.uniform(1000, 200000), 2),
-        "code_naf": random.choice(CODES_NAF),
+        "code_naf": code_naf,
         "greffe": random.choice(GREFFES),
         "representant_legal": manager,
-        "date_creation": fake.date_between(start_date="-12y", end_date="-6m"),
+        "date_creation": date_creation,
         "effectif": random.randint(1, 300),
     }
 
@@ -1441,60 +1502,65 @@ def add_salt_pepper_noise(img: Image.Image, amount=0.003):
 
 def degrade_image(img: Image.Image, level: str):
     """
-    level:
-      - clean
-      - medium
-      - hard
+    Simule des scans réalistes :
+      - clean  : document PDF propre
+      - medium : scan bureau correct (léger flou, légère rotation)
+      - hard   : photo smartphone (rotation, luminosité variable, compression)
     """
     applied = []
 
     if level == "clean":
         return img, applied
 
-    # légère variation luminosité / contraste
-    if random.random() < 0.8:
+    # Luminosité
+    if random.random() < 0.7:
         brightness = ImageEnhance.Brightness(img)
-        factor = random.uniform(0.9, 1.1) if level == "medium" else random.uniform(0.8, 1.2)
+        factor = random.uniform(0.92, 1.08) if level == "medium" else random.uniform(0.85, 1.15)
         img = brightness.enhance(factor)
         applied.append(f"brightness_{factor:.2f}")
 
-    if random.random() < 0.8:
+    # Contraste
+    if random.random() < 0.7:
         contrast = ImageEnhance.Contrast(img)
-        factor = random.uniform(0.9, 1.08) if level == "medium" else random.uniform(0.82, 1.15)
+        factor = random.uniform(0.93, 1.07) if level == "medium" else random.uniform(0.85, 1.12)
         img = contrast.enhance(factor)
         applied.append(f"contrast_{factor:.2f}")
 
-    # rotation 5-15°
-    angle_abs = random.uniform(5, 15)
+    # Rotation — réaliste : un scanner fait 1-3°, un smartphone 2-7°
+    if level == "medium":
+        angle_abs = random.uniform(0.5, 2.5)
+    else:
+        angle_abs = random.uniform(2, 6)
     angle = angle_abs if random.random() < 0.5 else -angle_abs
     img = img.rotate(angle, fillcolor="white", resample=Image.Resampling.BICUBIC)
     applied.append(f"rotation_{angle:.1f}")
 
-    # flou
-    blur_radius = random.uniform(0.6, 1.4) if level == "medium" else random.uniform(1.4, 2.8)
+    # Flou — léger, un vrai scan n'est pas très flou
+    blur_radius = random.uniform(0.3, 0.8) if level == "medium" else random.uniform(0.6, 1.3)
     img = img.filter(ImageFilter.GaussianBlur(radius=blur_radius))
     applied.append(f"gaussian_blur_{blur_radius:.2f}")
 
-    # bruit
-    if random.random() < 0.9:
-        std = random.uniform(5, 14) if level == "medium" else random.uniform(14, 28)
+    # Bruit — modéré
+    if random.random() < 0.7:
+        std = random.uniform(3, 8) if level == "medium" else random.uniform(6, 14)
         img = add_gaussian_noise(img, std)
         applied.append(f"gaussian_noise_{std:.1f}")
 
-    if random.random() < 0.5:
-        amount = random.uniform(0.001, 0.003) if level == "medium" else random.uniform(0.003, 0.006)
+    # Sel & poivre — rare et léger
+    if random.random() < 0.3:
+        amount = random.uniform(0.0005, 0.0015) if level == "medium" else random.uniform(0.001, 0.003)
         img = add_salt_pepper_noise(img, amount=amount)
         applied.append(f"salt_pepper_{amount:.4f}")
 
-    # basse résolution
+    # Résolution — un smartphone fait au moins 70% de la qualité
     w, h = img.size
     if level == "medium":
-        factor = random.uniform(0.65, 0.82)
+        factor = random.uniform(0.75, 0.90)
     else:
-        factor = random.uniform(0.35, 0.60)
+        factor = random.uniform(0.60, 0.80)
 
-    w2 = max(500, int(w * factor))
-    h2 = max(700, int(h * factor))
+    w2 = max(800, int(w * factor))
+    h2 = max(1100, int(h * factor))
     img = img.resize((w2, h2), Image.Resampling.BILINEAR).resize((w, h), Image.Resampling.BILINEAR)
     applied.append(f"low_resolution_{factor:.2f}")
 

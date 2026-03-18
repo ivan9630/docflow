@@ -7,8 +7,9 @@ import uuid, magic
 import structlog
 
 from app.db.database import get_db
-from app.models.models import Document, DocumentStatus, DataZone
+from app.models.models import Document, DocumentStatus, DataZone, User
 from app.services.minio_service import store_raw, sha256
+from app.services.auth_service import get_current_user
 from app.celery_app import process_document
 
 logger = structlog.get_logger()
@@ -19,7 +20,7 @@ MAX_SIZE = 50 * 1024 * 1024
 
 
 @router.post("/upload", summary="Upload multi-documents (max 20 fichiers)")
-async def upload(files: List[UploadFile] = File(...), db: AsyncSession = Depends(get_db)):
+async def upload(files: List[UploadFile] = File(...), db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     if len(files) > 20:
         raise HTTPException(400, "Maximum 20 fichiers par upload")
     results = []
@@ -63,7 +64,7 @@ async def reprocess(doc_id: str, db: AsyncSession = Depends(get_db)):
 async def list_docs(
     status: Optional[str] = None, doc_type: Optional[str] = None,
     limit: int = Query(50, le=500), offset: int = 0,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user),
 ):
     q = select(Document).order_by(desc(Document.created_at)).limit(limit).offset(offset)
     if status:   q = q.where(Document.statut == status)
@@ -90,7 +91,7 @@ async def doc_status(doc_id: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.patch("/{doc_id}/validate")
-async def validate(doc_id: str, db: AsyncSession = Depends(get_db)):
+async def validate(doc_id: str, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     doc = await db.get(Document, uuid.UUID(doc_id))
     if not doc: raise HTTPException(404)
     doc.statut = DocumentStatus.VALIDE
@@ -99,7 +100,7 @@ async def validate(doc_id: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.patch("/{doc_id}/reject")
-async def reject(doc_id: str, db: AsyncSession = Depends(get_db)):
+async def reject(doc_id: str, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     doc = await db.get(Document, uuid.UUID(doc_id))
     if not doc: raise HTTPException(404)
     doc.statut = DocumentStatus.REJETE

@@ -2,7 +2,7 @@
 Pipeline Celery — DocuFlow v2
 6 étapes : RAW → OCR → NER → Validation → CLEAN → CURATED
 """
-import os, asyncio, time
+import os, asyncio, time, re
 from celery import Celery
 import structlog
 
@@ -93,13 +93,42 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         # ── ÉTAPE 3 : Classification + Extraction entités ────────
         t = time.time()
         from app.services import classifier_service
-        local_clf = classifier_service.classify_local(ocr["text"])
-        if local_clf and local_clf["confidence"] > 0.3:
+
+        # Nettoyer le texte OCR pour améliorer la classification
+        clean_text = re.sub(r'[|~`{}\\]', '', ocr["text"])  # supprimer artefacts
+        clean_text = re.sub(r'\s{3,}', '  ', clean_text)     # réduire espaces excessifs
+        clean_text = re.sub(r'\n{3,}', '\n\n', clean_text)   # réduire lignes vides
+
+        local_clf = classifier_service.classify_local(clean_text)
+        if local_clf and local_clf["confidence"] > 0.3 and local_clf.get("type_document") != "autre":
             classification = local_clf
             logger.info(f"[{doc_id[:8]}] Classification locale : {local_clf['type_document']} (conf={local_clf['confidence']:.2f})")
         else:
-            classification = await ai_service.classify_document(ocr["text"])
+            classification = await ai_service.classify_document(clean_text)
             logger.info(f"[{doc_id[:8]}] Classification Claude fallback : {classification.get('type_document')}")
+            # Si Claude dit aussi "autre", tenter une classification par mots-clés
+            if classification.get("type_document") == "autre":
+                text_lower = clean_text.lower()
+                keyword_map = {
+                    "facture": ["facture", "montant ttc", "total h.t", "échéance"],
+                    "devis": ["devis", "proposition", "validité", "bon pour accord"],
+                    "attestation_urssaf": ["urssaf", "vigilance", "obligations déclaratives"],
+                    "attestation_fiscale": ["régularité fiscale", "finances publiques", "obligations fiscales"],
+                    "kbis": ["kbis", "registre du commerce", "greffe", "extrait k"],
+                    "rib": ["iban", "bic", "relevé d'identité bancaire", "rib"],
+                    "contrat": ["contrat", "convention", "article 1", "soussignés"],
+                    "bon_commande": ["bon de commande", "commande", "livraison"],
+                }
+                best_type, best_score = "autre", 0
+                for doc_t, keywords in keyword_map.items():
+                    matches = sum(1 for kw in keywords if kw in text_lower)
+                    if matches > best_score:
+                        best_score = matches
+                        best_type = doc_t
+                if best_score >= 1:
+                    classification = {"type_document": best_type, "confidence": 0.5}
+                    logger.info(f"[{doc_id[:8]}] Classification mots-clés fallback : {best_type} (matches={best_score})")
+
         doc.type_document = classification.get("type_document", "autre")
         doc.score_classification = classification.get("confidence", 0.0)
 
@@ -167,8 +196,10 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
                 supplier_data = {"siren":sup.siren,"siret":sup.siret_siege,"tva":sup.numero_tva,"iban":sup.iban}
 
         # Vérification locale (sans API) — modèle local en premier
+        # Si OCR confiance < 0.5, on réduit les vérifications (trop de faux positifs)
+        ocr_low_quality = (doc.score_ocr or 0) < 0.5
         fraud = ai_service.detect_anomalies_local(
-            str(doc.type_document), entities, supplier_data
+            str(doc.type_document), entities, supplier_data, skip_amounts=ocr_low_quality
         )
 
         all_anomalies = fraud.get("anomalies", [])

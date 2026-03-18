@@ -3,13 +3,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc, func
 from app.db.database import get_db
-from app.models.models import Document, AnomalyReport, DocumentStatus, Supplier
+from app.models.models import Document, AnomalyReport, DocumentStatus, Supplier, User
+from app.services.auth_service import require_role
 import uuid
 router = APIRouter()
 
 
 @router.get("/anomalies")
-async def anomalies(resolved: bool = False, severite: str = None, db: AsyncSession = Depends(get_db)):
+async def anomalies(resolved: bool = False, severite: str = None, db: AsyncSession = Depends(get_db), user: User = Depends(require_role("conformite", "admin"))):
     q = select(AnomalyReport).where(AnomalyReport.est_resolue == resolved).order_by(desc(AnomalyReport.created_at)).limit(200)
     if severite: q = q.where(AnomalyReport.severite == severite)
     r = await db.execute(q)
@@ -20,14 +21,14 @@ async def anomalies(resolved: bool = False, severite: str = None, db: AsyncSessi
 
 
 @router.get("/fraudulent")
-async def fraudulent(db: AsyncSession = Depends(get_db)):
+async def fraudulent(db: AsyncSession = Depends(get_db), user: User = Depends(require_role("conformite", "admin"))):
     r = await db.execute(select(Document).where(Document.est_frauduleux==True).order_by(desc(Document.score_fraude)))
     return [{"id":str(d.id),"nom":d.nom_fichier,"type":str(d.type_document),
              "fournisseur":d.nom_fournisseur,"score":d.score_fraude,"anomalies":d.anomalies} for d in r.scalars().all()]
 
 
 @router.patch("/anomalies/{aid}/resolve")
-async def resolve(aid: str, resolution: str = "Résolu manuellement", db: AsyncSession = Depends(get_db)):
+async def resolve(aid: str, resolution: str = "Résolu manuellement", db: AsyncSession = Depends(get_db), user: User = Depends(require_role("conformite", "admin"))):
     a = await db.get(AnomalyReport, uuid.UUID(aid))
     if not a: raise HTTPException(404)
     a.est_resolue = True; a.resolution = resolution
@@ -77,7 +78,7 @@ async def check_inter_docs(db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/refresh")
-async def refresh_compliance(db: AsyncSession = Depends(get_db)):
+async def refresh_compliance(db: AsyncSession = Depends(get_db), user: User = Depends(require_role("conformite", "admin"))):
     """Recalcule les scores de conformité fournisseurs."""
     r = await db.execute(select(Supplier))
     suppliers = r.scalars().all()

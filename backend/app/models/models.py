@@ -19,9 +19,12 @@ class DocumentType(str, enum.Enum):
     BON_COMMANDE        = "bon_commande"
     ATTESTATION_URSSAF  = "attestation_urssaf"
     ATTESTATION_FISCALE = "attestation_fiscale"
+    ATTESTATION_SIRET   = "attestation_siret"
     KBIS                = "kbis"
     RIB                 = "rib"
     CONTRAT             = "contrat"
+    AVOIR               = "avoir"
+    NOTE_FRAIS          = "note_frais"
     AUTRE               = "autre"
 
 
@@ -40,6 +43,18 @@ class DataZone(str, enum.Enum):
     RAW     = "raw"      # Fichier brut
     CLEAN   = "clean"    # Texte OCR + JSON
     CURATED = "curated"  # Enrichi, prêt métier
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id              = Column(Integer, primary_key=True, autoincrement=True)
+    username        = Column(String(100), unique=True, nullable=False)
+    hashed_password = Column(String(300), nullable=False)
+    nom_complet     = Column(String(300), nullable=False)
+    role            = Column(String(50), nullable=False, default="gestionnaire")  # admin, gestionnaire, conformite
+    is_active       = Column(Boolean, default=True)
+    created_at      = Column(DateTime, default=datetime.utcnow)
 
 
 class Document(Base):

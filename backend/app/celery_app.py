@@ -168,9 +168,23 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         fraud = ai_service.detect_anomalies_local(
             str(doc.type_document), entities, supplier_data
         )
-        logger.info(f"[{doc_id[:8]}] Vérification locale : {len(fraud['anomalies'])} anomalie(s), score={fraud['score_fraude']}")
 
         all_anomalies = fraud.get("anomalies", [])
+
+        # Document de type "autre" → anomalie automatique
+        if str(doc.type_document) in ("autre", "DocumentType.AUTRE"):
+            all_anomalies.append({
+                "type": "type_non_reconnu",
+                "description": "Type de document non reconnu par le classifieur. Vérification manuelle requise.",
+                "severite": "elevee",
+                "champ": "type_document",
+                "valeur_trouvee": "autre",
+                "valeur_attendue": "facture, devis, attestation, kbis, rib, contrat..."
+            })
+            fraud["score_fraude"] = max(fraud.get("score_fraude", 0.0), 0.4)
+
+        logger.info(f"[{doc_id[:8]}] Vérification locale : {len(all_anomalies)} anomalie(s), score={fraud['score_fraude']}")
+
         doc.score_fraude = fraud.get("score_fraude", 0.0)
         doc.est_frauduleux = fraud.get("est_frauduleux", False)
         doc.anomalies = all_anomalies

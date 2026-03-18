@@ -65,19 +65,23 @@ function AnimatedGauge({ value, delay, danger }) {
 }
 
 /* ── Check animé ──────────────────────────────────────────────── */
-function AutoCheck({ label, ok, delay }) {
+function AutoCheck({ label, ok, delay, available }) {
   const [visible, setVisible] = useState(false)
   useEffect(() => {
     setVisible(false)
     const t = setTimeout(() => setVisible(true), delay)
     return () => clearTimeout(t)
   }, [ok, delay])
+
+  const notAvailable = available === false
   return (
     <div className="flex items-center gap-2 text-sm transition-all duration-300" style={{ opacity: visible ? 1 : 0.3 }}>
-      <span style={{ color: visible ? (ok ? 'var(--accent2)' : 'var(--danger)') : 'var(--text2)' }}>
-        {visible ? (ok ? '✓' : '✗') : '○'}
+      <span style={{ color: visible ? (notAvailable ? 'var(--text2)' : ok ? 'var(--accent2)' : 'var(--danger)') : 'var(--text2)' }}>
+        {visible ? (notAvailable ? '—' : ok ? '✓' : '✗') : '○'}
       </span>
-      <span>{label}</span>
+      <span style={{ color: notAvailable && visible ? 'var(--text2)' : undefined }}>
+        {label}{notAvailable && visible ? ' (non détecté)' : ''}
+      </span>
     </div>
   )
 }
@@ -295,12 +299,12 @@ export default function CompliancePage() {
                       <div>
                         <div className="font-display font-bold text-sm mb-3">Vérifications automatiques</div>
                         <div className="space-y-2">
-                          <AutoCheck label="SIRET cohérent avec SIREN" ok={!anomaliesDoc.some(a => a.type?.includes('siret'))} delay={2300} />
-                          <AutoCheck label="N° TVA valide" ok={!anomaliesDoc.some(a => a.type?.includes('tva'))} delay={2500} />
-                          <AutoCheck label="Montants HT/TVA/TTC cohérents" ok={!anomaliesDoc.some(a => a.type?.includes('montant'))} delay={2700} />
-                          <AutoCheck label="IBAN conforme" ok={!anomaliesDoc.some(a => a.type?.includes('iban'))} delay={2900} />
-                          <AutoCheck label="Document non expiré" ok={!anomaliesDoc.some(a => a.type?.includes('expir'))} delay={3100} />
-                          <AutoCheck label="Aucune anomalie détectée" ok={anomaliesDoc.length === 0} delay={3300} />
+                          <AutoCheck label="SIRET cohérent avec SIREN" ok={!anomaliesDoc.some(a => a.type?.includes('siret'))} delay={2300} available={!!(ficheData.numero_siret && ficheData.numero_siren)} />
+                          <AutoCheck label="N° TVA valide" ok={!anomaliesDoc.some(a => a.type?.includes('tva'))} delay={2500} available={!!ficheData.numero_tva} />
+                          <AutoCheck label="Montants HT/TVA/TTC cohérents" ok={!anomaliesDoc.some(a => a.type?.includes('montant'))} delay={2700} available={!!(ficheData.montant_ht && ficheData.montant_ttc)} />
+                          <AutoCheck label="IBAN conforme" ok={!anomaliesDoc.some(a => a.type?.includes('iban'))} delay={2900} available={!!ficheData.iban} />
+                          <AutoCheck label="Document non expiré" ok={!anomaliesDoc.some(a => a.type?.includes('expir'))} delay={3100} available={!!ficheData.date_expiration} />
+                          <AutoCheck label="Type de document reconnu" ok={!anomaliesDoc.some(a => a.type?.includes('type_non_reconnu'))} delay={3300} available={true} />
                         </div>
                       </div>
 

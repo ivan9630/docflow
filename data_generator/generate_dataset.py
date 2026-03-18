@@ -96,14 +96,21 @@ FONT_CANDIDATES = [
 ]
 
 DEFAULT_SCENARIO_DISTRIBUTION = {
-    "facture_legitime": 15,
-    "facture_fake_siret": 5,
-    "facture_fake_amounts": 5,
-    "devis": 10,
-    "attestation_urssaf_valide": 8,
-    "attestation_urssaf_expiree": 5,
-    "kbis": 6,
-    "rib": 6,
+    "facture_legitime": 10,
+    "facture_fake_siret": 4,
+    "facture_fake_amounts": 4,
+    "devis": 7,
+    "bon_commande": 5,
+    "contrat": 5,
+    "attestation_urssaf_valide": 5,
+    "attestation_urssaf_expiree": 3,
+    "attestation_fiscale": 4,
+    "attestation_siret": 4,
+    "kbis": 5,
+    "rib": 5,
+    "avoir": 4,
+    "note_frais": 4,
+    "lot_inter_docs": 3,
 }
 
 # Utilitaires divers
@@ -796,6 +803,552 @@ Conseiller bancaire : {processing_agent}
     return text, label
 
 
+def make_attestation_fiscale(doc_id: str):
+    company = gen_company()
+    signatory = pick_member()
+    issue_date = fake.date_between(start_date="-300d", end_date="today")
+    valid_until = issue_date + timedelta(days=365)
+
+    text = f"""
+                     ATTESTATION DE RÉGULARITÉ FISCALE
+                  Direction Générale des Finances Publiques
+
+Nous soussignés, certifions que l'entreprise ci-dessous est à jour
+de l'ensemble de ses obligations fiscales.
+
+Raison sociale  : {company['nom']}
+Forme juridique : {company['forme_juridique']}
+SIREN           : {company['siren']}
+SIRET           : {company['siret']}
+N° TVA          : {company['tva']}
+Adresse         : {company['adresse']}, {company['cp']} {company['ville']}
+Représentant    : {company['representant_legal']}
+
+Date d'édition             : {format_date_fr(issue_date)}
+Valable jusqu'au           : {format_date_fr(valid_until)}
+N° attestation             : AFI-{random.randint(100000, 999999)}
+
+Cette attestation est délivrée pour servir et valoir ce que de droit.
+
+Agent ayant traité le dossier : {signatory}
+Direction Générale des Finances Publiques — www.impots.gouv.fr
+""".strip("\n")
+
+    label = {
+        "doc_id": doc_id,
+        "doc_type": "attestation_fiscale",
+        "variant": "standard",
+        "expected_class": "attestation_fiscale",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "issue_date": issue_date.isoformat(),
+        "valid_until": valid_until.isoformat(),
+        "supplier_name": company["nom"],
+        "supplier_siren": company["siren"],
+        "supplier_siret": company["siret"],
+        "group_member_names_used": [signatory, company["representant_legal"]],
+    }
+    return text, label
+
+
+def make_contrat(doc_id: str):
+    prestataire = gen_company()
+    client = gen_company()
+    signer1 = pick_member()
+    signer2 = pick_member(exclude=signer1)
+    issue_date = fake.date_between(start_date="-2y", end_date="today")
+    duree = random.choice([6, 12, 24, 36])
+    montant = round(random.uniform(5000, 200000), 2)
+    contract_number = f"CTR-{issue_date.year}-{random.randint(1000, 9999)}"
+
+    text = f"""
+                     CONTRAT DE PRESTATION DE SERVICES
+                     N° {contract_number}
+
+ENTRE LES SOUSSIGNÉS :
+
+Le Prestataire :
+  {prestataire['nom']}
+  {prestataire['adresse']}, {prestataire['cp']} {prestataire['ville']}
+  SIREN : {prestataire['siren']}
+  SIRET : {prestataire['siret']}
+  N° TVA : {prestataire['tva']}
+  Représenté par : {signer1}
+
+ET
+
+Le Client :
+  {client['nom']}
+  {client['adresse']}, {client['cp']} {client['ville']}
+  SIREN : {client['siren']}
+  SIRET : {client['siret']}
+  Représenté par : {signer2}
+
+ARTICLE 1 — OBJET
+Le présent contrat a pour objet la réalisation de prestations de conseil
+et d'accompagnement technique dans le domaine de la transformation digitale.
+
+ARTICLE 2 — DURÉE
+Le contrat est conclu pour une durée de {duree} mois à compter du {format_date_fr(issue_date)}.
+
+ARTICLE 3 — RÉMUNÉRATION
+Le montant total de la prestation s'élève à {euro(montant)} hors taxes.
+
+ARTICLE 4 — CONDITIONS DE PAIEMENT
+Paiement à 30 jours fin de mois par virement bancaire.
+IBAN prestataire : {prestataire['iban']}
+
+ARTICLE 5 — RÉSILIATION
+Chaque partie peut résilier le contrat avec un préavis de 3 mois.
+
+Fait en deux exemplaires originaux.
+Date : {format_date_fr(issue_date)}
+
+Signature Prestataire : {signer1}          Signature Client : {signer2}
+""".strip("\n")
+
+    label = {
+        "doc_id": doc_id,
+        "doc_type": "contrat",
+        "variant": "standard",
+        "expected_class": "contrat",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "contract_number": contract_number,
+        "issue_date": issue_date.isoformat(),
+        "duration_months": duree,
+        "amount_ht": montant,
+        "supplier_name": prestataire["nom"],
+        "supplier_siren": prestataire["siren"],
+        "supplier_siret": prestataire["siret"],
+        "client_name": client["nom"],
+        "client_siren": client["siren"],
+        "group_member_names_used": [signer1, signer2],
+    }
+    return text, label
+
+
+def make_bon_commande(doc_id: str):
+    emetteur = gen_company()
+    fournisseur = gen_company()
+    contact = pick_member()
+    issue_date = fake.date_between(start_date="-1y", end_date="today")
+    delivery_date = issue_date + timedelta(days=random.randint(7, 30))
+    bc_number = f"BC-{issue_date.year}-{random.randint(1000, 9999)}"
+
+    articles = [
+        "Fournitures de bureau", "Cartouches imprimante", "Papier A4 ramette",
+        "Écran moniteur 27 pouces", "Clavier sans fil", "Licence logiciel annuelle",
+        "Disque dur SSD 1To", "Câble Ethernet Cat6", "Souris ergonomique",
+        "Webcam HD", "Casque audio", "Hub USB-C",
+    ]
+    nb_lignes = random.randint(2, 5)
+    chosen = random.sample(articles, nb_lignes)
+    detail_lines = []
+    total_ht = 0.0
+    for art in chosen:
+        qty = random.randint(1, 50)
+        pu = round(random.uniform(5, 500), 2)
+        lt = round(qty * pu, 2)
+        total_ht += lt
+        detail_lines.append(f"  {art:40s} {qty:3d} x {euro(pu):>12s} = {euro(lt):>12s}")
+    total_ht = round(total_ht, 2)
+    taux = 20.0
+    tva = round(total_ht * taux / 100, 2)
+    ttc = round(total_ht + tva, 2)
+
+    text = f"""
+                            BON DE COMMANDE
+                            N° {bc_number}
+
+Émetteur :
+  {emetteur['nom']}
+  {emetteur['adresse']}, {emetteur['cp']} {emetteur['ville']}
+  SIREN : {emetteur['siren']}
+  SIRET : {emetteur['siret']}
+  Contact : {contact}
+
+Fournisseur :
+  {fournisseur['nom']}
+  {fournisseur['adresse']}, {fournisseur['cp']} {fournisseur['ville']}
+  SIREN : {fournisseur['siren']}
+
+Date de commande  : {format_date_fr(issue_date)}
+Date de livraison : {format_date_fr(delivery_date)}
+
+Articles commandés :
+{chr(10).join(detail_lines)}
+
+Total H.T.     : {euro(total_ht)}
+TVA {taux:.1f}%     : {euro(tva)}
+Total T.T.C.   : {euro(ttc)}
+
+Conditions : Livraison franco de port. Paiement à réception de facture.
+""".strip("\n")
+
+    label = {
+        "doc_id": doc_id,
+        "doc_type": "bon_commande",
+        "variant": "standard",
+        "expected_class": "bon_commande",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "bc_number": bc_number,
+        "issue_date": issue_date.isoformat(),
+        "delivery_date": delivery_date.isoformat(),
+        "amount_ht": total_ht,
+        "vat_rate": taux,
+        "amount_tva": tva,
+        "amount_ttc": ttc,
+        "supplier_name": emetteur["nom"],
+        "supplier_siren": emetteur["siren"],
+        "supplier_siret": emetteur["siret"],
+        "group_member_names_used": [contact],
+    }
+    return text, label
+
+
+def make_lot_inter_docs(start_id: int):
+    """Génère un lot de docs liés au même fournisseur pour tester la cohérence inter-documents."""
+    company = gen_company()
+    signer = pick_member()
+    docs = []
+
+    # Facture du fournisseur
+    issue_date = fake.date_between(start_date="-180d", end_date="today")
+    lines, ht = gen_invoice_lines()
+    vat_rate = random.choice(TAUX_TVA)
+    tva = round(ht * vat_rate / 100, 2)
+    ttc = round(ht + tva, 2)
+    inv_number = f"FAC-{issue_date.year}-{random.randint(1000, 9999)}"
+    detail_lines = []
+    for line in lines:
+        detail_lines.append(
+            f"  - {line['label']} x{line['qty']} @ {euro(line['unit_price'])} = {euro(line['line_total'])}"
+        )
+
+    text_fac = f"""
+                                    FACTURE
+
+Émetteur :
+  {company['nom']}
+  {company['adresse']}, {company['cp']} {company['ville']}
+  SIREN : {company['siren']}
+  SIRET : {company['siret']}
+  N° TVA intracommunautaire : {company['tva']}
+  IBAN : {company['iban']}
+
+Numéro de facture : {inv_number}
+Date d'émission   : {format_date_fr(issue_date)}
+
+Détail des prestations :
+{chr(10).join(detail_lines)}
+
+Montant total H.T.        : {euro(ht)}
+TVA {vat_rate:.1f}%               : {euro(tva)}
+Montant total T.T.C.      : {euro(ttc)}
+
+Établi par : {signer}
+""".strip("\n")
+
+    doc_id_fac = f"DOC-{start_id:04d}"
+    docs.append((text_fac, {
+        "doc_id": doc_id_fac,
+        "doc_type": "facture",
+        "variant": "inter_doc",
+        "expected_class": "facture",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "supplier_name": company["nom"],
+        "supplier_siren": company["siren"],
+        "supplier_siret": company["siret"],
+        "iban": company["iban_raw"],
+        "invoice_number": inv_number,
+        "amount_ht": ht,
+        "amount_ttc": ttc,
+        "inter_doc_group": f"GROUP-{start_id}",
+        "group_member_names_used": [signer],
+    }))
+
+    # Attestation URSSAF du même fournisseur
+    att_date = fake.date_between(start_date="-300d", end_date="today")
+    att_valid = att_date + timedelta(days=180)
+    att_number = f"ATT-{random.randint(100000, 999999)}"
+    region = random.choice(URSSAF_REGIONS)
+
+    text_att = f"""
+                           ATTESTATION DE VIGILANCE
+                               URSSAF {region}
+
+Raison sociale  : {company['nom']}
+SIREN           : {company['siren']}
+SIRET           : {company['siret']}
+Adresse         : {company['adresse']}, {company['cp']} {company['ville']}
+
+Date d'édition  : {format_date_fr(att_date)}
+Valable jusqu'au: {format_date_fr(att_valid)}
+N° attestation  : {att_number}
+""".strip("\n")
+
+    doc_id_att = f"DOC-{start_id + 1:04d}"
+    docs.append((text_att, {
+        "doc_id": doc_id_att,
+        "doc_type": "attestation_urssaf",
+        "variant": "inter_doc",
+        "expected_class": "attestation_urssaf",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "supplier_name": company["nom"],
+        "supplier_siren": company["siren"],
+        "supplier_siret": company["siret"],
+        "attestation_number": att_number,
+        "valid_until": att_valid.isoformat(),
+        "inter_doc_group": f"GROUP-{start_id}",
+        "group_member_names_used": [],
+    }))
+
+    # RIB du même fournisseur
+    bank = random.choice(BANQUES)
+    text_rib = f"""
+                     RELEVÉ D'IDENTITÉ BANCAIRE / IBAN
+
+Titulaire du compte : {company['nom']}
+Adresse             : {company['adresse']}, {company['cp']} {company['ville']}
+SIREN               : {company['siren']}
+
+Banque              : {bank}
+IBAN                : {company['iban']}
+BIC                 : {company['bic']}
+""".strip("\n")
+
+    doc_id_rib = f"DOC-{start_id + 2:04d}"
+    docs.append((text_rib, {
+        "doc_id": doc_id_rib,
+        "doc_type": "rib",
+        "variant": "inter_doc",
+        "expected_class": "rib",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "supplier_name": company["nom"],
+        "supplier_siren": company["siren"],
+        "iban": company["iban_raw"],
+        "bic": company["bic"],
+        "inter_doc_group": f"GROUP-{start_id}",
+        "group_member_names_used": [],
+    }))
+
+    return docs
+
+
+def make_attestation_siret(doc_id: str):
+    company = gen_company()
+    signatory = pick_member()
+    issue_date = fake.date_between(start_date="-90d", end_date="today")
+
+    templates = [
+        f"""
+                    ATTESTATION D'INSCRIPTION AU REPERTOIRE SIRENE
+                              INSEE
+
+L'Institut National de la Statistique et des Etudes Economiques certifie que :
+
+Denomination sociale : {company['nom']}
+Forme juridique      : {company['forme_juridique']}
+SIREN                : {company['siren']}
+SIRET (siege)        : {company['siret']}
+Code APE / NAF       : {company['code_naf']}
+Adresse              : {company['adresse']}, {company['cp']} {company['ville']}
+Date de creation     : {format_date_fr(company['date_creation'])}
+
+Est regulierement inscrit(e) au repertoire national des entreprises.
+
+Delivre le : {format_date_fr(issue_date)}
+Agent INSEE : {signatory}
+""",
+        f"""
+                         AVIS DE SITUATION AU REPERTOIRE SIRENE
+
+Identifiant SIREN : {company['siren']}
+Identifiant SIRET : {company['siret']}
+
+Denomination      : {company['nom']}
+Categorie juridique : {company['forme_juridique']}
+Activite principale : {company['code_naf']}
+Adresse de l'etablissement :
+  {company['adresse']}
+  {company['cp']} {company['ville']}
+
+Date de creation de l'etablissement : {format_date_fr(company['date_creation'])}
+Effectif de l'etablissement : {company['effectif']} salaries
+
+Situation : Actif
+Date de mise a jour : {format_date_fr(issue_date)}
+Source : INSEE - Repertoire SIRENE
+""",
+    ]
+
+    text = random.choice(templates).strip("\n")
+    label = {
+        "doc_id": doc_id,
+        "doc_type": "attestation_siret",
+        "variant": "standard",
+        "expected_class": "attestation_siret",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "supplier_name": company["nom"],
+        "supplier_siren": company["siren"],
+        "supplier_siret": company["siret"],
+        "issue_date": issue_date.isoformat(),
+        "group_member_names_used": [signatory],
+    }
+    return text, label
+
+
+def make_avoir(doc_id: str):
+    emetteur = gen_company()
+    client = gen_company()
+    signer = pick_member()
+    issue_date = fake.date_between(start_date="-180d", end_date="today")
+    avoir_number = f"AV-{issue_date.year}-{random.randint(1000, 9999)}"
+    facture_ref = f"FAC-{issue_date.year}-{random.randint(1000, 9999)}"
+    ht = round(random.uniform(50, 15000), 2)
+    taux = random.choice(TAUX_TVA)
+    tva = round(ht * taux / 100, 2)
+    ttc = round(ht + tva, 2)
+
+    templates = [
+        f"""
+                                AVOIR
+
+Emetteur :
+  {emetteur['nom']}
+  {emetteur['adresse']}, {emetteur['cp']} {emetteur['ville']}
+  SIREN : {emetteur['siren']}
+  SIRET : {emetteur['siret']}
+  N TVA : {emetteur['tva']}
+
+Client :
+  {client['nom']}
+  {client['adresse']}, {client['cp']} {client['ville']}
+
+Numero avoir     : {avoir_number}
+Facture reference : {facture_ref}
+Date             : {format_date_fr(issue_date)}
+Motif            : {random.choice(["Retour marchandise", "Erreur de facturation", "Remise commerciale", "Annulation partielle"])}
+
+Montant H.T.     : -{euro(ht)}
+TVA {taux:.1f}%       : -{euro(tva)}
+Montant T.T.C.   : -{euro(ttc)}
+
+Ce montant sera deduit de votre prochaine facture.
+Etabli par : {signer}
+""",
+        f"""
+                          NOTE DE CREDIT
+
+Ref : {avoir_number}
+Date : {format_date_fr(issue_date)}
+Facture d'origine : {facture_ref}
+
+De : {emetteur['nom']} (SIRET {emetteur['siret']})
+A  : {client['nom']}
+
+Description : Avoir suite a {random.choice(["litige commercial", "retour produit", "ajustement tarifaire"])}
+
+Total HT    : -{euro(ht)}
+TVA {taux:.1f}% : -{euro(tva)}
+Total TTC   : -{euro(ttc)}
+
+Signataire : {signer}
+""",
+    ]
+
+    text = random.choice(templates).strip("\n")
+    label = {
+        "doc_id": doc_id,
+        "doc_type": "avoir",
+        "variant": "standard",
+        "expected_class": "avoir",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "avoir_number": avoir_number,
+        "facture_ref": facture_ref,
+        "issue_date": issue_date.isoformat(),
+        "amount_ht": ht,
+        "amount_ttc": ttc,
+        "supplier_name": emetteur["nom"],
+        "supplier_siren": emetteur["siren"],
+        "group_member_names_used": [signer],
+    }
+    return text, label
+
+
+def make_note_frais(doc_id: str):
+    employee = pick_member()
+    manager = pick_member(exclude=employee)
+    company = gen_company()
+    issue_date = fake.date_between(start_date="-60d", end_date="today")
+    ndf_number = f"NDF-{issue_date.year}-{random.randint(100, 999)}"
+
+    depenses = [
+        ("Deplacement train Paris-Lyon", (45, 250)),
+        ("Hotel 1 nuit", (60, 200)),
+        ("Repas client", (15, 80)),
+        ("Taxi aeroport", (20, 90)),
+        ("Parking journee", (8, 25)),
+        ("Peage autoroute", (5, 35)),
+        ("Carburant", (30, 100)),
+        ("Fournitures de bureau", (10, 60)),
+    ]
+    nb = random.randint(2, 5)
+    chosen = random.sample(depenses, nb)
+    detail_lines = []
+    total = 0.0
+    for desc, (mn, mx) in chosen:
+        montant = round(random.uniform(mn, mx), 2)
+        date_dep = fake.date_between(start_date="-30d", end_date="today")
+        total += montant
+        detail_lines.append(f"  {format_date_fr(date_dep)}  {desc:40s}  {euro(montant)}")
+    total = round(total, 2)
+
+    text = f"""
+                        NOTE DE FRAIS
+
+Collaborateur : {employee}
+Service       : {random.choice(["Commercial", "Technique", "Direction", "R&D"])}
+Societe       : {company['nom']}
+SIRET         : {company['siret']}
+
+Numero        : {ndf_number}
+Periode       : {format_date_fr(issue_date)}
+
+Detail des depenses :
+{chr(10).join(detail_lines)}
+
+Total         : {euro(total)}
+
+Justificatifs joints : {nb} piece(s)
+
+Signature collaborateur : {employee}
+Validation manager      : {manager}
+""".strip("\n")
+
+    label = {
+        "doc_id": doc_id,
+        "doc_type": "note_frais",
+        "variant": "standard",
+        "expected_class": "note_frais",
+        "expected_fraud": False,
+        "fraud_reasons": [],
+        "ndf_number": ndf_number,
+        "issue_date": issue_date.isoformat(),
+        "total": total,
+        "supplier_name": company["nom"],
+        "group_member_names_used": [employee, manager],
+    }
+    return text, label
+
+
 # Rendu image
 
 def add_fake_stamp(draw, x, y, text="VALIDÉ"):
@@ -848,6 +1401,12 @@ def text_to_image(text: str, doc_type: str = "document"):
         add_fake_stamp(draw, W - 340, 190, "URSSAF")
     if doc_type == "rib" and random.random() < 0.6:
         add_fake_stamp(draw, W - 330, 190, "BANQUE")
+    if doc_type == "attestation_fiscale" and random.random() < 0.8:
+        add_fake_stamp(draw, W - 340, 190, "DGFIP")
+    if doc_type == "contrat" and random.random() < 0.6:
+        add_fake_stamp(draw, W - 300, 180, "SIGNE")
+    if doc_type == "bon_commande" and random.random() < 0.7:
+        add_fake_stamp(draw, W - 330, 180, "COMMANDE")
 
     return img
 
@@ -993,10 +1552,17 @@ def scenario_to_generator(scenario_name: str):
         "facture_fake_siret": make_facture_fake_siret,
         "facture_fake_amounts": make_facture_fake_amounts,
         "devis": make_devis,
+        "bon_commande": make_bon_commande,
+        "contrat": make_contrat,
         "attestation_urssaf_valide": lambda doc_id: make_attestation_urssaf(doc_id, expired=False),
         "attestation_urssaf_expiree": lambda doc_id: make_attestation_urssaf(doc_id, expired=True),
+        "attestation_fiscale": make_attestation_fiscale,
+        "attestation_siret": make_attestation_siret,
         "kbis": make_kbis,
         "rib": make_rib,
+        "avoir": make_avoir,
+        "note_frais": make_note_frais,
+        "lot_inter_docs": None,  # géré séparément dans generate_dataset()
     }
     return mapping[scenario_name]
 
@@ -1126,45 +1692,30 @@ def generate_dataset(count: int, output_dir: str, seed: int = 42):
     plan = build_plan(count)
     manifest = []
 
-    print(f"\n🔧 Génération de {count} documents dans : {out.resolve()}\n")
+    print(f"\n[*] Generation de {count} documents dans : {out.resolve()}\n")
 
-    for idx, scenario in enumerate(plan, start=1):
-        doc_id = f"DOC-{idx:04d}"
-        generator = scenario_to_generator(scenario)
-        text, label = generator(doc_id)
-
+    def save_doc(idx, text, label, scenario):
         doc_type = label["doc_type"]
         degradation_level = pick_degradation_level()
 
-        # rendu
         img = text_to_image(text, doc_type=doc_type)
         img, degradations_applied = degrade_image(img, degradation_level)
 
-        # extension 
-        base_name = sanitize_filename(f"{doc_id}_{doc_type}_{label['variant']}")
-        if degradation_level == "hard" and random.random() < 0.8:
-            ext = ".jpg"
-        else:
-            ext = ".png"
+        base_name = sanitize_filename(f"{label['doc_id']}_{doc_type}_{label['variant']}")
+        ext = ".jpg" if (degradation_level == "hard" and random.random() < 0.8) else ".png"
 
         image_filename = base_name + ext
         text_filename = base_name + ".txt"
-        label_filename = f"{doc_id}.json"
+        label_filename = f"{label['doc_id']}.json"
 
-        image_path = images_dir / image_filename
-        text_path = texts_dir / text_filename
-        label_path = labels_dir / label_filename
-
-        # sauvegarde image
         if ext == ".jpg":
-            img.save(image_path, format="JPEG", quality=random.randint(38, 68), optimize=True)
+            (images_dir / image_filename).parent.mkdir(parents=True, exist_ok=True)
+            img.save(images_dir / image_filename, format="JPEG", quality=random.randint(38, 68), optimize=True)
         else:
-            img.save(image_path, format="PNG")
+            img.save(images_dir / image_filename, format="PNG")
 
-        # sauvegarde texte
-        text_path.write_text(text, encoding="utf-8")
+        (texts_dir / text_filename).write_text(text, encoding="utf-8")
 
-        # enrichir label
         label.update({
             "filename": image_filename,
             "text_source_file": text_filename,
@@ -1175,15 +1726,31 @@ def generate_dataset(count: int, output_dir: str, seed: int = 42):
             "generated_at": datetime.now().isoformat(timespec="seconds"),
         })
 
-        label_path.write_text(json.dumps(label, ensure_ascii=False, indent=2), encoding="utf-8")
+        (labels_dir / label_filename).write_text(
+            json.dumps(label, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
         manifest.append(label)
 
-        fraud_icon = "⚠️" if label["expected_fraud"] else "✅"
+        fraud_flag = "FRAUD" if label["expected_fraud"] else "OK"
         print(
-            f"[{idx:03d}/{count}] "
-            f"{doc_id} | {doc_type:20s} | {label['variant']:15s} | "
-            f"{degradation_level:6s} | {fraud_icon}"
+            f"[{idx:03d}] "
+            f"{label['doc_id']} | {doc_type:22s} | {label['variant']:15s} | "
+            f"{degradation_level:6s} | {fraud_flag}"
         )
+
+    idx = 0
+    for scenario in plan:
+        if scenario == "lot_inter_docs":
+            docs = make_lot_inter_docs(idx + 1)
+            for text, label in docs:
+                idx += 1
+                save_doc(idx, text, label, scenario)
+        else:
+            idx += 1
+            doc_id = f"DOC-{idx:04d}"
+            generator = scenario_to_generator(scenario)
+            text, label = generator(doc_id)
+            save_doc(idx, text, label, scenario)
 
     # manifest global
     (meta_dir / "manifest.json").write_text(
@@ -1204,13 +1771,13 @@ def generate_dataset(count: int, output_dir: str, seed: int = 42):
         if item["expected_fraud"]:
             fraud_count += 1
 
-    print("\n" + "─" * 70)
-    print(f" Dataset généré : {count} documents")
+    print("\n" + "-" * 70)
+    print(f" Dataset genere : {len(manifest)} documents")
     print(f" Dossier        : {out.resolve()}")
-    print(f"  Frauduleux     : {fraud_count}")
+    print(f" Frauduleux     : {fraud_count}")
     print(f" Par type       : {by_type}")
-    print(f" Par scénario   : {by_variant}")
-    print("─" * 70 + "\n")
+    print(f" Par scenario   : {by_variant}")
+    print("-" * 70 + "\n")
 
 
 # CLI

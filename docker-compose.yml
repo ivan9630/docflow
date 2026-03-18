@@ -18,6 +18,7 @@ services:
       - AIRFLOW_URL=http://airflow-webserver:8080
     volumes:
       - ./backend:/app
+      - ./ml/models:/app/ml/models
       - tmp_uploads:/tmp/uploads
     depends_on:
       postgres:
@@ -46,6 +47,7 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     volumes:
       - ./backend:/app
+      - ./ml/models:/app/ml/models
       - tmp_uploads:/tmp/uploads
     depends_on:
       - backend

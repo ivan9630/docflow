@@ -126,16 +126,16 @@ export default function CRMPage() {
     <div>
       <div className="pt-8 px-8 mb-6 flex items-start justify-between">
         <div>
-          <h1 className="text-xl font-bold">CRM Fournisseurs</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text2)' }}>Upload de documents et auto-remplissage par l'IA</p>
+          <h1 className="text-lg font-bold">CRM Fournisseurs</h1>
+          <p className="text-[13px] mt-0.5" style={{ color: 'var(--text2)' }}>Upload de documents et auto-remplissage par l'IA</p>
         </div>
         <div className="flex gap-2">
-          <Btn variant="ghost" size="sm" onClick={loadData}><RefreshCw size={14} className="inline mr-1" />Refresh</Btn>
+          <Btn variant="ghost" size="sm" onClick={loadData}><RefreshCw size={13} className="inline mr-1" />Refresh</Btn>
           <Btn variant="secondary" size="sm" onClick={handleAutofill}>Auto-fill Curated</Btn>
         </div>
       </div>
 
-      <div className="px-8 space-y-5">
+      <div className="px-8 pb-8 space-y-5">
         {/* KPIs */}
         {kpis && (
           <div className="grid grid-cols-4 gap-3">

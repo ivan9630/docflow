@@ -21,6 +21,7 @@ frontend/build/
 data_generator/dataset/
 dataset/
 dataset_test/
+demo_docs/
 
 # Logs
 *.log

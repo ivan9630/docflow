@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { listAnomalies, listFraudulent, listDocuments, getDocument, resolveAnomaly, checkInterDocs, refreshCompliance } from '../api'
+import React, { useState, useEffect, useCallback } from 'react'
+import { listAnomalies, listFraudulent, listDocuments, getDocument, resolveAnomaly, checkInterDocs, refreshCompliance, uploadDocuments } from '../api'
 import { Panel, Spinner, Empty, Btn, SeverityBadge, TypeBadge, KpiCard } from '../components/UI'
-import { Check, X, Minus, Printer } from 'lucide-react'
+import { Check, X, Minus, Printer, Upload, Loader } from 'lucide-react'
+import { useDropzone } from 'react-dropzone'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import toast from 'react-hot-toast'
 
@@ -102,6 +103,24 @@ export default function CompliancePage() {
   const [ficheData, setFicheData] = useState(null)
   const [ficheLoading, setFicheLoading] = useState(false)
   const [filling, setFilling] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  const onDrop = useCallback(async (accepted) => {
+    if (!accepted.length) return
+    setUploading(true)
+    const form = new FormData()
+    accepted.forEach(f => form.append('files', f))
+    try {
+      const r = await uploadDocuments(form)
+      toast.success(`${r.data.uploaded} fichier(s) en traitement`)
+      setTimeout(() => load(), 3000)
+    } catch { toast.error('Erreur upload') }
+    finally { setUploading(false) }
+  }, [])
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop, accept: { 'application/pdf':[], 'image/jpeg':[], 'image/png':[], 'image/tiff':[] }, maxFiles: 20, maxSize: 50 * 1024 * 1024
+  })
 
   const load = async () => {
     setLoading(true)
@@ -150,8 +169,8 @@ export default function CompliancePage() {
     <div>
       <div className="pt-8 px-8 mb-6 flex items-start justify-between">
         <div>
-          <h1 className="text-xl font-bold">Outil de Conformite</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text2)' }}>Detection fraude et incoherences — {anomalies.length} anomalie(s)</p>
+          <h1 className="text-lg font-bold">Outil de Conformite</h1>
+          <p className="text-[13px] mt-0.5" style={{ color: 'var(--text2)' }}>Detection fraude et incoherences — {anomalies.length} anomalie(s)</p>
         </div>
         <div className="flex gap-2">
           <Btn variant="ghost" size="sm" onClick={async () => { const r = await checkInterDocs(); toast.success(`${r.data.new_anomalies} anomalie(s) inter-docs`); load() }}>Verif. inter-docs</Btn>
@@ -159,13 +178,24 @@ export default function CompliancePage() {
         </div>
       </div>
 
-      <div className="px-8 space-y-4">
+      <div className="px-8 pb-8 space-y-4">
         {/* KPIs */}
         <div className="grid grid-cols-4 gap-3">
           <KpiCard label="Critiques" value={crit} color="danger" />
           <KpiCard label="Elevees" value={high} color="warning" />
           <KpiCard label="Frauduleux" value={fraudDocs.length} color="gold" />
           <KpiCard label="Resolues" value={resolvedAnomalies.length} color="success" />
+        </div>
+
+        {/* Upload */}
+        <div {...getRootProps()} className="rounded-xl p-5 text-center cursor-pointer transition-all"
+             style={{ border: `2px dashed ${isDragActive ? 'var(--accent)' : 'var(--border)'}`, background: isDragActive ? 'rgba(59,91,219,0.04)' : 'var(--surface)' }}>
+          <input {...getInputProps()} />
+          <div className="flex items-center justify-center gap-3">
+            <Upload size={20} style={{ color: isDragActive ? 'var(--accent)' : 'var(--text2)' }} />
+            <div className="text-sm">{isDragActive ? 'Relachez pour uploader' : 'Deposez vos documents ici pour analyse de conformite'}</div>
+            {uploading && <Loader size={14} className="animate-spin" style={{ color: 'var(--accent)' }} />}
+          </div>
         </div>
 
         {/* Tabs */}

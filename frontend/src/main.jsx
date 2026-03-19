@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <App />
       <Toaster position="bottom-right" toastOptions={{
-        style: { background: '#fff', color: '#1c1c28', border: '1px solid #e2e4ea', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }
+        style: { background: '#fff', color: '#111827', border: '1px solid #e3e5eb', borderRadius: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.08)', fontSize: 13 }
       }} />
     </AuthProvider>
   </BrowserRouter>

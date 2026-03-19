@@ -65,17 +65,60 @@ def simulate_ocr_noise(text: str, error_rate: float = 0.03) -> str:
     for c in chars:
         r = random.random()
         if r < error_rate and c in OCR_SUBSTITUTIONS:
-            # substitution
             result.append(random.choice(OCR_SUBSTITUTIONS[c]))
         elif r < error_rate * 1.3 and c.isalnum():
-            # suppression
-            pass
+            pass  # suppression
         elif r < error_rate * 1.5 and c == " ":
-            # double espace ou suppression
             result.append("  " if random.random() < 0.5 else "")
         else:
             result.append(c)
     return "".join(result)
+
+
+def simulate_tesseract_output(text: str) -> str:
+    """Simule la sortie réelle de Tesseract : mise en page cassée, espaces, artefacts."""
+    lines = text.split("\n")
+    result = []
+    for line in lines:
+        if not line.strip():
+            # Tesseract ajoute parfois des lignes vides en plus
+            if random.random() < 0.3:
+                result.append("")
+            continue
+
+        # Casser l'indentation (Tesseract ne la préserve pas)
+        line = line.lstrip()
+
+        # Espaces multiples aléatoires (Tesseract output)
+        if random.random() < 0.4:
+            words = line.split()
+            line = ("  " if random.random() < 0.3 else " ").join(
+                ("  ".join(w) if random.random() < 0.05 else w) for w in words
+            )
+
+        # Couper des mots en deux (OCR scan avec colonnes)
+        if random.random() < 0.08:
+            words = line.split()
+            if len(words) > 3:
+                idx = random.randint(1, len(words) - 2)
+                words.insert(idx, "\n")
+                line = " ".join(words)
+
+        # Caractères parasites (artefacts de scan)
+        if random.random() < 0.05:
+            parasites = ["|", "~", "`", "}", "{", "\\", "_", "°"]
+            pos = random.randint(0, max(0, len(line) - 1))
+            line = line[:pos] + random.choice(parasites) + line[pos:]
+
+        # Accents perdus (fréquent en OCR français)
+        if random.random() < 0.15:
+            line = line.replace("é", "e").replace("è", "e").replace("ê", "e")
+            line = line.replace("à", "a").replace("â", "a")
+            line = line.replace("ù", "u").replace("û", "u")
+            line = line.replace("ô", "o").replace("î", "i")
+
+        result.append(line)
+    return "\n".join(result)
 
 
 # -- Variantes de titres pour chaque type (simule docs reels) --
@@ -202,19 +245,20 @@ def augment_text(text: str, label: str) -> str:
                 lines = lines[start:start + keep]
             text = "\n".join(lines)
 
-    # 5. Bruit OCR
+    # 5. Simulation sortie Tesseract (60% des cas)
+    if random.random() < 0.60:
+        text = simulate_tesseract_output(text)
+
+    # 6. Bruit OCR supplémentaire
     r = random.random()
     if r < 0.15:
         text = simulate_ocr_noise(text, error_rate=0.03)
     elif r < 0.30:
         text = simulate_ocr_noise(text, error_rate=0.07)
-    elif r < 0.45:
+    elif r < 0.40:
         text = simulate_ocr_noise(text, error_rate=0.12)
-    elif r < 0.55:
-        text = simulate_ocr_noise(text, error_rate=0.18)
-    # 45% propre
 
-    # 6. Majuscules
+    # 7. Majuscules
     if random.random() < 0.08:
         text = text.upper()
 

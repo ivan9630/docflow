@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>DocuFlow v2 — Architecture Technique</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a12;
+    color: #e0e0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+  }
+  h1 {
+    font-size: 2rem; font-weight: 800; margin-bottom: 4px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { color: #666; font-size: 0.82rem; margin-bottom: 30px; }
+  .section-title {
+    text-align: center; font-size: 1.1rem; font-weight: 700; color: #aaa;
+    margin: 36px 0 16px; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .footer { margin-top: 24px; color: #444; font-size: 0.68rem; }
+
+  .diagram-container {
+    width: 100%; max-width: 1400px; background: #0f0f1a;
+    border: 1px solid #1e1e2e; border-radius: 16px;
+    overflow: hidden; position: relative;
+  }
+  .zoom-controls {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    display: flex; gap: 6px;
+  }
+  .zoom-controls button {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid #2a2a3a; background: #13131f; color: #aaa;
+    font-size: 1rem; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .zoom-controls button:hover { background: #1e1e30; color: #fff; border-color: #6366f1; }
+  .zoom-level {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: #555; min-width: 38px; text-align: center; line-height: 32px;
+  }
+  .zoom-hint {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 0.62rem; color: #444; font-family: 'JetBrains Mono', monospace;
+    pointer-events: none; z-index: 10;
+  }
+  .pan-viewport { overflow: hidden; cursor: grab; min-height: 250px; }
+  .pan-viewport:active { cursor: grabbing; }
+  .pan-content { transform-origin: 0 0; padding: 30px; display: inline-block; min-width: 100%; }
+  .mermaid svg { max-width: none !important; }
+</style>
+</head>
+<body>
+
+<h1>DocuFlow v2 — Architecture Technique</h1>
+<p class="subtitle">Plateforme de traitement automatique de documents administratifs — Hackathon 2026</p>
+
+<!-- ═══════════════ 1. VUE GLOBALE SIMPLIFIEE ═══════════════ -->
+<div class="section-title">1. Vue Globale</div>
+
+<div class="diagram-container" id="dc-1">
+  <div class="zoom-controls">
+    <button onclick="zoomDiagram('dc-1', -0.15)">−</button>
+    <span class="zoom-level" id="dc-1-level">100%</span>
+    <button onclick="zoomDiagram('dc-1', 0.15)">+</button>
+    <button onclick="resetDiagram('dc-1')">↺</button>
+  </div>
+  <div class="zoom-hint">Molette pour zoomer · Clic-glisser pour deplacer</div>
+  <div class="pan-viewport"><div class="pan-content">
+<pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'fontSize': '14px', 'lineColor': '#555' }}}%%
+
+flowchart LR
+  USER["👤 Utilisateur<br/><i>navigateur</i>"]
+
+  subgraph FRONT["Frontend :3000"]
+    direction TB
+    LOGIN["🔐 Login"]
+    CRM["🏢 CRM"]
+    CONF["🛡️ Conformite"]
+  end
+
+  subgraph BACK["Backend FastAPI :8000"]
+    API["REST API<br/><i>Auth JWT + RBAC</i>"]
+  end
+
+  subgraph WORKERS["Celery Workers"]
+    PIPE["⚙️ Pipeline<br/>6 etapes"]
+  end
+
+  subgraph ATML["IA / ML"]
+    direction TB
+    OCR["Tesseract 5"]
+    SVM["SVM Classifier<br/><i>99.73%</i>"]
+    NER["spaCy NER"]
+    FRAUD["Controles fraude"]
+  end
+
+  subgraph STOCK["Stockage"]
+    direction TB
+    PG["🐘 PostgreSQL"]
+    MINIO["📦 MinIO S3<br/><i>Raw · Clean · Curated</i>"]
+    REDIS["⚡ Redis"]
+  end
+
+  subgraph ORCH["Orchestration"]
+    AIRFLOW["🔵 Airflow<br/><i>DAG / 5 min</i>"]
+  end
+
+  USER -->|"HTTP"| FRONT
+  FRONT -->|"JWT Bearer"| API
+  API -->|"task dispatch"| REDIS
+  REDIS -->|"pick task"| PIPE
+  PIPE --> OCR & SVM & NER & FRAUD
+  PIPE -->|"read/write"| MINIO
+  PIPE -->|"update"| PG
+  API -->|"CRUD"| PG
+  AIRFLOW -->|"HTTP trigger"| API
+
+  style FRONT fill:#0d1b2a,stroke:#1e3a5f,color:#60a5fa
+  style BACK fill:#0d1f15,stroke:#1a3a2a,color:#4ade80
+  style WORKERS fill:#1f150d,stroke:#3b2a1a,color:#fb923c
+  style ATML fill:#1f0d1f,stroke:#3b1a3b,color:#e879f9
+  style STOCK fill:#1f1f0d,stroke:#3b3b1a,color:#facc15
+  style ORCH fill:#0d151f,stroke:#1a2a3b,color:#38bdf8
+</pre>
+  </div></div>
+</div>
+
+<!-- ═══════════════ 2. PIPELINE ═══════════════ -->
+<div class="section-title">2. Pipeline de Traitement</div>
+
+<div class="diagram-container" id="dc-2">
+  <div class="zoom-controls">
+    <button onclick="zoomDiagram('dc-2', -0.15)">−</button>
+    <span class="zoom-level" id="dc-2-level">100%</span>
+    <button onclick="zoomDiagram('dc-2', 0.15)">+</button>
+    <button onclick="resetDiagram('dc-2')">↺</button>
+  </div>
+  <div class="zoom-hint">Molette pour zoomer · Clic-glisser pour deplacer</div>
+  <div class="pan-viewport"><div class="pan-content">
+<pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'fontSize': '13px' }}}%%
+
+flowchart LR
+  UP["📤 Upload"] ==> S1
+  S1["1. RAW Store<br/><i>MinIO</i>"]
+  S2["2. OCR<br/><i>Tesseract / pdfplumber</i>"]
+  S3["3. Classification<br/><i>SVM 99.73%</i>"]
+  S4["4. Extraction<br/><i>spaCy + Regex</i>"]
+  S5["5. Verification<br/><i>8 controles fraude</i>"]
+  S6["6. Enrichissement<br/><i>Score + Curated</i>"]
+
+  S1 ==> S2 ==> S3 ==> S4 ==> S5 ==> S6
+
+  S3 -.->|"fallback"| CLAUDE["Claude API"]
+  S5 -->|"anomalie"| ALERT["⚠️ AnomalyReport"]
+  S6 ==> OUT["🟡 Curated Zone"]
+
+  style UP fill:#1e3a5f,stroke:#60a5fa,color:#fff
+  style CLAUDE fill:#1f0d1f,stroke:#e879f9,color:#e879f9
+  style ALERT fill:#1f0d0d,stroke:#f87171,color:#f87171
+  style OUT fill:#1a1a08,stroke:#4a4a1a,color:#d4d474
+</pre>
+  </div></div>
+</div>
+
+<!-- ═══════════════ 3. DATA LAKE ═══════════════ -->
+<div class="section-title">3. Data Lake — Medallion</div>
+
+<div class="diagram-container" id="dc-3">
+  <div class="zoom-controls">
+    <button onclick="zoomDiagram('dc-3', -0.15)">−</button>
+    <span class="zoom-level" id="dc-3-level">100%</span>
+    <button onclick="zoomDiagram('dc-3', 0.15)">+</button>
+    <button onclick="resetDiagram('dc-3')">↺</button>
+  </div>
+  <div class="zoom-hint">Molette pour zoomer · Clic-glisser pour deplacer</div>
+  <div class="pan-viewport"><div class="pan-content">
+<pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'fontSize': '14px' }}}%%
+
+flowchart LR
+  DOC["📄 Document"] ==> RAW
+
+  RAW["🟤 RAW<br/><i>Fichier brut immutable</i><br/><code>PDF · JPEG · PNG</code>"]
+  CLEAN["⚪ CLEAN<br/><i>Texte OCR + entites</i><br/><code>JSON structure</code>"]
+  CURATED["🟡 CURATED<br/><i>Donnees enrichies</i><br/><code>Business-ready</code>"]
+
+  RAW ==>|"OCR + NER"| CLEAN ==>|"Validation + Scoring"| CURATED
+
+  CURATED ==> CRM["🏢 CRM Fournisseurs"]
+  CURATED ==> COMP["🛡️ Outil Conformite"]
+
+  style RAW fill:#1a1208,stroke:#4a3520,color:#d4a574
+  style CLEAN fill:#0d1a1a,stroke:#1a4040,color:#80c8c8
+  style CURATED fill:#1a1a08,stroke:#4a4a1a,color:#d4d474
+  style CRM fill:#0d1b2a,stroke:#60a5fa,color:#60a5fa
+  style COMP fill:#0d1b2a,stroke:#60a5fa,color:#60a5fa
+</pre>
+  </div></div>
+</div>
+
+<!-- ═══════════════ 4. AUTH ═══════════════ -->
+<div class="section-title">4. Authentification & Roles</div>
+
+<div class="diagram-container" id="dc-4">
+  <div class="zoom-controls">
+    <button onclick="zoomDiagram('dc-4', -0.15)">−</button>
+    <span class="zoom-level" id="dc-4-level">100%</span>
+    <button onclick="zoomDiagram('dc-4', 0.15)">+</button>
+    <button onclick="resetDiagram('dc-4')">↺</button>
+  </div>
+  <div class="zoom-hint">Molette pour zoomer · Clic-glisser pour deplacer</div>
+  <div class="pan-viewport"><div class="pan-content">
+<pre class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'fontSize': '14px' }}}%%
+
+flowchart LR
+  LOGIN["🔐 Login<br/><i>username + password</i>"]
+  LOGIN ==>|"POST /auth/login"| JWT["🎫 JWT Token<br/><i>bcrypt + HMAC</i>"]
+
+  JWT ==> GEST["🏢 Gestionnaire"]
+  JWT ==> CONFU["🛡️ Conformite"]
+  JWT ==> ADMIN["👑 Admin"]
+
+  GEST -->|"acces"| CRM_API["/api/suppliers<br/>/api/documents"]
+  CONFU -->|"acces"| COMP_API["/api/compliance<br/>/api/anomalies"]
+  ADMIN -->|"acces total"| CRM_API & COMP_API
+
+  style LOGIN fill:#1e3a5f,stroke:#60a5fa,color:#fff
+  style JWT fill:#3b3b1a,stroke:#facc15,color:#facc15
+  style GEST fill:#0d1b2a,stroke:#60a5fa,color:#60a5fa
+  style CONFU fill:#1f0d1f,stroke:#e879f9,color:#e879f9
+  style ADMIN fill:#0d1f15,stroke:#4ade80,color:#4ade80
+</pre>
+  </div></div>
+</div>
+
+<div class="footer">DocuFlow v2 — Hackathon 2026 — Architecture Technique</div>
+
+<script>
+  const state = {};
+  function getState(id) {
+    if (!state[id]) state[id] = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0 };
+    return state[id];
+  }
+  function applyTransform(id) {
+    const s = getState(id);
+    document.querySelector(`#${id} .pan-content`).style.transform = `translate(${s.x}px, ${s.y}px) scale(${s.scale})`;
+    document.getElementById(`${id}-level`).textContent = Math.round(s.scale * 100) + '%';
+  }
+  function zoomDiagram(id, delta) {
+    const s = getState(id);
+    s.scale = Math.min(3, Math.max(0.2, s.scale + delta));
+    applyTransform(id);
+  }
+  function resetDiagram(id) {
+    const s = getState(id);
+    s.scale = 1; s.x = 0; s.y = 0;
+    applyTransform(id);
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.diagram-container').forEach(c => {
+      const id = c.id, vp = c.querySelector('.pan-viewport');
+      vp.addEventListener('wheel', e => { e.preventDefault(); zoomDiagram(id, e.deltaY > 0 ? -0.08 : 0.08); }, { passive: false });
+      vp.addEventListener('mousedown', e => { const s = getState(id); s.dragging = true; s.startX = e.clientX - s.x; s.startY = e.clientY - s.y; });
+      vp.addEventListener('mousemove', e => { const s = getState(id); if (!s.dragging) return; s.x = e.clientX - s.startX; s.y = e.clientY - s.startY; applyTransform(id); });
+      vp.addEventListener('mouseup', () => getState(id).dragging = false);
+      vp.addEventListener('mouseleave', () => getState(id).dragging = false);
+    });
+  });
+  mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose',
+    flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis', padding: 15, nodeSpacing: 40, rankSpacing: 50 }
+  });
+</script>
+</body>
+</html>

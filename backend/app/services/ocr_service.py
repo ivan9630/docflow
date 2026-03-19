@@ -36,22 +36,44 @@ def preprocess(img: Image.Image) -> Image.Image:
         gray = cv2.cvtColor(arr, cv2.COLOR_RGB2GRAY)
     else:
         gray = arr
+
+    # Redimensionner si trop petit (améliore l'OCR)
+    h, w = gray.shape
+    if w < 1000:
+        scale = 1500 / w
+        gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+
     # Débruitage
-    denoised = cv2.fastNlMeansDenoising(gray, h=10)
-    # Redressement (deskew léger)
-    coords = np.column_stack(np.where(denoised < 200))
-    if len(coords) > 100:
+    denoised = cv2.fastNlMeansDenoising(gray, h=15)
+
+    # Redressement (deskew) — gère les rotations jusqu'à 20°
+    coords = np.column_stack(np.where(denoised < 180))
+    if len(coords) > 500:
         angle = cv2.minAreaRect(coords)[-1]
-        if abs(angle) < 45:
-            (h, w) = denoised.shape
-            M = cv2.getRotationMatrix2D((w//2, h//2), angle if angle < -45 else angle, 1.0)
-            denoised = cv2.warpAffine(denoised, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-    # Binarisation Otsu
-    _, binary = cv2.threshold(denoised, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    # Netteté
-    kernel = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]])
-    sharp = cv2.filter2D(binary, -1, kernel)
-    return Image.fromarray(sharp)
+        # Normaliser l'angle
+        if angle < -45:
+            angle = 90 + angle
+        elif angle > 45:
+            angle = angle - 90
+        if abs(angle) > 0.5:  # corriger seulement si rotation significative
+            (h2, w2) = denoised.shape
+            M = cv2.getRotationMatrix2D((w2//2, h2//2), angle, 1.0)
+            denoised = cv2.warpAffine(denoised, M, (w2, h2), flags=cv2.INTER_CUBIC,
+                                       borderMode=cv2.BORDER_REPLICATE)
+
+    # Augmenter le contraste (CLAHE)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    enhanced = clahe.apply(denoised)
+
+    # Binarisation adaptative (meilleure que Otsu pour les scans dégradés)
+    binary = cv2.adaptiveThreshold(enhanced, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                    cv2.THRESH_BINARY, 15, 8)
+
+    # Nettoyage morphologique (supprimer le bruit sel & poivre)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
+    binary = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
+
+    return Image.fromarray(binary)
 
 
 # ── EXTRACTION OCR ────────────────────────────────────────────────
@@ -203,21 +225,65 @@ def extract_doc_number(text: str) -> Optional[str]:
 
 def extract_company(text: str) -> Optional[str]:
     for p in [
+        r'(?:Société|Entreprise|Raison\s+sociale|Émetteur|Emetteur|Prestataire|Fournisseur|Dénomination\s+sociale)\s*:?\s*\n?\s*([^\n]{3,80})',
         r'^([A-Z][A-Z&\s\.\-]{5,60}(?:SAS|SARL|SA|EURL|SNC|EI|SASU))\s*$',
-        r'(?:Société|Entreprise|Raison\s+sociale)\s*:?\s*([^\n]{5,80})',
+        r'(?:De|From)\s*:?\s*([^\n]{3,80})',
     ]:
         m = re.search(p, text, re.I | re.M)
-        if m and 5 < len(m.group(1).strip()) < 200:
-            return m.group(1).strip()
+        if m:
+            name = m.group(1).strip()
+            # Nettoyer les artefacts OCR
+            name = re.sub(r'[\n\r\t]', ' ', name)
+            name = re.sub(r'\s{2,}', ' ', name).strip()
+            # Rejeter les noms poubelle
+            if len(name) < 4:
+                continue
+            if len(name) > 80:
+                continue
+            if re.match(r'^\d', name):  # commence par un chiffre
+                continue
+            if sum(1 for c in name if c.isalpha()) < len(name) * 0.5:  # moins de 50% de lettres
+                continue
+            if '\n' in name:
+                continue
+            return name
     return None
+
+
+def extract_address(text: str) -> dict:
+    """Extrait adresse, code postal et ville."""
+    addr = {"adresse": None, "code_postal": None, "ville": None}
+    # Code postal + ville
+    m = re.search(r'\b(\d{5})\s+([A-ZÀ-Ü][a-zà-ü\-\s]{2,40})\b', text)
+    if m:
+        addr["code_postal"] = m.group(1)
+        addr["ville"] = m.group(2).strip()
+    # Adresse (ligne avant le code postal)
+    for p in [
+        r'(?:Adresse|Siège|Domicil)\s*:?\s*\n?\s*([^\n]{5,100})',
+        r'(\d{1,4}[\s,]+(?:rue|avenue|boulevard|place|chemin|impasse|allée|passage|route)[^\n]{3,80})',
+    ]:
+        m = re.search(p, text, re.I)
+        if m:
+            addr["adresse"] = m.group(1).strip()
+            break
+    return addr
 
 
 def extract_all(text: str) -> dict:
     amounts = extract_amounts(text)
     ner = extract_ner(text)
+    siren = extract_siren(text)
+    siret = extract_siret(text)
+    address = extract_address(text)
+
+    # Déduire SIREN du SIRET si pas trouvé
+    if not siren and siret and len(siret) == 14:
+        siren = siret[:9]
+
     return {
-        "siren":          extract_siren(text),
-        "siret":          extract_siret(text),
+        "siren":          siren,
+        "siret":          siret,
         "tva_number":     extract_tva(text),
         "company_name":   extract_company(text) or (ner["organizations"][0] if ner["organizations"] else None),
         "iban":           extract_iban(text),
@@ -228,6 +294,9 @@ def extract_all(text: str) -> dict:
         "montant_tva":    amounts["tva"],
         "montant_ttc":    amounts["ttc"],
         "taux_tva":       amounts["taux_tva"],
+        "adresse":        address["adresse"],
+        "code_postal":    address["code_postal"],
+        "ville":          address["ville"],
         "ner":            ner,
     }
 

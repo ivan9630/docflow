@@ -2,7 +2,7 @@
 Pipeline Celery — DocuFlow v2
 6 étapes : RAW → OCR → NER → Validation → CLEAN → CURATED
 """
-import os, asyncio, time
+import os, asyncio, time, re
 from celery import Celery
 import structlog
 
@@ -26,14 +26,13 @@ def _run(coro):
     finally: loop.close()
 
 
-def _log_step(db_session, doc_id, step, status, msg, duration_ms=0):
+def _log_step(db, doc_id, step, status, msg, duration_ms=0):
     from app.models.models import PipelineLog
-    import uuid
-    log = PipelineLog(
-        id=uuid.uuid4(), document_id=doc_id,
+    import uuid as _u
+    db.add(PipelineLog(
+        id=_u.uuid4(), document_id=doc_id if isinstance(doc_id, _u.UUID) else _u.UUID(doc_id),
         etape=step, statut=status, message=msg, duree_ms=duration_ms
-    )
-    db_session.add(log)
+    ))
 
 
 @celery_app.task(bind=True, max_retries=3, name="process_document", queue="docuflow")
@@ -47,12 +46,18 @@ def process_document(self, doc_id: str, content_hex: str, filename: str, mime: s
 
 
 async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
-    from app.db.database import AsyncSessionLocal
+    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+    import os
     from app.models.models import Document, DocumentStatus, DataZone, AnomalyReport
     from app.services import ocr_service, ai_service, minio_service
     import uuid as _uuid
 
-    async with AsyncSessionLocal() as db:
+    # Créer un engine frais par task pour éviter les conflits asyncpg
+    _url = os.getenv("DATABASE_URL", "postgresql+asyncpg://docuflow:docuflow@localhost:5432/docuflow")
+    _engine = create_async_engine(_url, echo=False, pool_size=1, max_overflow=0)
+    _Session = async_sessionmaker(_engine, class_=AsyncSession, expire_on_commit=False)
+
+    async with _Session() as db:
         doc = await db.get(Document, _uuid.UUID(doc_id))
         if not doc: return
 
@@ -67,7 +72,8 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.hash_sha256 = minio_service.sha256(content)
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"raw","statut":"ok","ms":duration})
-        logger.info(f"[{doc_id[:8]}] ✅ RAW stored")
+        _log_step(db, doc.id, "raw", "ok", f"Fichier stocké: {filename}", duration)
+        logger.info(f"[{doc_id[:8]}] RAW stored")
 
         # ── ÉTAPE 2 : OCR ────────────────────────────────────────
         t = time.time()
@@ -81,18 +87,48 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.statut = DocumentStatus.OCR_OK
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"ocr","statut":"ok","ms":duration,"method":ocr["method"],"conf":ocr["confidence"]})
-        logger.info(f"[{doc_id[:8]}] ✅ OCR done ({ocr['method']}, conf={ocr['confidence']:.2f})")
+        _log_step(db, doc.id, "ocr", "ok", f"{ocr['method']} conf={ocr['confidence']:.2f}", duration)
+        logger.info(f"[{doc_id[:8]}] OCR done ({ocr['method']}, conf={ocr['confidence']:.2f})")
 
         # ── ÉTAPE 3 : Classification + Extraction entités ────────
         t = time.time()
         from app.services import classifier_service
-        local_clf = classifier_service.classify_local(ocr["text"])
-        if local_clf and local_clf["confidence"] > 0.6:
+
+        # Nettoyer le texte OCR pour améliorer la classification
+        clean_text = re.sub(r'[|~`{}\\]', '', ocr["text"])  # supprimer artefacts
+        clean_text = re.sub(r'\s{3,}', '  ', clean_text)     # réduire espaces excessifs
+        clean_text = re.sub(r'\n{3,}', '\n\n', clean_text)   # réduire lignes vides
+
+        local_clf = classifier_service.classify_local(clean_text)
+        if local_clf and local_clf["confidence"] > 0.6 and local_clf.get("type_document") != "autre":
             classification = local_clf
             logger.info(f"[{doc_id[:8]}] Classification locale : {local_clf['type_document']} (conf={local_clf['confidence']:.2f})")
         else:
-            classification = await ai_service.classify_document(ocr["text"])
+            classification = await ai_service.classify_document(clean_text)
             logger.info(f"[{doc_id[:8]}] Classification Claude fallback : {classification.get('type_document')}")
+            # Si Claude dit aussi "autre", tenter une classification par mots-clés
+            if classification.get("type_document") == "autre":
+                text_lower = clean_text.lower()
+                keyword_map = {
+                    "facture": ["facture", "montant ttc", "total h.t", "échéance"],
+                    "devis": ["devis", "proposition", "validité", "bon pour accord"],
+                    "attestation_urssaf": ["urssaf", "vigilance", "obligations déclaratives"],
+                    "attestation_fiscale": ["régularité fiscale", "finances publiques", "obligations fiscales"],
+                    "kbis": ["kbis", "registre du commerce", "greffe", "extrait k"],
+                    "rib": ["iban", "bic", "relevé d'identité bancaire", "rib"],
+                    "contrat": ["contrat", "convention", "article 1", "soussignés"],
+                    "bon_commande": ["bon de commande", "commande", "livraison"],
+                }
+                best_type, best_score = "autre", 0
+                for doc_t, keywords in keyword_map.items():
+                    matches = sum(1 for kw in keywords if kw in text_lower)
+                    if matches > best_score:
+                        best_score = matches
+                        best_type = doc_t
+                if best_score >= 1:
+                    classification = {"type_document": best_type, "confidence": 0.5}
+                    logger.info(f"[{doc_id[:8]}] Classification mots-clés fallback : {best_type} (matches={best_score})")
+
         doc.type_document = classification.get("type_document", "autre")
         doc.score_classification = classification.get("confidence", 0.0)
 
@@ -109,20 +145,38 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.montant_tva_val   = entities.get("montant_tva")
         doc.montant_ttc       = entities.get("montant_ttc")
         doc.taux_tva          = entities.get("taux_tva")
+        doc.adresse_fournisseur = entities.get("adresse")
         doc.donnees_extraites = entities
         doc.statut = DocumentStatus.EXTRAIT
 
-        # Lier fournisseur
+        # Lier ou créer fournisseur
         if doc.numero_siren:
             from sqlalchemy import select
             from app.models.models import Supplier
             res = await db.execute(select(Supplier).where(Supplier.siren == doc.numero_siren))
             sup = res.scalar_one_or_none()
-            if sup: doc.supplier_id = sup.id
+            if not sup:
+                sup = Supplier(
+                    id=_uuid.uuid4(),
+                    siren=doc.numero_siren,
+                    siret_siege=doc.numero_siret,
+                    nom=doc.nom_fournisseur or f"Fournisseur {doc.numero_siren}",
+                    numero_tva=doc.numero_tva,
+                    iban=doc.iban,
+                    adresse=entities.get("adresse"),
+                    code_postal=entities.get("code_postal"),
+                    ville=entities.get("ville"),
+                    score_conformite=100.0,
+                )
+                db.add(sup)
+                await db.flush()
+                logger.info(f"[{doc_id[:8]}] Fournisseur créé : {sup.nom} (SIREN {sup.siren})")
+            doc.supplier_id = sup.id
 
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"extraction","statut":"ok","ms":duration,"type":str(doc.type_document)})
-        logger.info(f"[{doc_id[:8]}] ✅ Extraction done (type={doc.type_document})")
+        _log_step(db, doc.id, "extraction", "ok", f"type={doc.type_document}", duration)
+        logger.info(f"[{doc_id[:8]}] Extraction done (type={doc.type_document})")
 
         # ── ÉTAPE 4 : CLEAN zone ─────────────────────────────────
         t = time.time()
@@ -141,25 +195,44 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
             if sup:
                 supplier_data = {"siren":sup.siren,"siret":sup.siret_siege,"tva":sup.numero_tva,"iban":sup.iban}
 
-        # Validations locales instantanées
-        local_anomalies = []
-        if doc.numero_siren and doc.numero_siret:
-            ok, msg = ai_service.validate_siret_siren(doc.numero_siren, doc.numero_siret)
-            if not ok: local_anomalies.append({"type":"incoherence_siret_siren","description":msg,"severite":"critique","champ":"siret"})
-        if doc.numero_siren and doc.numero_tva:
-            ok, msg = ai_service.validate_tva_local(doc.numero_siren, doc.numero_tva)
-            if not ok: local_anomalies.append({"type":"incoherence_tva","description":msg,"severite":"elevee","champ":"tva"})
-        if doc.montant_ht and doc.montant_ttc:
-            ok, msg = ai_service.validate_amounts(doc.montant_ht, doc.montant_tva_val, doc.montant_ttc, doc.taux_tva)
-            if not ok: local_anomalies.append({"type":"montant_incoherent","description":msg,"severite":"elevee","champ":"montants"})
-
-        # Vérification IA (anomalies complexes)
-        fraud = await ai_service.detect_anomalies(
-            str(doc.type_document), entities, supplier_data, []
+        # Vérification locale (sans API) — modèle local en premier
+        # Si OCR confiance < 0.5, on réduit les vérifications (trop de faux positifs)
+        ocr_low_quality = (doc.score_ocr or 0) < 0.5
+        fraud = ai_service.detect_anomalies_local(
+            str(doc.type_document), entities, supplier_data, skip_amounts=ocr_low_quality
         )
-        all_anomalies = local_anomalies + fraud.get("anomalies", [])
-        doc.score_fraude = max(fraud.get("score_fraude", 0.0), len(local_anomalies) * 0.2)
-        doc.est_frauduleux = fraud.get("est_frauduleux", False) or doc.score_fraude > 0.7
+
+        all_anomalies = fraud.get("anomalies", [])
+
+        # Document de type "autre" → anomalie automatique
+        if str(doc.type_document) in ("autre", "DocumentType.AUTRE"):
+            all_anomalies.append({
+                "type": "type_non_reconnu",
+                "description": "Type de document non reconnu par le classifieur. Vérification manuelle requise.",
+                "severite": "critique",
+                "champ": "type_document",
+                "valeur_trouvee": "autre",
+                "valeur_attendue": "facture, devis, attestation, kbis, rib, contrat..."
+            })
+            fraud["score_fraude"] = max(fraud.get("score_fraude", 0.0), 0.7)
+            fraud["est_frauduleux"] = True
+
+        # Document classifié avec faible confiance → flag
+        elif (doc.score_classification or 0) < 0.6:
+            all_anomalies.append({
+                "type": "classification_faible_confiance",
+                "description": f"Classification incertaine ({doc.score_classification:.0%}). Le document pourrait ne pas correspondre au type detecte.",
+                "severite": "elevee",
+                "champ": "type_document",
+                "valeur_trouvee": f"{doc.type_document} ({doc.score_classification:.0%})",
+                "valeur_attendue": "Confiance > 60%"
+            })
+            fraud["score_fraude"] = max(fraud.get("score_fraude", 0.0), 0.3)
+
+        logger.info(f"[{doc_id[:8]}] Vérification locale : {len(all_anomalies)} anomalie(s), score={fraud['score_fraude']}")
+
+        doc.score_fraude = fraud.get("score_fraude", 0.0)
+        doc.est_frauduleux = fraud.get("est_frauduleux", False)
         doc.anomalies = all_anomalies
 
         # Sauvegarder rapports d'anomalies
@@ -178,11 +251,12 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"verification","statut":"ok","ms":duration,
                        "score_fraude":doc.score_fraude,"anomalies":len(all_anomalies)})
-        logger.info(f"[{doc_id[:8]}] ✅ Vérification done (score_fraude={doc.score_fraude:.2f})")
+        _log_step(db, doc.id, "verification", "ok", f"score={doc.score_fraude:.2f} anomalies={len(all_anomalies)}", duration)
+        logger.info(f"[{doc_id[:8]}] Verification done (score_fraude={doc.score_fraude:.2f})")
 
         # ── ÉTAPE 6 : CURATED + Enrichissement ──────────────────
         t = time.time()
-        enriched = await ai_service.enrich_for_crm(str(doc.type_document), entities, fraud)
+        enriched = ai_service.enrich_local(str(doc.type_document), entities, fraud)
         curated_payload = {
             "doc_id": doc_id, "type": str(doc.type_document),
             "entities": entities, "fraud": fraud,
@@ -196,6 +270,7 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         doc.pipeline_steps = steps
         duration = int((time.time()-t)*1000)
         steps.append({"etape":"curated","statut":"ok","ms":duration})
+        _log_step(db, doc.id, "curated", "ok", f"Enrichissement terminé", duration)
 
         # Statut final
         if doc.est_frauduleux: doc.statut = DocumentStatus.ANOMALIE
@@ -203,7 +278,10 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         else:                  doc.statut = DocumentStatus.VALIDE
 
         await db.commit()
-        logger.info(f"[{doc_id[:8]}] 🏁 Pipeline terminé — statut={doc.statut}")
+        logger.info(f"[{doc_id[:8]}] Pipeline termine — statut={doc.statut}")
 
-        return {"doc_id":doc_id,"statut":str(doc.statut),"type":str(doc.type_document),
+        result = {"doc_id":doc_id,"statut":str(doc.statut),"type":str(doc.type_document),
                 "score_fraude":doc.score_fraude,"anomalies":len(all_anomalies)}
+
+    await _engine.dispose()
+    return result

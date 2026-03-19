@@ -34,7 +34,7 @@ numpy==1.26.4
 img2pdf==0.5.1
 
 # ── NLP / NER ─────────────────────────────────────────────────────
-spacy==3.7.4
+spacy>=3.8,<4.0
 transformers==4.41.0
 torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
 
@@ -50,6 +50,7 @@ pandas==2.2.2
 python-magic==0.4.27
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 structlog==24.1.0
 
 # ── Tests ─────────────────────────────────────────────────────────

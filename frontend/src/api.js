@@ -2,9 +2,38 @@ import axios from 'axios'
 
 const api = axios.create({ baseURL: '/api', timeout: 30000 })
 
+// Intercepteur : ajoute le token JWT à chaque requête
+api.interceptors.request.use((config) => {
+  const saved = localStorage.getItem('docuflow_auth')
+  if (saved) {
+    try {
+      const { token } = JSON.parse(saved)
+      if (token) config.headers.Authorization = `Bearer ${token}`
+    } catch { /* ignore */ }
+  }
+  return config
+})
+
+// Intercepteur : redirige vers login si 401
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401 && !err.config.url?.includes('/auth/')) {
+      localStorage.removeItem('docuflow_auth')
+      window.location.href = '/login'
+    }
+    return Promise.reject(err)
+  }
+)
+
+// Auth
+export const loginUser       = (username, password) => api.post('/auth/login', { username, password })
+export const getMe           = ()                   => api.get('/auth/me')
+
 // Documents
 export const uploadDocuments  = (formData) => api.post('/documents/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 export const listDocuments    = (params)   => api.get('/documents/', { params })
+export const listDocsFull     = (params)   => api.get('/documents/', { params })
 export const getDocument      = (id)       => api.get(`/documents/${id}`)
 export const getDocStatus     = (id)       => api.get(`/documents/${id}/status`)
 export const validateDoc      = (id)       => api.patch(`/documents/${id}/validate`)
@@ -32,6 +61,7 @@ export const datalakeZone     = (zone)     => api.get(`/datalake/${zone}`)
 
 // Stats
 export const dashboardStats   = ()         => api.get('/stats/dashboard')
+export const adminStats       = ()         => api.get('/stats/admin')
 
 // Airflow
 export const triggerDAG       = (dag_id)   => api.post(`/airflow/trigger/${dag_id}`)

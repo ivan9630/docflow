@@ -1,48 +1,14 @@
 import React from 'react'
 
-// ── KPI Card ──────────────────────────────────────────────────────
-export function KpiCard({ label, value, delta, color = 'accent', icon }) {
-  const colors = {
-    accent:  'var(--accent)',
-    success: 'var(--accent2)',
-    warning: 'var(--warn)',
-    danger:  'var(--danger)',
-    gold:    'var(--gold)',
-  }
-  const c = colors[color] || colors.accent
-  return (
-    <div className="rounded-xl p-5 relative overflow-hidden slide-in"
-         style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-      <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: c }} />
-      <div className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color: 'var(--text2)' }}>{label}</div>
-      <div className="font-display text-3xl font-bold" style={{ color: c }}>{value ?? '—'}</div>
-      {delta && <div className="text-xs mt-1" style={{ color: 'var(--text2)' }}>{delta}</div>}
-    </div>
-  )
-}
-
-// ── Page Header ───────────────────────────────────────────────────
-export function PageHeader({ title, subtitle, actions }) {
-  return (
-    <div className="flex items-start justify-between mb-8 pt-8 px-8">
-      <div>
-        <h1 className="font-display text-2xl font-bold">{title}</h1>
-        {subtitle && <p className="text-sm mt-1" style={{ color: 'var(--text2)' }}>{subtitle}</p>}
-      </div>
-      {actions && <div className="flex gap-3">{actions}</div>}
-    </div>
-  )
-}
-
 // ── Panel ─────────────────────────────────────────────────────────
 export function Panel({ title, children, action, className = '' }) {
   return (
-    <div className={`rounded-xl overflow-hidden ${className}`}
-         style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+    <div className={`rounded-xl overflow-hidden slide-in ${className}`}
+         style={{ background: 'var(--surface)', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow)' }}>
       {title && (
-        <div className="flex items-center justify-between px-5 py-3 border-b"
-             style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}>
-          <span className="font-display text-sm font-bold uppercase tracking-wide">{title}</span>
+        <div className="flex items-center justify-between px-5 py-3.5"
+             style={{ borderBottom: '1px solid var(--border-light)' }}>
+          <span className="text-[13px] font-semibold tracking-wide" style={{ color: 'var(--text)' }}>{title}</span>
           {action}
         </div>
       )}
@@ -54,44 +20,42 @@ export function Panel({ title, children, action, className = '' }) {
 // ── Status Pill ───────────────────────────────────────────────────
 export function StatusPill({ status }) {
   const map = {
-    uploade:       ['📤', 'var(--gold)',    'rgba(255,209,102,0.12)'],
-    en_traitement: ['⚙️', 'var(--accent)',  'rgba(108,99,255,0.12)'],
-    ocr_ok:        ['🔍', 'var(--accent)',  'rgba(108,99,255,0.12)'],
-    extrait:       ['📊', 'var(--accent2)', 'rgba(0,212,170,0.12)'],
-    verifie:       ['✅', 'var(--accent2)', 'rgba(0,212,170,0.12)'],
-    valide:        ['✓',  'var(--accent2)', 'rgba(0,212,170,0.12)'],
-    anomalie:      ['⚠️', 'var(--warn)',    'rgba(255,107,53,0.12)'],
-    rejete:        ['✗',  'var(--danger)',  'rgba(255,51,102,0.12)'],
+    uploade:       ['var(--gold)',    'var(--warn-light)'],
+    en_traitement: ['var(--accent)',  'var(--accent-light)'],
+    ocr_ok:        ['var(--accent)',  'var(--accent-light)'],
+    extrait:       ['var(--accent2)', 'var(--accent2-light)'],
+    verifie:       ['var(--accent2)', 'var(--accent2-light)'],
+    valide:        ['var(--accent2)', 'var(--accent2-light)'],
+    anomalie:      ['var(--warn)',    'var(--warn-light)'],
+    rejete:        ['var(--danger)',  'var(--danger-light)'],
   }
-  const [icon, color, bg] = map[status] || ['?', 'var(--text2)', 'rgba(255,255,255,0.05)']
+  const [color, bg] = map[status] || ['var(--text2)', 'var(--surface2)']
   const labels = {
-    uploade:'Uploadé', en_traitement:'En cours', ocr_ok:'OCR OK',
-    extrait:'Extrait', verifie:'Vérifié', valide:'Validé',
-    anomalie:'Anomalie', rejete:'Rejeté'
+    uploade:'Upload', en_traitement:'En cours', ocr_ok:'OCR OK',
+    extrait:'Extrait', verifie:'Verifie', valide:'Valide',
+    anomalie:'Anomalie', rejete:'Rejete'
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono text-xs font-bold"
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
           style={{ color, background: bg }}>
-      {icon} {labels[status] || status}
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+      {labels[status] || status}
     </span>
   )
 }
 
 // ── Type Badge ────────────────────────────────────────────────────
 export function TypeBadge({ type }) {
-  const map = {
-    facture:'🧾', devis:'📋', bon_commande:'📦', attestation_urssaf:'✅',
-    attestation_fiscale:'📑', kbis:'🏢', rib:'🏦', contrat:'📝', autre:'📄'
-  }
   const labels = {
     facture:'Facture', devis:'Devis', bon_commande:'Bon Cmd',
     attestation_urssaf:'URSSAF', attestation_fiscale:'Fiscal',
-    kbis:'KBIS', rib:'RIB', contrat:'Contrat', autre:'Autre'
+    attestation_siret:'SIRET', kbis:'KBIS', rib:'RIB',
+    contrat:'Contrat', avoir:'Avoir', note_frais:'Note frais', autre:'Autre'
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium"
-          style={{ background: 'var(--surface2)', color: 'var(--text2)', border: '1px solid var(--border)' }}>
-      {map[type] || '📄'} {labels[type] || type || '?'}
+    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium"
+          style={{ background: 'var(--surface2)', color: 'var(--text2)', border: '1px solid var(--border-light)' }}>
+      {labels[type] || type || '—'}
     </span>
   )
 }
@@ -99,41 +63,33 @@ export function TypeBadge({ type }) {
 // ── Zone Badge ────────────────────────────────────────────────────
 export function ZoneBadge({ zone }) {
   const map = {
-    raw:     ['🟤','#cd7f32','rgba(205,127,50,0.15)'],
-    clean:   ['⚪','#c0c0c0','rgba(192,192,192,0.15)'],
-    curated: ['🟡','#ffd700','rgba(255,215,0,0.15)'],
+    raw:     ['#92400e', 'rgba(146,64,14,0.08)'],
+    clean:   ['var(--text2)', 'var(--surface2)'],
+    curated: ['var(--gold)', 'var(--warn-light)'],
   }
-  const [icon, color, bg] = map[zone] || ['?','var(--text2)','transparent']
+  const [color, bg] = map[zone] || ['var(--text2)', 'transparent']
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono text-xs font-bold uppercase"
+    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold uppercase"
           style={{ color, background: bg }}>
-      {icon} {zone}
+      {zone}
     </span>
-  )
-}
-
-// ── Fraud Score ───────────────────────────────────────────────────
-export function FraudScore({ score = 0 }) {
-  const pct = Math.round((score || 0) * 100)
-  const color = pct > 60 ? 'var(--danger)' : pct > 30 ? 'var(--warn)' : 'var(--accent2)'
-  return (
-    <span className="font-mono text-xs font-bold" style={{ color }}>{pct}%</span>
   )
 }
 
 // ── Button ────────────────────────────────────────────────────────
 export function Btn({ children, onClick, variant = 'primary', size = 'md', disabled = false, className = '' }) {
+  const base = 'rounded-lg font-medium transition-all active:scale-[0.97] disabled:opacity-40 '
   const variants = {
-    primary:   { background: 'var(--accent)',  color: 'white', border: 'none' },
+    primary:   { background: 'var(--accent)', color: 'white', border: 'none', boxShadow: '0 1px 2px rgba(79,110,247,0.3)' },
     success:   { background: 'var(--accent2)', color: 'white', border: 'none' },
-    danger:    { background: 'var(--danger)',  color: 'white', border: 'none' },
-    secondary: { background: 'var(--surface2)',color: 'var(--text)', border: '1px solid var(--border)' },
-    ghost:     { background: 'transparent',    color: 'var(--text2)', border: '1px solid var(--border)' },
+    danger:    { background: 'var(--danger)', color: 'white', border: 'none' },
+    secondary: { background: 'var(--surface)', color: 'var(--text)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' },
+    ghost:     { background: 'transparent', color: 'var(--text2)', border: '1px solid var(--border)' },
   }
-  const sizes = { sm: 'px-3 py-1.5 text-xs', md: 'px-4 py-2 text-sm', lg: 'px-6 py-3 text-base' }
+  const sizes = { sm: 'px-3 py-1.5 text-[12px]', md: 'px-4 py-2 text-[13px]', lg: 'px-5 py-2.5 text-sm' }
   return (
     <button onClick={onClick} disabled={disabled}
-      className={`rounded-lg font-medium transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 ${sizes[size]} ${className}`}
+      className={`${base} hover:brightness-95 ${sizes[size]} ${className}`}
       style={variants[variant]}>
       {children}
     </button>
@@ -141,9 +97,9 @@ export function Btn({ children, onClick, variant = 'primary', size = 'md', disab
 }
 
 // ── Loading Spinner ───────────────────────────────────────────────
-export function Spinner({ size = 24 }) {
+export function Spinner({ size = 20 }) {
   return (
-    <div className="flex items-center justify-center p-8">
+    <div className="flex items-center justify-center p-10">
       <div className="rounded-full animate-spin border-2 border-t-transparent"
            style={{ width: size, height: size, borderColor: 'var(--accent)', borderTopColor: 'transparent' }} />
     </div>
@@ -151,12 +107,14 @@ export function Spinner({ size = 24 }) {
 }
 
 // ── Empty State ───────────────────────────────────────────────────
-export function Empty({ icon = '📭', title = 'Aucune donnée', sub = '' }) {
+export function Empty({ title = 'Aucune donnee', sub = '' }) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-      <span className="text-4xl mb-3">{icon}</span>
-      <div className="font-display font-bold text-lg">{title}</div>
-      {sub && <div className="text-sm mt-1" style={{ color: 'var(--text2)' }}>{sub}</div>}
+    <div className="flex flex-col items-center justify-center py-14 px-4 text-center">
+      <div className="w-10 h-10 rounded-full flex items-center justify-center mb-3" style={{ background: 'var(--surface2)' }}>
+        <span className="text-base" style={{ color: 'var(--text3)' }}>—</span>
+      </div>
+      <div className="font-medium text-sm" style={{ color: 'var(--text)' }}>{title}</div>
+      {sub && <div className="text-[13px] mt-1 max-w-xs" style={{ color: 'var(--text2)' }}>{sub}</div>}
     </div>
   )
 }
@@ -164,16 +122,23 @@ export function Empty({ icon = '📭', title = 'Aucune donnée', sub = '' }) {
 // ── Severity Badge ────────────────────────────────────────────────
 export function SeverityBadge({ sev }) {
   const map = {
-    critique: ['var(--danger)', 'rgba(255,51,102,0.15)'],
-    elevee:   ['var(--warn)',   'rgba(255,107,53,0.15)'],
-    moyenne:  ['var(--gold)',   'rgba(255,209,102,0.15)'],
-    faible:   ['#6699ff',      'rgba(102,153,255,0.15)'],
+    critique: ['var(--danger)', 'var(--danger-light)'],
+    elevee:   ['var(--warn)',   'var(--warn-light)'],
+    moyenne:  ['var(--gold)',   'var(--warn-light)'],
+    faible:   ['#6366f1',      'rgba(99,102,241,0.08)'],
   }
   const [color, bg] = map[sev] || ['var(--text2)', 'transparent']
   return (
-    <span className="px-2 py-0.5 rounded font-mono text-xs font-bold uppercase"
+    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold capitalize"
           style={{ color, background: bg }}>{sev}</span>
   )
+}
+
+// ── Fraud Score ───────────────────────────────────────────────────
+export function FraudScore({ score = 0 }) {
+  const pct = Math.round((score || 0) * 100)
+  const color = pct > 60 ? 'var(--danger)' : pct > 30 ? 'var(--warn)' : 'var(--accent2)'
+  return <span className="text-xs font-semibold" style={{ color }}>{pct}%</span>
 }
 
 // ── Table ─────────────────────────────────────────────────────────
@@ -182,10 +147,10 @@ export function Table({ headers, children, className = '' }) {
     <div className={`overflow-x-auto ${className}`}>
       <table className="w-full border-collapse">
         <thead>
-          <tr style={{ borderBottom: '2px solid var(--border)' }}>
+          <tr>
             {headers.map(h => (
-              <th key={h} className="text-left px-4 py-3 font-mono text-xs uppercase tracking-widest"
-                  style={{ color: 'var(--text2)', background: 'var(--surface)' }}>{h}</th>
+              <th key={h} className="text-left px-5 py-3 text-[11px] font-semibold uppercase tracking-wider"
+                  style={{ color: 'var(--text3)', borderBottom: '1px solid var(--border-light)' }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -197,15 +162,47 @@ export function Table({ headers, children, className = '' }) {
 
 export function Tr({ children, onClick }) {
   return (
-    <tr onClick={onClick} className="transition-colors"
-        style={{ borderBottom: '1px solid var(--border)', cursor: onClick ? 'pointer' : 'default' }}
-        onMouseEnter={e => onClick && (e.currentTarget.style.background = 'var(--surface2)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
+    <tr onClick={onClick}
+        className="transition-colors hover:bg-[#f8f9fb]"
+        style={{ borderBottom: '1px solid var(--border-light)', cursor: onClick ? 'pointer' : 'default' }}>
       {children}
     </tr>
   )
 }
 
 export function Td({ children, className = '' }) {
-  return <td className={`px-4 py-3 text-sm ${className}`}>{children}</td>
+  return <td className={`px-5 py-3 text-sm ${className}`}>{children}</td>
+}
+
+// ── KPI Card ──────────────────────────────────────────────────────
+export function KpiCard({ label, value, color = 'accent' }) {
+  const colors = {
+    accent:  { main: 'var(--accent)',  bg: 'var(--accent-light)' },
+    success: { main: 'var(--accent2)', bg: 'var(--accent2-light)' },
+    warning: { main: 'var(--warn)',    bg: 'var(--warn-light)' },
+    danger:  { main: 'var(--danger)',  bg: 'var(--danger-light)' },
+    gold:    { main: 'var(--gold)',    bg: 'var(--warn-light)' },
+  }
+  const c = colors[color] || colors.accent
+  return (
+    <div className="rounded-xl p-5 relative overflow-hidden"
+         style={{ background: 'var(--surface)', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow)' }}>
+      <div className="absolute top-0 left-0 w-1 h-full rounded-r" style={{ background: c.main }} />
+      <div className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text3)' }}>{label}</div>
+      <div className="text-2xl font-bold" style={{ color: c.main }}>{value ?? '—'}</div>
+    </div>
+  )
+}
+
+// ── Page Header ───────────────────────────────────────────────────
+export function PageHeader({ title, subtitle, actions }) {
+  return (
+    <div className="flex items-start justify-between mb-6 pt-8 px-8">
+      <div>
+        <h1 className="text-lg font-bold" style={{ color: 'var(--text)' }}>{title}</h1>
+        {subtitle && <p className="text-[13px] mt-0.5" style={{ color: 'var(--text2)' }}>{subtitle}</p>}
+      </div>
+      {actions && <div className="flex gap-2">{actions}</div>}
+    </div>
+  )
 }

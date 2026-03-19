@@ -6,7 +6,8 @@ from pydantic import BaseModel
 from typing import Optional
 import uuid
 from app.db.database import get_db
-from app.models.models import Supplier, Document
+from app.models.models import Supplier, Document, User
+from app.services.auth_service import require_role
 
 router = APIRouter()
 
@@ -21,13 +22,13 @@ class SupplierIn(BaseModel):
 
 
 @router.get("/")
-async def list_suppliers(db: AsyncSession = Depends(get_db)):
+async def list_suppliers(db: AsyncSession = Depends(get_db), user: User = Depends(require_role("gestionnaire", "admin"))):
     r = await db.execute(select(Supplier).order_by(Supplier.nom))
     return [_ser(s) for s in r.scalars().all()]
 
 
 @router.post("/")
-async def create_supplier(data: SupplierIn, db: AsyncSession = Depends(get_db)):
+async def create_supplier(data: SupplierIn, db: AsyncSession = Depends(get_db), user: User = Depends(require_role("gestionnaire", "admin"))):
     s = Supplier(**data.model_dump())
     db.add(s); await db.commit(); await db.refresh(s)
     return _ser(s, full=True)
@@ -58,7 +59,7 @@ async def supplier_docs(sid: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/autofill-from-curated", summary="Auto-fill CRM depuis zone Curated")
-async def autofill_crm(db: AsyncSession = Depends(get_db)):
+async def autofill_crm(db: AsyncSession = Depends(get_db), user: User = Depends(require_role("gestionnaire", "admin"))):
     """Parcourt les documents en zone Curated et met à jour les fiches fournisseurs."""
     from app.models.models import DataZone
     from app.services.minio_service import get_curated

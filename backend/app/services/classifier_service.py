@@ -28,7 +28,7 @@ def _load_model():
         return None
 
 
-REJECTION_THRESHOLD = 0.25  # en dessous, le document est considéré hors sujet
+REJECTION_THRESHOLD = 0.50  # en dessous, le document est considéré hors sujet
 
 
 def classify_local(text: str) -> dict | None:

@@ -100,7 +100,7 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
         clean_text = re.sub(r'\n{3,}', '\n\n', clean_text)   # réduire lignes vides
 
         local_clf = classifier_service.classify_local(clean_text)
-        if local_clf and local_clf["confidence"] > 0.3 and local_clf.get("type_document") != "autre":
+        if local_clf and local_clf["confidence"] > 0.6 and local_clf.get("type_document") != "autre":
             classification = local_clf
             logger.info(f"[{doc_id[:8]}] Classification locale : {local_clf['type_document']} (conf={local_clf['confidence']:.2f})")
         else:
@@ -209,12 +209,25 @@ async def _pipeline(doc_id: str, content: bytes, filename: str, mime: str):
             all_anomalies.append({
                 "type": "type_non_reconnu",
                 "description": "Type de document non reconnu par le classifieur. Vérification manuelle requise.",
-                "severite": "elevee",
+                "severite": "critique",
                 "champ": "type_document",
                 "valeur_trouvee": "autre",
                 "valeur_attendue": "facture, devis, attestation, kbis, rib, contrat..."
             })
-            fraud["score_fraude"] = max(fraud.get("score_fraude", 0.0), 0.4)
+            fraud["score_fraude"] = max(fraud.get("score_fraude", 0.0), 0.7)
+            fraud["est_frauduleux"] = True
+
+        # Document classifié avec faible confiance → flag
+        elif (doc.score_classification or 0) < 0.6:
+            all_anomalies.append({
+                "type": "classification_faible_confiance",
+                "description": f"Classification incertaine ({doc.score_classification:.0%}). Le document pourrait ne pas correspondre au type detecte.",
+                "severite": "elevee",
+                "champ": "type_document",
+                "valeur_trouvee": f"{doc.type_document} ({doc.score_classification:.0%})",
+                "valeur_attendue": "Confiance > 60%"
+            })
+            fraud["score_fraude"] = max(fraud.get("score_fraude", 0.0), 0.3)
 
         logger.info(f"[{doc_id[:8]}] Vérification locale : {len(all_anomalies)} anomalie(s), score={fraud['score_fraude']}")
 

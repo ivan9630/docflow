@@ -1,0 +1,25 @@
+{
+  "requirements": [
+    {
+      "id": "R1",
+      "description": "Require review before payment"
+    },
+    {
+      "id": "R2",
+      "description": "Export audit trail"
+    }
+  ],
+  "tests": [
+    {
+      "id": "T1",
+      "requirement": "R1",
+      "status": "pass"
+    },
+    {
+      "id": "T2",
+      "requirement": "R2",
+      "status": "not_run"
+    }
+  ]
+}
+

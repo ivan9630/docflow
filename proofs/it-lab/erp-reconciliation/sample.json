@@ -1,0 +1,28 @@
+{
+  "opening_stock": {
+    "SKU1": 10
+  },
+  "movements": [
+    {
+      "id": "M1",
+      "sku": "SKU1",
+      "kind": "receipt",
+      "quantity": 5
+    },
+    {
+      "id": "M2",
+      "sku": "SKU1",
+      "kind": "issue",
+      "quantity": 3
+    }
+  ],
+  "invoices": [
+    {
+      "id": "F1",
+      "quantity": 3,
+      "unit_price_cents": 1200,
+      "total_cents": 3500
+    }
+  ]
+}
+

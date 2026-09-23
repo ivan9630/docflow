@@ -1,0 +1,29 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "team": "A",
+      "amount_eur": 120,
+      "delay_days": 2
+    },
+    {
+      "id": "C2",
+      "team": "A",
+      "amount_eur": 80,
+      "delay_days": 4
+    },
+    {
+      "id": "C1",
+      "team": "A",
+      "amount_eur": 120,
+      "delay_days": 2
+    },
+    {
+      "id": "C3",
+      "team": "B",
+      "amount_eur": -20,
+      "delay_days": 2
+    }
+  ]
+}
+

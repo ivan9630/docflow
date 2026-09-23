@@ -1,0 +1,21 @@
+{
+  "devices": [
+    {
+      "id": "DEMO-01",
+      "os": "Windows",
+      "disk_free_gb": 8,
+      "disk_total_gb": 256,
+      "ram_gb": 8,
+      "encrypted": true
+    },
+    {
+      "id": "DEMO-02",
+      "os": "macOS",
+      "disk_free_gb": 128,
+      "disk_total_gb": 256,
+      "ram_gb": 16,
+      "encrypted": false
+    }
+  ]
+}
+

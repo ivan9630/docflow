@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "id": "gateway",
+      "ip": "192.0.2.1",
+      "up": false,
+      "depends_on": []
+    },
+    {
+      "id": "switch",
+      "ip": "192.0.2.2",
+      "up": false,
+      "depends_on": [
+        "gateway"
+      ]
+    },
+    {
+      "id": "workstation",
+      "ip": "192.0.2.3",
+      "up": false,
+      "depends_on": [
+        "switch"
+      ]
+    }
+  ]
+}
+

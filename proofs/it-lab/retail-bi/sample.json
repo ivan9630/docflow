@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "sku": "SKU1",
+      "category": "books",
+      "stock": 4,
+      "price_cents": 1000
+    },
+    {
+      "sku": "SKU2",
+      "category": "books",
+      "stock": 0,
+      "price_cents": 2000
+    }
+  ],
+  "sales": [
+    {
+      "sku": "SKU1",
+      "quantity": 2
+    },
+    {
+      "sku": "SKU1",
+      "quantity": 1
+    },
+    {
+      "sku": "SKU2",
+      "quantity": 1
+    }
+  ]
+}
+

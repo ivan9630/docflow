@@ -1,0 +1,47 @@
+{
+  "scenarios": [
+    {
+      "id": "AC1",
+      "state": "new",
+      "event": "reserve",
+      "stock": 8,
+      "quantity": 3,
+      "expected": {
+        "state": "reserved",
+        "stock": 5
+      }
+    },
+    {
+      "id": "AC2",
+      "state": "new",
+      "event": "reserve",
+      "stock": 2,
+      "quantity": 3,
+      "expected": {
+        "error": "insufficient stock"
+      }
+    },
+    {
+      "id": "AC3",
+      "state": "reserved",
+      "event": "cancel",
+      "stock": 5,
+      "quantity": 3,
+      "expected": {
+        "state": "cancelled",
+        "stock": 8
+      }
+    },
+    {
+      "id": "AC4",
+      "state": "new",
+      "event": "ship",
+      "stock": 8,
+      "quantity": 3,
+      "expected": {
+        "error": "invalid transition"
+      }
+    }
+  ]
+}
+

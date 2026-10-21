@@ -1,0 +1,1 @@
+{"name":"data-document-lab","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.js","test:python":"python -m unittest discover -s tests -v","serve":"python -m http.server 4173"}}

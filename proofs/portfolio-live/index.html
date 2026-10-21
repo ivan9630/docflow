@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Quatre démonstrateurs personnels interactifs en qualité documentaire, workflows métier et data engineering." />
+    <meta name="theme-color" content="#101a2d" />
+    <title>Data & Document Lab — démonstrateurs interactifs</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="src/demo.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Data and Document Lab, accueil">
+        <span class="brand-mark">DD</span>
+        <span>DATA &amp; DOCUMENT LAB</span>
+      </a>
+      <a class="github-link" href="https://github.com/ivan9630/docflow/tree/main/proofs/portfolio-live" target="_blank" rel="noreferrer">Voir le code <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="eyebrow"><span class="pulse"></span> LABORATOIRE DE DÉMONSTRATION · DONNÉES SYNTHÉTIQUES</div>
+        <h1>Des systèmes documentaires<br /><span>aux produits data.</span></h1>
+        <p class="hero-copy">Quatre cas pratiques interactifs : contrôler une reprise documentaire, piloter une validation métier, explorer une charge prévisionnelle et rejouer un pipeline analytique.</p>
+        <div class="hero-meta"><span>Démos Web interactives · Scripts Python · SQL</span><span class="meta-separator">/</span><span>Projets personnels, réalisés avec assistance IA</span></div>
+      </section>
+
+      <nav class="tabs" aria-label="Démonstrateurs">
+        <button class="tab active" data-view="migration" aria-selected="true"><span>01</span> Reprise documentaire</button>
+        <button class="tab" data-view="workflow" aria-selected="false"><span>02</span> Workflow d’expertise</button>
+        <button class="tab" data-view="capacity" aria-selected="false"><span>03</span> Pilotage de charge</button>
+        <button class="tab" data-view="olympics" aria-selected="false"><span>04</span> Pipeline analytique</button>
+      </nav>
+
+      <section class="project-panel" id="panel" aria-live="polite"></section>
+
+      <aside class="honesty-note">
+        <span class="note-icon">i</span>
+        <p><strong>À propos de ces démonstrations.</strong> Ce sont des projets personnels construits à partir de scénarios fictifs et de données synthétiques. Ils ne sont pas des livraisons réalisées pour AEROW, GRtgaz, EDF ou un autre employeur, et ne se connectent à aucun de leurs systèmes. Les noms cités dans le CV servent uniquement à situer le type de sujet, pas à revendiquer ces prototypes comme travaux professionnels.</p>
+      </aside>
+    </main>
+
+    <footer><span>Ivan Tchomte · Portfolio technique</span><span>Tout s’exécute dans votre navigateur — aucune donnée n’est envoyée.</span></footer>
+  </body>
+</html>

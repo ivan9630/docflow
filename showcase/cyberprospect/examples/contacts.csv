@@ -1,0 +1,6 @@
+company,name,role,sector,employees,signal,email,status,next_action
+Société Alpha,Alex Exemple,RSSI,finance,1200,nouveau_rssi,alex@example.invalid,À qualifier,Appel découverte
+Société Bêta,Camille Exemple,DSI,industrie,350,recrutement_cyber,camille@example.invalid,À contacter,Premier message
+Société Gamma,Morgan Exemple,Responsable marketing,commerce,60,,morgan@example.invalid,À qualifier,Recherche complémentaire
+Société Alpha,Alex Exemple,RSSI,finance,1200,nouveau_rssi,alex@example.invalid,À qualifier,Doublon intentionnel
+Société Delta,Sam Exemple,RSSI,services_it,80,projet_cloud,,À qualifier,Compléter coordonnées

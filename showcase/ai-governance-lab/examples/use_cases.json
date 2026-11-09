@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Assistant documentaire interne",
+    "owner": "Équipe SI",
+    "personal_data": false,
+    "sensitive_data": false,
+    "external_users": false,
+    "impactful_decision": false,
+    "third_party_llm": true,
+    "human_oversight": true,
+    "sample_text": "Texte fictif sans donnée identifiante."
+  },
+  {
+    "name": "Préqualification de dossiers clients",
+    "owner": "Direction métier",
+    "personal_data": true,
+    "sensitive_data": true,
+    "external_users": true,
+    "impactful_decision": true,
+    "third_party_llm": true,
+    "human_oversight": false,
+    "sample_text": "Exemple fictif: alice@example.invalid, 06 12 34 56 78."
+  },
+  {
+    "name": "Analyse statistique de tickets internes",
+    "owner": "Support IT",
+    "personal_data": false,
+    "sensitive_data": false,
+    "external_users": false,
+    "impactful_decision": false,
+    "third_party_llm": false,
+    "human_oversight": true,
+    "sample_text": "Logs techniques synthétiques."
+  }
+]

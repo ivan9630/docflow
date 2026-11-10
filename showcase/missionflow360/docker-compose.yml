@@ -1,0 +1,24 @@
+services:
+  demo:
+    build: .
+    ports: ["8080:8080"]
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: missionflow
+      POSTGRES_USER: missionflow
+      POSTGRES_PASSWORD: local_dev_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U missionflow"]
+      interval: 5s
+      retries: 10
+  spring-api:
+    build: ./spring-api
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/missionflow
+      SPRING_DATASOURCE_USERNAME: missionflow
+      SPRING_DATASOURCE_PASSWORD: local_dev_password
+    ports: ["8082:8082"]
+    depends_on:
+      postgres: {condition: service_healthy}

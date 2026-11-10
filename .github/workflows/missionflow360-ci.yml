@@ -1,0 +1,33 @@
+name: MissionFlow 360 CI
+on:
+  push:
+    paths:
+      - 'showcase/missionflow360/**'
+      - '.github/workflows/missionflow360-ci.yml'
+  pull_request:
+    paths:
+      - 'showcase/missionflow360/**'
+      - '.github/workflows/missionflow360-ci.yml'
+jobs:
+  java-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Domain tests
+        run: bash test.sh
+        working-directory: showcase/missionflow360
+  spring-boot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Spring tests
+        run: mvn -B -ntp test
+        working-directory: showcase/missionflow360/spring-api

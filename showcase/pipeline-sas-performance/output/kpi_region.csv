@@ -1,0 +1,6 @@
+name,observations,impressions,clics,contacts,rdv,ctr,contact_rate,rdv_rate,rdv_par_1000,cout_par_rdv
+Auvergne-Rhone-Alpes,120,474060,29759,9071,3605,6.28,30.48,39.74,7.6,15.13
+Bretagne,120,480100,29239,8945,3552,6.09,30.59,39.71,7.4,14.92
+Hauts-de-France,120,474520,29428,8854,3519,6.2,30.09,39.74,7.42,15.43
+Ile-de-France,121,471692,29499,8846,3518,6.25,29.99,39.77,7.46,15.31
+Occitanie,120,477080,28532,8645,3409,5.98,30.3,39.43,7.15,15.86

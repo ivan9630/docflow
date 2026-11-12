@@ -1,0 +1,27 @@
+[
+  {
+    "id": "KB001",
+    "title": "Sécurité",
+    "text": "Surchauffe, câble abîmé et batterie endommagée exigent un avis professionnel et une filière DEEE. Ne pas donner de procédure de réparation."
+  },
+  {
+    "id": "KB002",
+    "title": "Réemploi",
+    "text": "Vérifier la valeur estimée, les défauts et la possibilité de reconditionnement, avec contrôle réglementaire humain."
+  },
+  {
+    "id": "KB003",
+    "title": "Recyclage",
+    "text": "Orienter les équipements irréparables ou présentant un risque vers la collecte DEEE autorisée."
+  },
+  {
+    "id": "KB004",
+    "title": "SAV",
+    "text": "Tracer l'identifiant, l'état, la décision et les anomalies. Ne jamais annoncer une garantie sans sources."
+  },
+  {
+    "id": "KB005",
+    "title": "Arbre de décision",
+    "text": "Priorité : danger, état irréparable, faible valeur économique, validation humaine."
+  }
+]

@@ -87,12 +87,15 @@ def create_star_schema(df, out=OUT):
     for name,dim in dims.items():
         fact[name+"_id"]=df[name].map(dict(zip(dim[name],dim[name+"_id"])))
     fact.to_csv(out/"fact_campagnes.csv",index=False)
-    with sqlite3.connect(out/"pilotage_campagnes.sqlite") as conn:
+    db_path = out / "pilotage_campagnes.sqlite"
+    db_path.unlink(missing_ok=True)  # Exécution reproductible, sans doublons SQL lors des relances
+    with sqlite3.connect(db_path) as conn:
         conn.executescript(SCHEMA.read_text(encoding="utf-8"))
         for name,dim in dims.items():
             dim.to_sql("dim_"+name,conn,if_exists="append",index=False)
         fact.to_sql("fact_campagnes",conn,if_exists="append",index=False)
-        conn.execute("PRAGMA foreign_key_check")
+        fk_errors = conn.execute("PRAGMA foreign_key_check").fetchall()
+        assert not fk_errors, f"Foreign-key violations: {fk_errors}"
     return fact
 
 def build():

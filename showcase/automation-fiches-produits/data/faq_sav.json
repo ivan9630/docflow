@@ -1,0 +1,37 @@
+[
+  {
+    "id": "F01",
+    "intent": "garantie",
+    "question": "Quelle est la garantie ?",
+    "reponse": "Consultez vos documents d'achat ou le vendeur : la garantie dépend du contrat.",
+    "escalade": true
+  },
+  {
+    "id": "F02",
+    "intent": "livraison",
+    "question": "Où est ma livraison ?",
+    "reponse": "Le statut de livraison n'est pas accessible ici ; contactez le support avec votre référence de commande.",
+    "escalade": true
+  },
+  {
+    "id": "F03",
+    "intent": "retour",
+    "question": "Comment retourner un produit ?",
+    "reponse": "Consultez les modalités de retour communiquées par le vendeur.",
+    "escalade": true
+  },
+  {
+    "id": "F04",
+    "intent": "panne",
+    "question": "Mon appareil surchauffe",
+    "reponse": "Cessez l'utilisation et contactez un professionnel qualifié ; pas de réparation DIY.",
+    "escalade": true
+  },
+  {
+    "id": "F05",
+    "intent": "plateforme",
+    "question": "Comment utiliser la plateforme ?",
+    "reponse": "Le support peut expliquer la navigation et les fonctionnalités générales.",
+    "escalade": false
+  }
+]

@@ -1,0 +1,84 @@
+{
+  "name": "Envie - Bot SAV - démo",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "support-demo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-11",
+      "name": "Webhook question",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        200,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/api/support",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({question:$json.body.question, use_llm:false}) }}",
+        "options": {}
+      },
+      "id": "node-12",
+      "name": "Recherche FAQ - bot support",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        500,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "node-13",
+      "name": "Réponse ou escalade",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        820,
+        240
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook question": {
+      "main": [
+        [
+          {
+            "node": "Recherche FAQ - bot support",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recherche FAQ - bot support": {
+      "main": [
+        [
+          {
+            "node": "Réponse ou escalade",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

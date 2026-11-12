@@ -1,0 +1,139 @@
+{
+  "name": "Envie - Enrichissement fiches - démo",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fiches-demo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-1",
+      "name": "Webhook déclenchement",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        200,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://host.docker.internal:8000/api/scrape-demo",
+        "options": {}
+      },
+      "id": "node-2",
+      "name": "Scraping HTML (API locale)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        430,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/api/enrich",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"produit_id\":\"PROD-N8N\",\"nom\":\"Lave-linge Bosch reconditionné\",\"marque\":\"Bosch\",\"description\":\"État bon, défaut cosmétique\",\"etat\":\"bon\",\"defauts_declares\":\"cosmetique\",\"prix_reference_eur\":180,\"use_llm\":false}",
+        "options": {}
+      },
+      "id": "node-3",
+      "name": "LLM structuration (API locale + clé optionnelle)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        650,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/api/store",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "node-4",
+      "name": "Insertion SQL via API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        890,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "node-5",
+      "name": "Réponse webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1130,
+        240
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook déclenchement": {
+      "main": [
+        [
+          {
+            "node": "Scraping HTML (API locale)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scraping HTML (API locale)": {
+      "main": [
+        [
+          {
+            "node": "LLM structuration (API locale + clé optionnelle)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM structuration (API locale + clé optionnelle)": {
+      "main": [
+        [
+          {
+            "node": "Insertion SQL via API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertion SQL via API": {
+      "main": [
+        [
+          {
+            "node": "Réponse webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

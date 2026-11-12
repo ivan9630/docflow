@@ -16,7 +16,7 @@ Projet personnel pour un contexte de **génération de leads et marketing digita
 - Écart de facturation détecté et filtres de livraison paramétrables ; aucune diffusion de contacts réelle.
 - Test de classification sur un échantillon de contrôle **synthétique** ; il ne s'agit pas d'une précision vérifiée sur des leads réels.
 
-[Rapport chiffré](output/rapport_performance.md) · [Cahier des charges / architecture](docs/ARCHITECTURE.md) · [Guide HubSpot API](docs/HUBSPOT_API.md) · [Mode d'emploi Excel](docs/EXCEL_MODELE.md)
+[Rapport chiffré](output/rapport_performance.md) · [Tableur Excel de pilotage](output/pilotage_crm_tableurs_avances.xlsx) · [Cahier des charges / architecture](docs/ARCHITECTURE.md) · [Guide HubSpot API](docs/HUBSPOT_API.md) · [Mode d'emploi Excel](docs/EXCEL_MODELE.md)
 
 ## Reproduire
 

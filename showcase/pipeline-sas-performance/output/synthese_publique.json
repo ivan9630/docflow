@@ -5,19 +5,19 @@
     "valides": 600
   },
   "national": {
-    "observations": 601,
-    "impressions": 2377452,
-    "clics": 146457,
-    "contacts": 44361,
-    "rdv": 17603,
-    "cout": 269751,
+    "observations": 600,
+    "impressions": 2374700,
+    "clics": 146281,
+    "contacts": 44291,
+    "rdv": 17574,
+    "cout": 269100,
     "ctr": 6.16,
-    "contact_rate": 30.29,
+    "contact_rate": 30.28,
     "rdv_rate": 39.68,
     "rdv_par_1000": 7.4,
-    "cout_par_rdv": 15.32
+    "cout_par_rdv": 15.31
   },
-  "impact_did_rdv_1000": 1.72,
+  "impact_did_rdv_1000": 1.71,
   "regions": [
     {
       "name": "Auvergne-Rhone-Alpes",
@@ -63,17 +63,17 @@
     },
     {
       "name": "Ile-de-France",
-      "observations": 121,
-      "impressions": 471692,
-      "clics": 29499,
-      "contacts": 8846,
-      "rdv": 3518,
-      "cout": 53871,
+      "observations": 120,
+      "impressions": 468940,
+      "clics": 29323,
+      "contacts": 8776,
+      "rdv": 3489,
+      "cout": 53220,
       "ctr": 6.25,
-      "contact_rate": 29.99,
-      "rdv_rate": 39.77,
-      "rdv_par_1000": 7.46,
-      "cout_par_rdv": 15.31
+      "contact_rate": 29.93,
+      "rdv_rate": 39.76,
+      "rdv_par_1000": 7.44,
+      "cout_par_rdv": 15.25
     },
     {
       "name": "Occitanie",
@@ -93,17 +93,17 @@
   "secteurs": [
     {
       "name": "BTP",
-      "observations": 121,
-      "impressions": 477112,
-      "clics": 28702,
-      "contacts": 8705,
-      "rdv": 3442,
-      "cout": 53391,
-      "ctr": 6.02,
-      "contact_rate": 30.33,
-      "rdv_rate": 39.54,
-      "rdv_par_1000": 7.21,
-      "cout_par_rdv": 15.51
+      "observations": 120,
+      "impressions": 474360,
+      "clics": 28526,
+      "contacts": 8635,
+      "rdv": 3413,
+      "cout": 52740,
+      "ctr": 6.01,
+      "contact_rate": 30.27,
+      "rdv_rate": 39.53,
+      "rdv_par_1000": 7.19,
+      "cout_par_rdv": 15.45
     },
     {
       "name": "Commerce",
@@ -165,17 +165,17 @@
   "campagnes": [
     {
       "name": "FT-Pro-Acquisition",
-      "observations": 201,
-      "impressions": 785352,
-      "clics": 45158,
-      "contacts": 13680,
-      "rdv": 5414,
-      "cout": 91951,
+      "observations": 200,
+      "impressions": 782600,
+      "clics": 44982,
+      "contacts": 13610,
+      "rdv": 5385,
+      "cout": 91300,
       "ctr": 5.75,
-      "contact_rate": 30.29,
-      "rdv_rate": 39.58,
-      "rdv_par_1000": 6.89,
-      "cout_par_rdv": 16.98
+      "contact_rate": 30.26,
+      "rdv_rate": 39.57,
+      "rdv_par_1000": 6.88,
+      "cout_par_rdv": 16.95
     },
     {
       "name": "FT-Pro-Relance",

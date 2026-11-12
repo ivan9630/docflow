@@ -1,0 +1,40 @@
+name: CRM HubSpot Data — Python SQL ML QA
+on:
+  push:
+    paths:
+      - 'showcase/crm-hubspot-data-pipeline/**'
+      - '.github/workflows/crm-hubspot-data-ci.yml'
+  pull_request:
+    paths:
+      - 'showcase/crm-hubspot-data-pipeline/**'
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: showcase/crm-hubspot-data-pipeline
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -r requirements.txt
+      - name: Generate demo
+        run: PYTHONPATH=src python -m crm_pipeline generate
+      - name: Test pipeline
+        run: PYTHONPATH=src python -m unittest discover -s tests -v
+      - name: Run end-to-end
+        run: PYTHONPATH=src python -m crm_pipeline run
+      - name: Check outputs
+        run: |
+          python - <<'PY'
+          import json,sqlite3
+          data=json.load(open('output/resultats.json'))
+          assert (data['sources'],data['contacts_uniques'],data['doublons'],data['rejets_invalides'])==(260,240,12,8)
+          with sqlite3.connect('output/hubspot_demo.sqlite') as db:
+              assert db.execute('SELECT COUNT(*) FROM fact_leads').fetchone()[0]==240
+              assert not db.execute('PRAGMA foreign_key_check').fetchall()
+          print('CRM quality gate passed')
+          PY

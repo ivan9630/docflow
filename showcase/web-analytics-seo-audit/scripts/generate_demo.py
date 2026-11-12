@@ -23,7 +23,8 @@ def html_page(i):
     desc='' if i%11==0 else f'Découvrez le dossier {i} sur les matériaux, les solutions industrielles et le réemploi.'
     heading='' if i%19==0 else f'<h1>{html.escape(name)}</h1>'
     canonical='' if i%23==0 else f'<link rel="canonical" href="https://www.exemple-audit.invalid/pages/page-{i:03}.html">'
-    image=f'<img src="../assets/symbol.svg" {'alt="Matériau industriel"' if i%13 else ''}>'
+    alt='alt="Matériau industriel"' if i%13 else ''
+    image=f'<img src="../assets/symbol.svg" {alt}>'
     next_page=i+1 if i<130 else 1
     return f'''<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>{html.escape(title)}</title>
     {f'<meta name="description" content="{html.escape(desc)}">' if desc else ''}

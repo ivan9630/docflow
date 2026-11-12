@@ -1,0 +1,10 @@
+{
+  "client": "Client Internet fictif",
+  "secteur": ["BTP", "Services", "Logiciels"],
+  "region": ["Île-de-France", "Bretagne"],
+  "segment": ["Prioritaire", "À qualifier"],
+  "qualite_min": 70,
+  "volume_max": 25,
+  "format": "csv",
+  "utilisation": "Simulation hors production ; ne jamais diffuser de données personnelles réelles"
+}

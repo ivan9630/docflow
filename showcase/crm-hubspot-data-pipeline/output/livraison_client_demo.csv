@@ -1,0 +1,24 @@
+lead_id,email,entreprise,secteur,region,segment,score_qualite,score_conversion_ml
+LD-0195,contact195@example.com,Société Démo 065,Logiciels,Île-de-France,Prioritaire,90.0,84.3
+LD-0160,contact160@example.com,Société Démo 054,Logiciels,Île-de-France,Prioritaire,90.0,79.9
+LD-0230,contact230@example.com,Société Démo 077,Logiciels,Île-de-France,Prioritaire,100.0,78.5
+LD-0115,contact115@example.com,Société Démo 039,Logiciels,Île-de-France,Prioritaire,85.0,77.2
+LD-0015,contact015@example.com,Société Démo 005,Logiciels,Île-de-France,Prioritaire,90.0,75.5
+LD-0200,contact200@example.com,Société Démo 067,Logiciels,Île-de-France,Prioritaire,90.0,75.2
+LD-0010,contact010@example.com,Société Démo 004,Logiciels,Île-de-France,Prioritaire,100.0,72.9
+LD-0070,contact070@example.com,Société Démo 024,Logiciels,Île-de-France,Prioritaire,100.0,72.1
+LD-0065,contact065@example.com,Société Démo 022,Logiciels,Île-de-France,Prioritaire,75.0,70.8
+LD-0045,contact045@example.com,Société Démo 015,Logiciels,Île-de-France,À qualifier,100.0,66.8
+LD-0225,contact225@example.com,Société Démo 075,Logiciels,Île-de-France,À qualifier,100.0,62.6
+LD-0170,contact170@example.com,Société Démo 057,Logiciels,Île-de-France,À qualifier,90.0,58.6
+LD-0135,contact135@example.com,Société Démo 045,Logiciels,Île-de-France,À qualifier,90.0,56.8
+LD-0055,contact055@example.com,Société Démo 019,Logiciels,Île-de-France,À qualifier,90.0,55.8
+LD-0120,contact120@example.com,Société Démo 040,Logiciels,Île-de-France,À qualifier,100.0,54.4
+LD-0145,contact145@example.com,Société Démo 049,Logiciels,Île-de-France,À qualifier,85.0,51.5
+LD-0165,contact165@example.com,Société Démo 055,Logiciels,Île-de-France,À qualifier,100.0,51.4
+LD-0085,contact085@example.com,Société Démo 029,Logiciels,Île-de-France,À qualifier,100.0,50.6
+LD-0140,contact140@example.com,Société Démo 047,Logiciels,Île-de-France,À qualifier,90.0,50.3
+LD-0080,contact080@example.com,Société Démo 027,Logiciels,Île-de-France,À qualifier,90.0,49.6
+LD-0100,contact100@example.com,Société Démo 034,Logiciels,Île-de-France,À qualifier,75.0,46.4
+LD-0050,contact050@example.com,Société Démo 017,Logiciels,Île-de-France,À qualifier,100.0,44.3
+LD-0095,contact095@example.com,Société Démo 032,Logiciels,Île-de-France,À qualifier,100.0,43.9

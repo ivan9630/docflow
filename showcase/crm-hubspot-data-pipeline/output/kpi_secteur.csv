@@ -1,0 +1,6 @@
+secteur,leads,livraisons,transformations,taux_transformation_pct,cout_par_lead_eur,marge_eur,litiges
+BTP,48,583,173,29.67,148.48,29543.86,4
+Commerce,48,661,233,35.25,149.34,37802.11,1
+Industrie,48,687,108,15.72,164.43,14828.36,4
+Logiciels,48,565,110,19.47,146.42,20208.51,4
+Services,48,587,137,23.34,146.25,22601.31,2

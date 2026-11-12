@@ -1,0 +1,21 @@
+lead_id,nom,email,entreprise,source,secteur,region,statut,derniere_interaction,nb_interactions,pages_visitees,taille_entreprise,budget_indicatif,contacts_livres,contacts_convertis,litiges,cout_acquisition,ca_facture,montant_facture,date_creation,motif_rejet
+BAD-001,Contact Démo 041,adresse-invalide,Société Démo 014,Email,BTP,Occitanie,qualifie,2026-10-01,7,3,15,11523,3,0,0,55.63,0.0,0.0,2026-07-01,EMAIL_INVALIDE
+BAD-002,Contact Démo 042,adresse-invalide,Société Démo 014,LinkedIn,Commerce,Bretagne,contacte,2026-07-30,24,20,500,5260,2,1,0,47.82,124.27,124.27,2026-07-01,EMAIL_INVALIDE
+BAD-003,Contact Démo 043,erreur3@example.com,Société Démo 015,Google Ads,Industrie,Hauts-de-France,proposition,2026-09-13,8,2,40,6891,14,6,0,-25.0,706.18,706.18,2026-07-01,MONTANT_INVALIDE
+BAD-004,Contact Démo 044,erreur4@example.com,Société Démo 015,Meta Ads,Services,Auvergne-Rhône-Alpes,perdu,2026-07-25,2,22,500,8965,9,0,0,-25.0,0.0,0.0,2026-07-01,MONTANT_INVALIDE
+BAD-005,Contact Démo 045,erreur5@example.com,Société Démo 015,SEO,Logiciels,Île-de-France,contacte,2026-09-06,19,5,40,11465,18,23,0,231.87,1889.55,1889.55,2026-07-01,CONVERSION_INVALIDE
+BAD-006,Contact Démo 046,erreur6@example.com,Société Démo 016,Partenaire,BTP,Occitanie,qualifie,2026-09-04,5,20,120,6738,7,12,0,107.18,821.97,821.97,2026-07-01,CONVERSION_INVALIDE
+BAD-007,Contact Démo 047,erreur7@example.com,Société Démo 016,Email,Commerce,Bretagne,gagne,date-erronee,9,22,40,557,1,1,0,30.12,210.02,300.02,2026-07-01,DATE_INVALIDE
+BAD-008,Contact Démo 048,erreur8@example.com,Société Démo 016,LinkedIn,Industrie,Hauts-de-France,gagne,date-erronee,25,7,120,2322,17,4,0,227.4,809.54,809.54,2026-07-01,DATE_INVALIDE
+LD-0138,Contact Démo 138,contact138@example.com,Société Démo 046,LinkedIn,Industrie,Hauts-de-France,nouveau,2026-10-12,1,15,500,11774,22,0,1,188.29,0.0,0.0,2026-07-01,DOUBLON_EMAIL
+LD-0099,Contact Démo 099,contact099@example.com,Société Démo 033,SEO,Services,Auvergne-Rhône-Alpes,proposition,2026-10-07,9,2,120,9772,12,9,0,110.53,2910.29,2910.29,2026-07-01,DOUBLON_EMAIL
+LD-0125,Contact Démo 125,contact125@example.com,Société Démo 042,Email,Logiciels,Île-de-France,qualifie,2026-10-02,12,6,120,10933,5,0,0,78.47,0.0,0.0,2026-07-01,DOUBLON_EMAIL
+LD-0034,Contact Démo 034,contact034@example.com,Société Démo 012,Partenaire,Services,Auvergne-Rhône-Alpes,perdu,2026-09-11,20,22,3,6667,7,5,0,114.56,747.44,747.44,2026-07-01,DOUBLON_EMAIL
+LD-0047,Contact Démo 047,contact047@example.com,Société Démo 016,Email,Commerce,Bretagne,gagne,2026-09-02,9,22,40,557,1,1,0,30.12,210.02,300.02,2026-07-01,DOUBLON_EMAIL
+LD-0073,Contact Démo 073,contact073@example.com,Société Démo 025,Google Ads,Industrie,Hauts-de-France,perdu,2026-08-31,2,7,500,9963,24,0,0,352.4,0.0,0.0,2026-07-01,DOUBLON_EMAIL
+LD-0086,Contact Démo 086,contact086@example.com,Société Démo 029,Meta Ads,BTP,Occitanie,proposition,2026-08-31,8,7,120,2824,8,0,0,137.58,0.0,0.0,2026-07-01,DOUBLON_EMAIL
+LD-0008,Contact Démo 008,contact008@example.com,Société Démo 003,Meta Ads,Industrie,Hauts-de-France,nouveau,2026-08-30,24,10,120,858,14,4,0,228.99,884.57,884.57,2026-07-01,DOUBLON_EMAIL
+LD-0112,Contact Démo 112,contact112@example.com,Société Démo 038,Partenaire,Commerce,Bretagne,nouveau,2026-08-29,13,11,500,3030,23,0,0,210.47,0.0,0.0,2026-07-01,DOUBLON_EMAIL
+LD-0021,Contact Démo 021,contact021@example.com,Société Démo 007,SEO,BTP,Occitanie,nouveau,2026-08-25,21,2,3,340,3,0,0,50.58,0.0,0.0,2026-07-01,DOUBLON_EMAIL
+LD-0060,Contact Démo 060,contact060@example.com,Société Démo 020,LinkedIn,Logiciels,Île-de-France,contacte,2026-08-19,17,1,500,1008,24,4,0,276.6,1214.86,1214.86,2026-07-01,DOUBLON_EMAIL
+LD-0151,Contact Démo 151,contact151@example.com,Société Démo 051,Google Ads,BTP,Occitanie,qualifie,2026-07-19,15,20,500,3204,24,0,0,173.82,0.0,0.0,2026-07-01,DOUBLON_EMAIL

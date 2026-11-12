@@ -1,0 +1,241 @@
+lead_id,nom,email,entreprise,source,secteur,region,statut,derniere_interaction,nb_interactions,pages_visitees,taille_entreprise,budget_indicatif,contacts_livres,contacts_convertis,litiges,cout_acquisition,ca_facture,montant_facture,date_creation,jours_depuis_interaction,score_qualite,score_conversion_ml,segment,ecart_facturation
+DUP-001,Contact Démo 008,contact008@example.com,Société Démo 003,Meta Ads,Industrie,Hauts-de-France,nouveau,2026-11-01,25,10,120,858,14,4,0,228.99,884.57,884.57,2026-07-01,11,100.0,66.9,À qualifier,0.0
+DUP-002,Contact Démo 021,contact021@example.com,Société Démo 007,SEO,BTP,Occitanie,nouveau,2026-11-01,22,2,3,340,3,0,0,50.58,0.0,0.0,2026-07-01,11,85.0,79.6,Prioritaire,0.0
+DUP-003,Contact Démo 034,contact034@example.com,Société Démo 012,Partenaire,Services,Auvergne-Rhône-Alpes,perdu,2026-11-01,21,22,3,6667,7,5,0,114.56,747.44,747.44,2026-07-01,11,100.0,86.4,Prioritaire,0.0
+DUP-004,Contact Démo 047,contact047@example.com,Société Démo 016,Email,Commerce,Bretagne,gagne,2026-11-01,10,22,40,557,1,1,0,30.12,210.02,300.02,2026-07-01,11,100.0,45.1,À qualifier,90.0
+DUP-005,Contact Démo 060,contact060@example.com,Société Démo 020,LinkedIn,Logiciels,Île-de-France,contacte,2026-11-01,18,1,500,1008,24,4,0,276.6,1214.86,1214.86,2026-07-01,11,85.0,40.2,À réengager,0.0
+DUP-006,Contact Démo 073,contact073@example.com,Société Démo 025,Google Ads,Industrie,Hauts-de-France,perdu,2026-11-01,3,7,500,9963,24,0,0,352.4,0.0,0.0,2026-07-01,11,100.0,12.0,À réengager,0.0
+DUP-007,Contact Démo 086,contact086@example.com,Société Démo 029,Meta Ads,BTP,Occitanie,proposition,2026-11-01,9,7,120,2824,8,0,0,137.58,0.0,0.0,2026-07-01,11,100.0,37.2,À réengager,0.0
+DUP-008,Contact Démo 099,contact099@example.com,Société Démo 033,SEO,Services,Auvergne-Rhône-Alpes,proposition,2026-11-01,10,2,120,9772,12,9,0,110.53,2910.29,2910.29,2026-07-01,11,85.0,40.0,À réengager,0.0
+DUP-009,Contact Démo 112,contact112@example.com,Société Démo 038,Partenaire,Commerce,Bretagne,nouveau,2026-11-01,14,11,500,3030,23,0,0,210.47,0.0,0.0,2026-07-01,11,100.0,75.8,Prioritaire,0.0
+DUP-010,Contact Démo 125,contact125@example.com,Société Démo 042,Email,Logiciels,Île-de-France,qualifie,2026-11-01,13,6,120,10933,5,0,0,78.47,0.0,0.0,2026-07-01,11,100.0,22.2,À réengager,0.0
+DUP-011,Contact Démo 138,contact138@example.com,Société Démo 046,LinkedIn,Industrie,Hauts-de-France,nouveau,2026-11-01,2,15,500,11774,22,0,1,188.29,0.0,0.0,2026-07-01,11,85.0,8.6,À réengager,0.0
+DUP-012,Contact Démo 151,contact151@example.com,Société Démo 051,Google Ads,BTP,Occitanie,qualifie,2026-11-01,16,20,500,3204,24,0,0,173.82,0.0,0.0,2026-07-01,11,100.0,68.3,À qualifier,0.0
+LD-0167,Contact Démo 167,contact167@example.com,Société Démo 056,Email,Commerce,Bretagne,perdu,2026-10-14,5,16,15,306,24,13,0,308.64,1379.67,1379.67,2026-07-01,29,100.0,30.6,À réengager,0.0
+LD-0228,Contact Démo 228,contact228@example.com,Société Démo 076,LinkedIn,Industrie,Hauts-de-France,contacte,2026-10-14,8,3,15,1955,8,3,0,66.58,812.56,812.56,2026-07-01,29,100.0,16.8,À réengager,0.0
+LD-0016,Contact Démo 016,contact016@example.com,Société Démo 006,Partenaire,BTP,Occitanie,contacte,2026-10-13,5,16,3,1704,22,13,0,248.95,2861.71,2861.71,2026-07-01,30,100.0,54.9,À qualifier,0.0
+LD-0035,Contact Démo 035,contact035@example.com,Société Démo 012,Email,Logiciels,Île-de-France,contacte,2026-10-13,17,5,500,3752,23,0,0,272.36,0.0,0.0,2026-07-01,30,100.0,35.4,À réengager,0.0
+LD-0105,Contact Démo 105,contact105@example.com,Société Démo 035,SEO,Logiciels,Île-de-France,nouveau,2026-10-13,9,9,40,8798,13,0,0,194.39,0.0,0.0,2026-07-01,30,100.0,37.0,À réengager,0.0
+LD-0214,Contact Démo 214,contact214@example.com,Société Démo 072,Partenaire,Services,Auvergne-Rhône-Alpes,perdu,2026-10-12,23,5,120,2381,19,9,0,220.33,2361.0,2361.0,2026-07-01,31,100.0,86.0,Prioritaire,0.0
+LD-0030,Contact Démo 030,contact030@example.com,Société Démo 010,LinkedIn,Logiciels,Île-de-France,proposition,2026-10-11,8,1,15,3001,12,0,0,91.77,0.0,0.0,2026-07-01,32,85.0,19.7,À réengager,0.0
+LD-0040,Contact Démo 040,contact040@example.com,Société Démo 014,Partenaire,Logiciels,Île-de-France,proposition,2026-10-11,3,4,15,2187,23,0,0,349.97,0.0,0.0,2026-07-01,32,100.0,29.7,À réengager,0.0
+LD-0072,Contact Démo 072,contact072@example.com,Société Démo 024,LinkedIn,Commerce,Bretagne,proposition,2026-10-11,16,7,40,5472,2,0,0,44.93,0.0,0.0,2026-07-01,32,100.0,59.5,À qualifier,0.0
+LD-0063,Contact Démo 063,contact063@example.com,Société Démo 021,SEO,Industrie,Hauts-de-France,gagne,2026-10-10,11,6,120,9281,23,0,0,191.85,0.0,0.0,2026-07-01,33,100.0,34.6,À réengager,0.0
+LD-0097,Contact Démo 097,contact097@example.com,Société Démo 033,Google Ads,Commerce,Bretagne,gagne,2026-10-10,23,3,40,2316,9,2,0,75.81,208.72,208.72,2026-07-01,33,100.0,83.1,Prioritaire,0.0
+LD-0127,Contact Démo 127,contact127@example.com,Société Démo 043,Google Ads,Commerce,Bretagne,gagne,2026-10-10,19,22,500,7987,17,7,0,163.64,1299.02,1299.02,2026-07-01,33,100.0,81.0,Prioritaire,0.0
+LD-0110,Contact Démo 110,contact110@example.com,Société Démo 037,Meta Ads,Logiciels,Île-de-France,proposition,2026-10-09,7,17,3,8019,13,0,0,206.76,0.0,0.0,2026-07-01,34,100.0,28.1,À réengager,0.0
+LD-0208,Contact Démo 208,contact208@example.com,Société Démo 070,Partenaire,Industrie,Hauts-de-France,proposition,2026-10-09,17,17,40,4946,15,4,0,163.95,667.81,587.81,2026-07-01,34,100.0,69.3,À qualifier,-80.0
+LD-0217,Contact Démo 217,contact217@example.com,Société Démo 073,Google Ads,Commerce,Bretagne,gagne,2026-10-09,17,13,15,3739,17,11,0,116.92,1691.79,1691.79,2026-07-01,34,100.0,75.8,Prioritaire,0.0
+LD-0018,Contact Démo 018,contact018@example.com,Société Démo 006,LinkedIn,Industrie,Hauts-de-France,proposition,2026-10-08,21,18,15,11311,21,12,0,314.28,2225.29,2225.29,2026-07-01,35,100.0,54.0,À qualifier,0.0
+LD-0145,Contact Démo 145,contact145@example.com,Société Démo 049,Google Ads,Logiciels,Île-de-France,contacte,2026-10-08,14,14,3,4577,23,12,1,176.14,2747.83,2747.83,2026-07-01,35,85.0,51.5,À qualifier,0.0
+LD-0234,Contact Démo 234,contact234@example.com,Société Démo 078,LinkedIn,Services,Auvergne-Rhône-Alpes,qualifie,2026-10-08,13,17,120,9306,18,11,0,224.45,2554.57,2554.57,2026-07-01,35,100.0,45.7,À qualifier,0.0
+LD-0130,Contact Démo 130,contact130@example.com,Société Démo 044,Partenaire,Logiciels,Île-de-France,qualifie,2026-10-07,1,12,500,4531,8,0,0,120.89,0.0,0.0,2026-07-01,36,100.0,27.4,À réengager,0.0
+LD-0136,Contact Démo 136,contact136@example.com,Société Démo 046,Partenaire,BTP,Occitanie,qualifie,2026-10-07,15,14,15,8887,23,0,0,157.91,0.0,0.0,2026-07-01,36,100.0,76.8,Prioritaire,0.0
+LD-0206,Contact Démo 206,contact206@example.com,Société Démo 069,Meta Ads,BTP,Occitanie,perdu,2026-10-07,11,17,15,3646,19,12,0,120.87,1921.68,1921.68,2026-07-01,36,100.0,53.2,À qualifier,0.0
+LD-0159,Contact Démo 159,contact159@example.com,Société Démo 053,SEO,Services,Auvergne-Rhône-Alpes,perdu,2026-10-06,8,12,120,11141,7,2,0,127.37,517.98,517.98,2026-07-01,37,100.0,44.1,À qualifier,0.0
+LD-0156,Contact Démo 156,contact156@example.com,Société Démo 052,LinkedIn,BTP,Occitanie,nouveau,2026-10-05,14,22,3,2172,8,3,0,105.02,924.42,924.42,2026-07-01,38,100.0,60.4,À qualifier,0.0
+LD-0158,Contact Démo 158,contact158@example.com,Société Démo 053,Meta Ads,Industrie,Hauts-de-France,gagne,2026-10-05,6,8,15,2688,23,0,0,244.18,0.0,0.0,2026-07-01,38,100.0,19.5,À réengager,0.0
+LD-0219,Contact Démo 219,contact219@example.com,Société Démo 073,SEO,Services,Auvergne-Rhône-Alpes,proposition,2026-10-05,0,21,120,5533,2,0,0,46.58,0.0,0.0,2026-07-01,38,80.0,31.0,À réengager,0.0
+LD-0027,Contact Démo 027,contact027@example.com,Société Démo 009,SEO,Commerce,Bretagne,proposition,2026-10-04,6,13,40,3785,6,0,0,55.56,0.0,0.0,2026-07-01,39,100.0,53.4,À qualifier,0.0
+LD-0053,Contact Démo 053,contact053@example.com,Société Démo 018,Email,Industrie,Hauts-de-France,proposition,2026-10-04,0,7,500,6486,18,0,0,206.67,0.0,0.0,2026-07-01,39,80.0,5.8,À réengager,0.0
+LD-0101,Contact Démo 101,contact101@example.com,Société Démo 034,Email,BTP,Occitanie,proposition,2026-10-04,11,2,40,296,14,0,0,187.61,0.0,0.0,2026-07-01,39,70.0,33.5,À réengager,0.0
+LD-0107,Contact Démo 107,contact107@example.com,Société Démo 036,Email,Commerce,Bretagne,contacte,2026-10-04,21,12,40,7277,4,0,0,52.43,0.0,0.0,2026-07-01,39,100.0,70.0,Prioritaire,0.0
+LD-0120,Contact Démo 120,contact120@example.com,Société Démo 040,LinkedIn,Logiciels,Île-de-France,nouveau,2026-10-04,20,7,500,563,18,8,0,246.19,1751.0,1751.0,2026-07-01,39,100.0,54.4,À qualifier,0.0
+LD-0144,Contact Démo 144,contact144@example.com,Société Démo 048,LinkedIn,Services,Auvergne-Rhône-Alpes,contacte,2026-10-04,25,12,500,2003,7,0,0,79.29,0.0,0.0,2026-07-01,39,100.0,77.1,Prioritaire,0.0
+LD-0164,Contact Démo 164,contact164@example.com,Société Démo 055,Meta Ads,Services,Auvergne-Rhône-Alpes,qualifie,2026-10-04,0,8,120,571,2,0,0,48.51,0.0,0.0,2026-07-01,39,80.0,18.5,À réengager,0.0
+LD-0181,Contact Démo 181,contact181@example.com,Société Démo 061,Google Ads,BTP,Occitanie,nouveau,2026-10-04,23,17,120,8181,4,1,0,84.27,270.4,270.4,2026-07-01,39,100.0,83.6,Prioritaire,0.0
+LD-0088,Contact Démo 088,contact088@example.com,Société Démo 030,Partenaire,Industrie,Hauts-de-France,gagne,2026-10-03,22,19,120,3336,24,0,0,302.1,0.0,0.0,2026-07-01,40,100.0,81.9,Prioritaire,0.0
+LD-0103,Contact Démo 103,contact103@example.com,Société Démo 035,Google Ads,Industrie,Hauts-de-France,qualifie,2026-10-02,8,9,40,7945,10,0,0,167.96,0.0,0.0,2026-07-01,41,100.0,25.6,À réengager,0.0
+LD-0215,Contact Démo 215,contact215@example.com,Société Démo 072,Email,Logiciels,Île-de-France,nouveau,2026-10-02,14,5,120,1389,17,0,0,233.04,0.0,0.0,2026-07-01,41,100.0,31.4,À réengager,0.0
+LD-0041,Contact Démo 041,contact041@example.com,Société Démo 014,Email,BTP,Occitanie,qualifie,2026-10-01,7,3,15,11523,3,0,0,55.63,0.0,0.0,2026-07-01,42,100.0,20.8,À réengager,0.0
+LD-0198,Contact Démo 198,contact198@example.com,Société Démo 066,LinkedIn,Industrie,Hauts-de-France,proposition,2026-10-01,23,22,120,10900,7,2,0,71.45,526.18,526.18,2026-07-01,42,100.0,63.1,À qualifier,0.0
+LD-0225,Contact Démo 225,contact225@example.com,Société Démo 075,SEO,Logiciels,Île-de-France,contacte,2026-10-01,17,5,3,1846,3,2,0,63.74,603.84,603.84,2026-07-01,42,100.0,62.6,À qualifier,0.0
+LD-0235,Contact Démo 235,contact235@example.com,Société Démo 079,Google Ads,Logiciels,Île-de-France,nouveau,2026-10-01,10,14,500,10146,3,1,0,53.53,325.35,325.35,2026-07-01,42,100.0,36.6,À réengager,0.0
+LD-0183,Contact Démo 183,contact183@example.com,Société Démo 061,SEO,Industrie,Hauts-de-France,proposition,2026-09-30,9,1,40,7036,7,2,0,102.47,431.28,431.28,2026-07-01,43,85.0,29.2,À réengager,0.0
+LD-0220,Contact Démo 220,contact220@example.com,Société Démo 074,Partenaire,Logiciels,Île-de-France,qualifie,2026-09-30,3,21,120,6095,6,2,0,102.54,605.54,605.54,2026-07-01,43,100.0,39.4,À réengager,0.0
+LD-0033,Contact Démo 033,contact033@example.com,Société Démo 011,SEO,Industrie,Hauts-de-France,qualifie,2026-09-29,12,15,500,4511,13,6,0,158.96,1821.42,1821.42,2026-07-01,44,100.0,45.9,À qualifier,0.0
+LD-0143,Contact Démo 143,contact143@example.com,Société Démo 048,Email,Industrie,Hauts-de-France,contacte,2026-09-29,25,18,40,11944,16,4,0,171.62,1251.32,1251.32,2026-07-01,44,100.0,60.0,À qualifier,0.0
+LD-0161,Contact Démo 161,contact161@example.com,Société Démo 054,Email,BTP,Occitanie,perdu,2026-09-29,23,12,15,5935,7,1,0,103.95,267.17,267.17,2026-07-01,44,100.0,71.1,Prioritaire,0.0
+LD-0023,Contact Démo 023,contact023@example.com,Société Démo 008,Email,Industrie,Hauts-de-France,contacte,2026-09-27,24,9,15,2574,24,0,0,212.38,0.0,0.0,2026-07-01,46,100.0,56.4,À qualifier,0.0
+LD-0113,Contact Démo 113,contact113@example.com,Société Démo 038,Email,Industrie,Hauts-de-France,gagne,2026-09-27,1,13,3,9216,24,0,0,239.11,0.0,0.0,2026-07-01,46,100.0,8.0,À réengager,0.0
+LD-0010,Contact Démo 010,contact010@example.com,Société Démo 004,Partenaire,Logiciels,Île-de-France,contacte,2026-09-26,20,3,120,10727,1,0,0,34.93,0.0,0.0,2026-07-01,47,100.0,72.9,Prioritaire,0.0
+LD-0011,Contact Démo 011,contact011@example.com,Société Démo 004,Email,BTP,Occitanie,contacte,2026-09-26,11,17,40,2777,19,0,0,178.45,0.0,0.0,2026-07-01,47,100.0,43.0,À qualifier,0.0
+LD-0070,Contact Démo 070,contact070@example.com,Société Démo 024,Partenaire,Logiciels,Île-de-France,perdu,2026-09-26,16,13,500,659,10,2,0,87.06,210.82,130.82,2026-07-01,47,100.0,72.1,Prioritaire,-80.0
+LD-0171,Contact Démo 171,contact171@example.com,Société Démo 057,SEO,BTP,Occitanie,qualifie,2026-09-26,10,18,3,6225,5,0,0,76.93,0.0,0.0,2026-07-01,47,100.0,62.1,À qualifier,0.0
+LD-0201,Contact Démo 201,contact201@example.com,Société Démo 067,SEO,BTP,Occitanie,contacte,2026-09-26,8,11,15,9581,5,1,0,93.6,134.77,134.77,2026-07-01,47,100.0,50.1,À qualifier,0.0
+LD-0141,Contact Démo 141,contact141@example.com,Société Démo 047,SEO,BTP,Occitanie,contacte,2026-09-25,19,4,15,3667,6,2,0,100.5,211.98,211.98,2026-07-01,48,100.0,77.3,Prioritaire,0.0
+LD-0092,Contact Démo 092,contact092@example.com,Société Démo 031,Meta Ads,Commerce,Bretagne,perdu,2026-09-24,25,20,500,8640,1,1,0,33.8,133.39,133.39,2026-07-01,49,100.0,88.0,Prioritaire,0.0
+LD-0163,Contact Démo 163,contact163@example.com,Société Démo 055,Google Ads,Industrie,Hauts-de-France,perdu,2026-09-24,18,18,15,4830,2,1,0,35.31,293.65,293.65,2026-07-01,49,100.0,61.3,À qualifier,0.0
+LD-0004,Contact Démo 004,contact004@example.com,Société Démo 002,Partenaire,Services,Auvergne-Rhône-Alpes,nouveau,2026-09-23,1,14,40,4455,3,2,0,42.34,476.31,476.31,2026-07-01,50,100.0,39.7,À réengager,0.0
+LD-0149,Contact Démo 149,contact149@example.com,Société Démo 050,Email,Services,Auvergne-Rhône-Alpes,qualifie,2026-09-23,9,22,3,7357,16,3,0,126.71,784.15,784.15,2026-07-01,50,100.0,35.2,À réengager,0.0
+LD-0152,Contact Démo 152,contact152@example.com,Société Démo 051,Meta Ads,Commerce,Bretagne,perdu,2026-09-23,6,12,15,5467,19,0,1,192.21,0.0,0.0,2026-07-01,50,85.0,42.7,À qualifier,0.0
+LD-0190,Contact Démo 190,contact190@example.com,Société Démo 064,Partenaire,Logiciels,Île-de-France,proposition,2026-09-23,0,4,15,5821,10,0,0,120.35,0.0,0.0,2026-07-01,50,80.0,23.6,À réengager,0.0
+LD-0216,Contact Démo 216,contact216@example.com,Société Démo 072,LinkedIn,BTP,Occitanie,proposition,2026-09-23,10,11,3,7179,22,0,0,227.6,0.0,0.0,2026-07-01,50,100.0,40.8,À réengager,0.0
+LD-0050,Contact Démo 050,contact050@example.com,Société Démo 017,Meta Ads,Logiciels,Île-de-France,qualifie,2026-09-22,14,11,500,6720,20,13,0,169.31,3989.74,3989.74,2026-07-01,51,100.0,44.3,À qualifier,0.0
+LD-0093,Contact Démo 093,contact093@example.com,Société Démo 031,SEO,Industrie,Hauts-de-France,qualifie,2026-09-22,2,12,3,5542,20,0,0,135.26,0.0,90.0,2026-07-01,51,100.0,21.1,À réengager,90.0
+LD-0185,Contact Démo 185,contact185@example.com,Société Démo 062,Email,Logiciels,Île-de-France,perdu,2026-09-21,3,20,3,8767,14,0,0,137.72,0.0,0.0,2026-07-01,52,100.0,15.1,À réengager,0.0
+LD-0210,Contact Démo 210,contact210@example.com,Société Démo 070,LinkedIn,Logiciels,Île-de-France,proposition,2026-09-21,8,1,120,5299,10,0,0,170.45,0.0,0.0,2026-07-01,52,85.0,20.7,À réengager,0.0
+LD-0067,Contact Démo 067,contact067@example.com,Société Démo 023,Google Ads,Commerce,Bretagne,perdu,2026-09-19,6,14,15,3120,1,0,0,33.69,0.0,0.0,2026-07-01,54,100.0,50.6,À qualifier,0.0
+LD-0069,Contact Démo 069,contact069@example.com,Société Démo 023,SEO,Services,Auvergne-Rhône-Alpes,qualifie,2026-09-19,15,6,120,1617,18,0,0,258.49,0.0,0.0,2026-07-01,54,100.0,67.3,À qualifier,0.0
+LD-0085,Contact Démo 085,contact085@example.com,Société Démo 029,Google Ads,Logiciels,Île-de-France,gagne,2026-09-19,12,20,40,8209,1,1,0,39.63,308.89,308.89,2026-07-01,54,100.0,50.6,À qualifier,0.0
+LD-0239,Contact Démo 239,contact239@example.com,Société Démo 080,Email,Services,Auvergne-Rhône-Alpes,nouveau,2026-09-19,21,16,3,6453,10,0,0,75.12,0.0,0.0,2026-07-01,54,100.0,66.2,À qualifier,0.0
+LD-0002,Contact Démo 002,contact002@example.com,Société Démo 001,Meta Ads,Commerce,Bretagne,nouveau,2026-09-18,25,16,500,4243,16,3,0,119.66,774.56,774.56,2026-07-01,55,100.0,88.2,Prioritaire,0.0
+LD-0054,Contact Démo 054,contact054@example.com,Société Démo 018,LinkedIn,Services,Auvergne-Rhône-Alpes,nouveau,2026-09-18,24,17,120,7248,18,4,0,238.99,712.31,712.31,2026-07-01,55,100.0,78.2,Prioritaire,0.0
+LD-0049,Contact Démo 049,contact049@example.com,Société Démo 017,Google Ads,Services,Auvergne-Rhône-Alpes,nouveau,2026-09-17,23,20,40,2663,15,7,0,159.66,1519.1,1519.1,2026-07-01,56,100.0,85.6,Prioritaire,0.0
+LD-0068,Contact Démo 068,contact068@example.com,Société Démo 023,Meta Ads,Industrie,Hauts-de-France,perdu,2026-09-17,24,19,40,11430,5,0,0,59.37,0.0,0.0,2026-07-01,56,100.0,71.0,Prioritaire,0.0
+LD-0096,Contact Démo 096,contact096@example.com,Société Démo 032,LinkedIn,BTP,Occitanie,nouveau,2026-09-17,4,7,120,7530,14,7,1,226.75,1887.58,1887.58,2026-07-01,56,85.0,23.8,À réengager,0.0
+LD-0165,Contact Démo 165,contact165@example.com,Société Démo 055,SEO,Logiciels,Île-de-France,contacte,2026-09-17,11,17,15,9964,3,0,0,49.03,0.0,0.0,2026-07-01,56,100.0,51.4,À qualifier,0.0
+LD-0175,Contact Démo 175,contact175@example.com,Société Démo 059,Google Ads,Logiciels,Île-de-France,contacte,2026-09-17,4,1,3,1113,15,0,0,216.17,0.0,0.0,2026-07-01,56,85.0,22.2,À réengager,0.0
+LD-0177,Contact Démo 177,contact177@example.com,Société Démo 059,SEO,Commerce,Bretagne,gagne,2026-09-17,17,15,3,11698,12,8,0,141.82,1427.49,1427.49,2026-07-01,56,100.0,80.5,Prioritaire,0.0
+LD-0122,Contact Démo 122,contact122@example.com,Société Démo 041,Meta Ads,Commerce,Bretagne,gagne,2026-09-15,22,17,40,10564,15,5,0,152.95,1387.23,1387.23,2026-07-01,58,100.0,83.8,Prioritaire,0.0
+LD-0148,Contact Démo 148,contact148@example.com,Société Démo 050,Partenaire,Industrie,Hauts-de-France,proposition,2026-09-15,15,9,40,7505,6,0,0,70.38,0.0,0.0,2026-07-01,58,100.0,61.4,À qualifier,0.0
+LD-0218,Contact Démo 218,contact218@example.com,Société Démo 073,Meta Ads,Industrie,Hauts-de-France,nouveau,2026-09-15,15,5,15,9549,24,11,0,286.23,1584.74,1584.74,2026-07-01,58,100.0,38.4,À réengager,0.0
+LD-0194,Contact Démo 194,contact194@example.com,Société Démo 065,Meta Ads,Services,Auvergne-Rhône-Alpes,nouveau,2026-09-14,24,17,120,2647,13,4,0,163.71,915.87,915.87,2026-07-01,59,100.0,83.7,Prioritaire,0.0
+LD-0043,Contact Démo 043,contact043@example.com,Société Démo 015,Google Ads,Industrie,Hauts-de-France,proposition,2026-09-13,8,2,40,6891,14,6,0,188.33,706.18,706.18,2026-07-01,60,85.0,24.7,À réengager,0.0
+LD-0087,Contact Démo 087,contact087@example.com,Société Démo 029,SEO,Commerce,Bretagne,perdu,2026-09-13,0,14,40,1995,21,10,0,193.03,1981.95,1981.95,2026-07-01,60,80.0,40.9,À réengager,0.0
+LD-0102,Contact Démo 102,contact102@example.com,Société Démo 034,LinkedIn,Commerce,Bretagne,contacte,2026-09-13,18,21,120,5888,20,0,0,151.43,0.0,0.0,2026-07-01,60,100.0,75.9,Prioritaire,0.0
+LD-0174,Contact Démo 174,contact174@example.com,Société Démo 058,LinkedIn,Services,Auvergne-Rhône-Alpes,contacte,2026-09-12,4,22,3,3009,17,0,0,117.94,0.0,0.0,2026-07-01,61,100.0,31.5,À réengager,0.0
+LD-0014,Contact Démo 014,contact014@example.com,Société Démo 005,Meta Ads,Services,Auvergne-Rhône-Alpes,proposition,2026-09-10,10,22,40,6920,8,3,0,73.38,832.76,832.76,2026-07-01,63,100.0,52.2,À qualifier,0.0
+LD-0084,Contact Démo 084,contact084@example.com,Société Démo 028,LinkedIn,Services,Auvergne-Rhône-Alpes,proposition,2026-09-10,18,13,120,11216,6,3,0,106.51,683.03,683.03,2026-07-01,63,100.0,60.7,À qualifier,0.0
+LD-0155,Contact Démo 155,contact155@example.com,Société Démo 052,Email,Logiciels,Île-de-France,qualifie,2026-09-10,2,19,3,5626,8,0,0,136.06,0.0,0.0,2026-07-01,63,100.0,15.0,À réengager,0.0
+LD-0202,Contact Démo 202,contact202@example.com,Société Démo 068,Partenaire,Commerce,Bretagne,perdu,2026-09-10,24,8,500,7629,12,2,0,176.69,379.84,379.84,2026-07-01,63,100.0,92.0,Prioritaire,0.0
+LD-0150,Contact Démo 150,contact150@example.com,Société Démo 050,LinkedIn,Logiciels,Île-de-France,gagne,2026-09-09,11,2,40,6993,14,0,1,144.99,0.0,0.0,2026-07-01,64,70.0,28.6,À réengager,0.0
+LD-0227,Contact Démo 227,contact227@example.com,Société Démo 076,Email,Commerce,Bretagne,contacte,2026-09-09,20,9,40,9816,13,4,0,125.27,601.98,601.98,2026-07-01,64,100.0,68.0,À qualifier,0.0
+LD-0111,Contact Démo 111,contact111@example.com,Société Démo 037,SEO,BTP,Occitanie,perdu,2026-09-08,19,21,500,5854,22,12,0,213.27,1331.49,1331.49,2026-07-01,65,100.0,84.2,Prioritaire,0.0
+LD-0172,Contact Démo 172,contact172@example.com,Société Démo 058,Partenaire,Commerce,Bretagne,contacte,2026-09-08,4,15,15,8371,23,12,0,174.49,3665.68,3665.68,2026-07-01,65,100.0,59.3,À qualifier,0.0
+LD-0230,Contact Démo 230,contact230@example.com,Société Démo 077,Meta Ads,Logiciels,Île-de-France,proposition,2026-09-08,24,18,500,2686,11,0,0,162.86,0.0,0.0,2026-07-01,65,100.0,78.5,Prioritaire,0.0
+LD-0095,Contact Démo 095,contact095@example.com,Société Démo 032,Email,Logiciels,Île-de-France,perdu,2026-09-07,17,13,500,7630,15,0,0,133.57,0.0,0.0,2026-07-01,66,100.0,43.9,À qualifier,0.0
+LD-0115,Contact Démo 115,contact115@example.com,Société Démo 039,Google Ads,Logiciels,Île-de-France,nouveau,2026-09-07,25,2,3,4042,5,2,0,63.46,422.35,422.35,2026-07-01,66,85.0,77.2,Prioritaire,0.0
+LD-0045,Contact Démo 045,contact045@example.com,Société Démo 015,SEO,Logiciels,Île-de-France,contacte,2026-09-06,19,5,40,11465,18,12,0,231.87,1889.55,1889.55,2026-07-01,67,100.0,66.8,À qualifier,0.0
+LD-0129,Contact Démo 129,contact129@example.com,Société Démo 043,SEO,Services,Auvergne-Rhône-Alpes,contacte,2026-09-06,22,17,15,2789,7,2,1,97.01,363.82,363.82,2026-07-01,67,85.0,87.0,Prioritaire,0.0
+LD-0193,Contact Démo 193,contact193@example.com,Société Démo 065,Google Ads,Industrie,Hauts-de-France,perdu,2026-09-06,4,2,40,10094,6,0,0,73.71,0.0,0.0,2026-07-01,67,85.0,16.7,À réengager,0.0
+LD-0046,Contact Démo 046,contact046@example.com,Société Démo 016,Partenaire,BTP,Occitanie,qualifie,2026-09-04,5,20,120,6738,7,3,0,107.18,821.97,821.97,2026-07-01,69,100.0,60.5,À qualifier,0.0
+LD-0017,Contact Démo 017,contact017@example.com,Société Démo 006,Email,Commerce,Bretagne,qualifie,2026-09-03,14,1,15,2083,25,18,0,378.42,2531.2,2531.2,2026-07-01,70,85.0,51.0,À qualifier,0.0
+LD-0024,Contact Démo 024,contact024@example.com,Société Démo 008,LinkedIn,Services,Auvergne-Rhône-Alpes,gagne,2026-09-03,6,13,3,3410,20,0,0,173.39,0.0,0.0,2026-07-01,70,100.0,32.3,À réengager,0.0
+LD-0106,Contact Démo 106,contact106@example.com,Société Démo 036,Partenaire,BTP,Occitanie,qualifie,2026-09-03,10,7,40,7522,9,3,0,131.96,719.31,719.31,2026-07-01,70,100.0,65.9,À qualifier,0.0
+LD-0153,Contact Démo 153,contact153@example.com,Société Démo 051,SEO,Industrie,Hauts-de-France,nouveau,2026-09-03,14,4,500,4735,21,0,0,270.43,0.0,0.0,2026-07-01,70,100.0,48.2,À qualifier,0.0
+LD-0199,Contact Démo 199,contact199@example.com,Société Démo 067,Google Ads,Services,Auvergne-Rhône-Alpes,contacte,2026-09-02,2,17,40,979,1,0,0,30.11,0.0,0.0,2026-07-01,71,100.0,35.1,À réengager,0.0
+LD-0009,Contact Démo 009,contact009@example.com,Société Démo 003,SEO,Services,Auvergne-Rhône-Alpes,qualifie,2026-09-01,4,18,3,920,15,0,0,197.46,0.0,0.0,2026-07-01,72,100.0,47.6,À qualifier,0.0
+LD-0123,Contact Démo 123,contact123@example.com,Société Démo 041,SEO,Industrie,Hauts-de-France,proposition,2026-09-01,13,4,15,177,22,0,0,163.08,0.0,0.0,2026-07-01,72,85.0,49.7,À qualifier,0.0
+LD-0233,Contact Démo 233,contact233@example.com,Société Démo 078,Email,Industrie,Hauts-de-France,qualifie,2026-09-01,12,12,500,6388,4,0,0,84.64,0.0,0.0,2026-07-01,72,100.0,26.0,À réengager,0.0
+LD-0020,Contact Démo 020,contact020@example.com,Société Démo 007,Meta Ads,Logiciels,Île-de-France,contacte,2026-08-31,6,16,500,1548,22,12,0,308.69,3880.89,3880.89,2026-07-01,73,90.0,31.4,À réengager,0.0
+LD-0026,Contact Démo 026,contact026@example.com,Société Démo 009,Meta Ads,BTP,Occitanie,gagne,2026-08-31,1,4,40,6473,21,0,0,243.51,0.0,0.0,2026-07-01,73,90.0,22.8,À réengager,0.0
+LD-0039,Contact Démo 039,contact039@example.com,Société Démo 013,SEO,Services,Auvergne-Rhône-Alpes,qualifie,2026-08-31,10,5,3,1858,15,3,0,105.5,731.95,731.95,2026-07-01,73,90.0,56.0,À qualifier,0.0
+LD-0176,Contact Démo 176,contact176@example.com,Société Démo 059,Meta Ads,BTP,Occitanie,nouveau,2026-08-31,22,11,40,9773,11,5,0,111.81,1306.09,1306.09,2026-07-01,73,90.0,79.4,Prioritaire,0.0
+LD-0189,Contact Démo 189,contact189@example.com,Société Démo 063,SEO,Services,Auvergne-Rhône-Alpes,proposition,2026-08-31,2,9,500,1536,17,4,0,199.85,572.99,572.99,2026-07-01,73,90.0,34.3,À réengager,0.0
+LD-0237,Contact Démo 237,contact237@example.com,Société Démo 079,SEO,Commerce,Bretagne,nouveau,2026-08-31,14,22,120,3679,20,12,0,248.01,1806.79,1806.79,2026-07-01,73,90.0,81.9,Prioritaire,0.0
+LD-0052,Contact Démo 052,contact052@example.com,Société Démo 018,Partenaire,Commerce,Bretagne,contacte,2026-08-30,22,14,15,6869,2,1,0,42.36,168.94,168.94,2026-07-01,74,90.0,92.6,Prioritaire,0.0
+LD-0075,Contact Démo 075,contact075@example.com,Société Démo 025,SEO,Logiciels,Île-de-France,contacte,2026-08-30,3,14,3,11708,20,0,0,260.5,0.0,0.0,2026-07-01,74,90.0,29.3,À réengager,0.0
+LD-0205,Contact Démo 205,contact205@example.com,Société Démo 069,Google Ads,Logiciels,Île-de-France,gagne,2026-08-29,0,12,500,7765,13,0,0,172.14,0.0,0.0,2026-07-01,75,70.0,18.0,À réengager,0.0
+LD-0094,Contact Démo 094,contact094@example.com,Société Démo 032,Partenaire,Services,Auvergne-Rhône-Alpes,perdu,2026-08-28,10,4,40,2822,24,0,0,182.33,0.0,0.0,2026-07-01,76,90.0,63.6,À qualifier,0.0
+LD-0001,Contact Démo 001,contact001@example.com,Société Démo 001,Google Ads,BTP,Occitanie,perdu,2026-08-27,6,17,15,3031,8,0,0,135.78,0.0,90.0,2026-07-01,77,90.0,50.1,À qualifier,90.0
+LD-0019,Contact Démo 019,contact019@example.com,Société Démo 007,Google Ads,Services,Auvergne-Rhône-Alpes,perdu,2026-08-27,7,11,120,11745,20,11,0,231.56,1643.1,1643.1,2026-07-01,77,90.0,40.3,À réengager,0.0
+LD-0031,Contact Démo 031,contact031@example.com,Société Démo 011,Google Ads,BTP,Occitanie,proposition,2026-08-27,25,3,500,9117,9,4,0,139.09,410.77,410.77,2026-07-01,77,90.0,83.8,Prioritaire,0.0
+LD-0078,Contact Démo 078,contact078@example.com,Société Démo 026,LinkedIn,Industrie,Hauts-de-France,perdu,2026-08-27,12,2,120,6949,13,0,0,174.4,0.0,0.0,2026-07-01,77,75.0,27.2,À réengager,0.0
+LD-0104,Contact Démo 104,contact104@example.com,Société Démo 035,Meta Ads,Services,Auvergne-Rhône-Alpes,gagne,2026-08-27,4,5,3,11145,25,0,0,329.34,0.0,0.0,2026-07-01,77,90.0,25.6,À réengager,0.0
+LD-0154,Contact Démo 154,contact154@example.com,Société Démo 052,Partenaire,Services,Auvergne-Rhône-Alpes,qualifie,2026-08-27,15,16,3,10001,10,6,0,119.35,1954.83,1954.83,2026-07-01,77,90.0,79.0,Prioritaire,0.0
+LD-0119,Contact Démo 119,contact119@example.com,Société Démo 040,Email,Services,Auvergne-Rhône-Alpes,contacte,2026-08-26,1,14,500,8459,17,0,0,166.02,0.0,0.0,2026-07-01,78,90.0,15.7,À réengager,0.0
+LD-0147,Contact Démo 147,contact147@example.com,Société Démo 049,SEO,Commerce,Bretagne,perdu,2026-08-26,25,8,15,7920,19,13,0,123.92,1784.81,1784.81,2026-07-01,78,90.0,91.5,Prioritaire,0.0
+LD-0051,Contact Démo 051,contact051@example.com,Société Démo 017,SEO,BTP,Occitanie,perdu,2026-08-24,9,18,3,7845,17,0,0,136.9,0.0,0.0,2026-07-01,80,90.0,63.4,À qualifier,0.0
+LD-0071,Contact Démo 071,contact071@example.com,Société Démo 024,Email,BTP,Occitanie,qualifie,2026-08-24,9,1,3,3874,22,8,0,344.78,2362.03,2362.03,2026-07-01,80,75.0,31.9,À réengager,0.0
+LD-0238,Contact Démo 238,contact238@example.com,Société Démo 080,Partenaire,Industrie,Hauts-de-France,gagne,2026-08-23,4,6,3,219,20,5,0,207.27,1542.73,1542.73,2026-07-01,81,75.0,35.4,À réengager,0.0
+LD-0006,Contact Démo 006,contact006@example.com,Société Démo 002,LinkedIn,BTP,Occitanie,nouveau,2026-08-21,14,16,3,7841,23,14,0,268.87,2755.65,2755.65,2026-07-01,83,90.0,60.3,À qualifier,0.0
+LD-0121,Contact Démo 121,contact121@example.com,Société Démo 041,Google Ads,BTP,Occitanie,contacte,2026-08-21,3,8,15,5640,16,0,1,245.92,0.0,0.0,2026-07-01,83,75.0,35.3,À réengager,0.0
+LD-0128,Contact Démo 128,contact128@example.com,Société Démo 043,Meta Ads,Industrie,Hauts-de-France,contacte,2026-08-21,25,20,15,9780,17,0,0,195.85,0.0,0.0,2026-07-01,83,90.0,77.6,Prioritaire,0.0
+LD-0142,Contact Démo 142,contact142@example.com,Société Démo 048,Partenaire,Commerce,Bretagne,contacte,2026-08-21,19,2,15,3841,24,8,0,206.06,2077.48,2077.48,2026-07-01,83,75.0,87.8,Prioritaire,0.0
+LD-0061,Contact Démo 061,contact061@example.com,Société Démo 021,Google Ads,BTP,Occitanie,proposition,2026-08-20,14,14,120,3735,4,0,1,70.49,0.0,0.0,2026-07-01,84,75.0,70.4,Prioritaire,0.0
+LD-0197,Contact Démo 197,contact197@example.com,Société Démo 066,Email,Commerce,Bretagne,contacte,2026-08-20,11,10,3,11386,11,0,0,89.37,0.0,0.0,2026-07-01,84,90.0,45.7,À qualifier,0.0
+LD-0203,Contact Démo 203,contact203@example.com,Société Démo 068,Email,Industrie,Hauts-de-France,perdu,2026-08-20,3,9,120,8070,16,0,0,163.48,0.0,0.0,2026-07-01,84,90.0,11.1,À réengager,0.0
+LD-0207,Contact Démo 207,contact207@example.com,Société Démo 069,SEO,Commerce,Bretagne,qualifie,2026-08-20,24,22,500,7410,9,5,0,93.16,628.69,628.69,2026-07-01,84,90.0,93.1,Prioritaire,0.0
+LD-0083,Contact Démo 083,contact083@example.com,Société Démo 028,Email,Industrie,Hauts-de-France,qualifie,2026-08-19,2,19,15,6587,8,0,0,80.31,0.0,0.0,2026-07-01,85,90.0,13.3,À réengager,0.0
+LD-0146,Contact Démo 146,contact146@example.com,Société Démo 049,Meta Ads,BTP,Occitanie,nouveau,2026-08-18,20,13,15,5702,25,12,0,315.93,2984.09,2984.09,2026-07-01,86,90.0,79.2,Prioritaire,0.0
+LD-0168,Contact Démo 168,contact168@example.com,Société Démo 056,LinkedIn,Industrie,Hauts-de-France,gagne,2026-08-18,12,14,40,11557,24,0,0,168.76,0.0,0.0,2026-07-01,86,90.0,33.4,À réengager,0.0
+LD-0076,Contact Démo 076,contact076@example.com,Société Démo 026,Partenaire,BTP,Occitanie,proposition,2026-08-17,17,16,15,2013,3,2,0,48.27,587.86,587.86,2026-07-01,87,90.0,87.4,Prioritaire,0.0
+LD-0089,Contact Démo 089,contact089@example.com,Société Démo 030,Email,Services,Auvergne-Rhône-Alpes,contacte,2026-08-17,13,19,15,4772,23,13,0,319.82,1639.79,1639.79,2026-07-01,87,90.0,51.4,À qualifier,0.0
+LD-0126,Contact Démo 126,contact126@example.com,Société Démo 042,LinkedIn,BTP,Occitanie,gagne,2026-08-17,18,10,40,11884,20,11,0,255.92,1776.26,1776.26,2026-07-01,87,90.0,65.9,À qualifier,0.0
+LD-0079,Contact Démo 079,contact079@example.com,Société Démo 027,Google Ads,Services,Auvergne-Rhône-Alpes,nouveau,2026-08-16,25,1,40,11217,18,4,0,137.36,540.93,540.93,2026-07-01,88,75.0,82.1,Prioritaire,0.0
+LD-0137,Contact Démo 137,contact137@example.com,Société Démo 046,Email,Commerce,Bretagne,qualifie,2026-08-16,1,11,120,4328,24,13,0,350.77,3543.24,3543.24,2026-07-01,88,90.0,24.0,À réengager,0.0
+LD-0082,Contact Démo 082,contact082@example.com,Société Démo 028,Partenaire,Commerce,Bretagne,qualifie,2026-08-15,10,11,40,867,20,0,0,289.01,0.0,0.0,2026-07-01,89,90.0,78.0,Prioritaire,0.0
+LD-0169,Contact Démo 169,contact169@example.com,Société Démo 057,Google Ads,Services,Auvergne-Rhône-Alpes,proposition,2026-08-15,17,7,500,3854,8,3,0,117.91,800.91,800.91,2026-07-01,89,90.0,69.9,Prioritaire,0.0
+LD-0015,Contact Démo 015,contact015@example.com,Société Démo 005,SEO,Logiciels,Île-de-France,proposition,2026-08-13,18,15,3,5674,2,1,0,53.58,205.51,205.51,2026-07-01,91,90.0,75.5,Prioritaire,0.0
+LD-0077,Contact Démo 077,contact077@example.com,Société Démo 026,Email,Commerce,Bretagne,nouveau,2026-08-13,24,18,15,4900,7,4,0,86.09,928.68,928.68,2026-07-01,91,90.0,85.0,Prioritaire,0.0
+LD-0162,Contact Démo 162,contact162@example.com,Société Démo 054,LinkedIn,Commerce,Bretagne,gagne,2026-08-13,14,13,3,11936,12,0,0,194.84,0.0,0.0,2026-07-01,91,90.0,63.3,À qualifier,0.0
+LD-0184,Contact Démo 184,contact184@example.com,Société Démo 062,Partenaire,Services,Auvergne-Rhône-Alpes,qualifie,2026-08-13,2,6,15,2944,7,0,0,78.77,0.0,0.0,2026-07-01,91,90.0,44.3,À qualifier,0.0
+LD-0231,Contact Démo 231,contact231@example.com,Société Démo 077,SEO,BTP,Occitanie,nouveau,2026-08-13,12,1,120,10363,2,1,0,48.61,106.39,196.39,2026-07-01,91,75.0,60.8,À qualifier,90.0
+LD-0074,Contact Démo 074,contact074@example.com,Société Démo 025,Meta Ads,Services,Auvergne-Rhône-Alpes,qualifie,2026-08-12,22,4,500,5441,2,1,0,48.49,204.25,204.25,2026-07-01,92,90.0,75.8,Prioritaire,0.0
+LD-0191,Contact Démo 191,contact191@example.com,Société Démo 064,Email,BTP,Occitanie,perdu,2026-08-12,25,19,120,5955,21,15,0,135.88,4907.19,4907.19,2026-07-01,92,90.0,83.2,Prioritaire,0.0
+LD-0229,Contact Démo 229,contact229@example.com,Société Démo 077,Google Ads,Services,Auvergne-Rhône-Alpes,qualifie,2026-08-10,13,15,120,5217,3,1,0,59.12,221.91,221.91,2026-07-01,94,90.0,65.7,À qualifier,0.0
+LD-0134,Contact Démo 134,contact134@example.com,Société Démo 045,Meta Ads,Services,Auvergne-Rhône-Alpes,contacte,2026-08-09,18,4,500,7131,22,0,0,343.03,0.0,0.0,2026-07-01,95,90.0,65.9,À qualifier,0.0
+LD-0226,Contact Démo 226,contact226@example.com,Société Démo 076,Partenaire,BTP,Occitanie,perdu,2026-08-09,11,6,15,11590,1,1,0,38.24,175.66,175.66,2026-07-01,95,90.0,69.5,À qualifier,0.0
+LD-0100,Contact Démo 100,contact100@example.com,Société Démo 034,Partenaire,Logiciels,Île-de-France,qualifie,2026-08-08,8,1,40,10619,21,0,0,262.4,0.0,0.0,2026-07-01,96,75.0,46.4,À qualifier,0.0
+LD-0160,Contact Démo 160,contact160@example.com,Société Démo 054,Partenaire,Logiciels,Île-de-France,qualifie,2026-08-08,17,19,15,11345,5,2,0,90.3,262.18,262.18,2026-07-01,96,90.0,79.9,Prioritaire,0.0
+LD-0222,Contact Démo 222,contact222@example.com,Société Démo 074,LinkedIn,Commerce,Bretagne,perdu,2026-08-08,3,18,40,10113,24,0,0,184.58,0.0,0.0,2026-07-01,96,90.0,36.9,À réengager,0.0
+LD-0223,Contact Démo 223,contact223@example.com,Société Démo 075,Google Ads,Industrie,Hauts-de-France,qualifie,2026-08-08,16,13,15,11085,13,0,1,184.3,0.0,0.0,2026-07-01,96,75.0,56.2,À qualifier,0.0
+LD-0204,Contact Démo 204,contact204@example.com,Société Démo 068,LinkedIn,Services,Auvergne-Rhône-Alpes,contacte,2026-08-07,0,20,120,7663,14,0,0,165.09,0.0,0.0,2026-07-01,97,70.0,23.4,À réengager,0.0
+LD-0057,Contact Démo 057,contact057@example.com,Société Démo 019,SEO,Commerce,Bretagne,nouveau,2026-08-06,19,1,15,1662,18,9,0,207.44,1382.43,1382.43,2026-07-01,98,75.0,85.0,Prioritaire,0.0
+LD-0098,Contact Démo 098,contact098@example.com,Société Démo 033,Meta Ads,Industrie,Hauts-de-France,qualifie,2026-08-06,2,9,40,6670,9,0,0,150.99,0.0,0.0,2026-07-01,98,90.0,17.1,À réengager,0.0
+LD-0062,Contact Démo 062,contact062@example.com,Société Démo 021,Meta Ads,Commerce,Bretagne,nouveau,2026-08-05,24,7,500,10929,23,17,0,224.45,4257.76,4257.76,2026-07-01,99,90.0,85.6,Prioritaire,0.0
+LD-0157,Contact Démo 157,contact157@example.com,Société Démo 053,Google Ads,Commerce,Bretagne,gagne,2026-08-05,15,6,15,6197,17,8,0,129.68,2402.3,2402.3,2026-07-01,99,90.0,74.5,Prioritaire,0.0
+LD-0038,Contact Démo 038,contact038@example.com,Société Démo 013,Meta Ads,Industrie,Hauts-de-France,perdu,2026-08-04,16,9,40,8623,18,0,0,262.51,0.0,0.0,2026-07-01,100,90.0,50.7,À qualifier,0.0
+LD-0066,Contact Démo 066,contact066@example.com,Société Démo 022,LinkedIn,BTP,Occitanie,perdu,2026-08-04,9,4,120,11544,19,0,0,135.49,0.0,0.0,2026-07-01,100,90.0,38.3,À réengager,0.0
+LD-0212,Contact Démo 212,contact212@example.com,Société Démo 071,Meta Ads,Commerce,Bretagne,contacte,2026-08-04,24,3,40,11271,9,4,0,72.4,570.36,570.36,2026-07-01,100,90.0,85.1,Prioritaire,0.0
+LD-0090,Contact Démo 090,contact090@example.com,Société Démo 030,LinkedIn,Logiciels,Île-de-France,perdu,2026-08-03,0,6,3,2199,14,0,0,226.19,0.0,0.0,2026-07-01,101,70.0,14.7,À réengager,0.0
+LD-0196,Contact Démo 196,contact196@example.com,Société Démo 066,Partenaire,BTP,Occitanie,qualifie,2026-08-03,19,19,3,2432,6,1,0,112.64,127.92,127.92,2026-07-01,101,90.0,91.1,Prioritaire,0.0
+LD-0211,Contact Démo 211,contact211@example.com,Société Démo 071,Google Ads,BTP,Occitanie,qualifie,2026-08-03,19,9,3,3748,17,0,1,185.62,0.0,0.0,2026-07-01,101,75.0,80.8,Prioritaire,0.0
+LD-0013,Contact Démo 013,contact013@example.com,Société Démo 005,Google Ads,Industrie,Hauts-de-France,perdu,2026-08-01,24,11,40,1111,12,8,0,104.77,2046.55,2046.55,2026-07-01,103,90.0,79.8,Prioritaire,0.0
+LD-0192,Contact Démo 192,contact192@example.com,Société Démo 064,LinkedIn,Commerce,Bretagne,contacte,2026-07-31,18,2,3,10640,8,4,0,91.07,917.75,917.75,2026-07-01,104,75.0,69.5,Prioritaire,0.0
+LD-0036,Contact Démo 036,contact036@example.com,Société Démo 012,LinkedIn,BTP,Occitanie,nouveau,2026-07-30,10,20,3,7199,11,6,0,112.54,1661.61,1661.61,2026-07-01,105,90.0,55.2,À qualifier,0.0
+LD-0042,Contact Démo 042,contact042@example.com,Société Démo 014,LinkedIn,Commerce,Bretagne,contacte,2026-07-30,24,20,500,5260,2,1,0,47.82,124.27,124.27,2026-07-01,105,90.0,88.6,Prioritaire,0.0
+LD-0055,Contact Démo 055,contact055@example.com,Société Démo 019,Google Ads,Logiciels,Île-de-France,contacte,2026-07-30,11,16,15,2684,15,2,0,110.38,361.11,361.11,2026-07-01,105,90.0,55.8,À qualifier,0.0
+LD-0200,Contact Démo 200,contact200@example.com,Société Démo 067,Meta Ads,Logiciels,Île-de-France,contacte,2026-07-30,21,17,15,8678,11,5,0,161.2,1226.72,1226.72,2026-07-01,105,90.0,75.2,Prioritaire,0.0
+LD-0032,Contact Démo 032,contact032@example.com,Société Démo 011,Meta Ads,Commerce,Bretagne,qualifie,2026-07-29,14,16,500,9662,6,0,0,92.48,0.0,0.0,2026-07-01,106,90.0,71.8,Prioritaire,0.0
+LD-0178,Contact Démo 178,contact178@example.com,Société Démo 060,Partenaire,Industrie,Hauts-de-France,nouveau,2026-07-29,6,3,40,5008,17,0,0,197.72,0.0,0.0,2026-07-01,106,90.0,40.2,À réengager,0.0
+LD-0182,Contact Démo 182,contact182@example.com,Société Démo 061,Meta Ads,Commerce,Bretagne,qualifie,2026-07-29,2,6,3,291,10,5,0,163.77,845.95,845.95,2026-07-01,106,75.0,38.6,À réengager,0.0
+LD-0124,Contact Démo 124,contact124@example.com,Société Démo 042,Partenaire,Services,Auvergne-Rhône-Alpes,nouveau,2026-07-28,10,22,15,8022,10,7,0,174.54,1761.24,1761.24,2026-07-01,107,90.0,75.5,Prioritaire,0.0
+LD-0135,Contact Démo 135,contact135@example.com,Société Démo 045,SEO,Logiciels,Île-de-France,nouveau,2026-07-28,9,20,500,3875,15,9,0,153.34,2713.17,2713.17,2026-07-01,107,90.0,56.8,À qualifier,0.0
+LD-0091,Contact Démo 091,contact091@example.com,Société Démo 031,Google Ads,BTP,Occitanie,perdu,2026-07-27,19,15,40,5688,23,15,0,360.84,1568.24,1568.24,2026-07-01,108,90.0,83.1,Prioritaire,0.0
+LD-0188,Contact Démo 188,contact188@example.com,Société Démo 063,Meta Ads,Industrie,Hauts-de-France,contacte,2026-07-27,12,19,120,10618,10,2,0,102.16,420.51,420.51,2026-07-01,108,90.0,45.7,À qualifier,0.0
+LD-0180,Contact Démo 180,contact180@example.com,Société Démo 060,LinkedIn,Logiciels,Île-de-France,qualifie,2026-07-26,9,16,15,493,9,0,0,79.52,0.0,0.0,2026-07-01,109,90.0,41.2,À réengager,0.0
+LD-0240,Contact Démo 240,contact240@example.com,Société Démo 080,LinkedIn,Logiciels,Île-de-France,contacte,2026-07-26,4,19,3,7071,5,0,0,74.84,0.0,0.0,2026-07-01,109,90.0,27.0,À réengager,0.0
+LD-0025,Contact Démo 025,contact025@example.com,Société Démo 009,Google Ads,Logiciels,Île-de-France,perdu,2026-07-25,0,16,120,6523,21,0,0,161.98,0.0,0.0,2026-07-01,110,70.0,24.8,À réengager,0.0
+LD-0044,Contact Démo 044,contact044@example.com,Société Démo 015,Meta Ads,Services,Auvergne-Rhône-Alpes,perdu,2026-07-25,2,22,500,8965,9,0,0,97.06,0.0,0.0,2026-07-01,110,90.0,34.0,À réengager,0.0
+LD-0058,Contact Démo 058,contact058@example.com,Société Démo 020,Partenaire,Industrie,Hauts-de-France,gagne,2026-07-25,22,13,40,2752,7,4,0,81.23,1169.71,1169.71,2026-07-01,110,90.0,85.9,Prioritaire,0.0
+LD-0028,Contact Démo 028,contact028@example.com,Société Démo 010,Partenaire,Industrie,Hauts-de-France,nouveau,2026-07-24,6,11,15,1586,4,2,0,45.7,407.61,407.61,2026-07-01,111,90.0,48.1,À qualifier,0.0
+LD-0080,Contact Démo 080,contact080@example.com,Société Démo 027,Meta Ads,Logiciels,Île-de-France,gagne,2026-07-24,12,11,120,5841,15,10,0,172.82,1673.49,1673.49,2026-07-01,111,90.0,49.6,À qualifier,0.0
+LD-0139,Contact Démo 139,contact139@example.com,Société Démo 047,Google Ads,Services,Auvergne-Rhône-Alpes,qualifie,2026-07-24,15,14,120,3412,17,12,0,171.25,2090.43,2180.43,2026-07-01,111,90.0,73.1,Prioritaire,90.0
+LD-0213,Contact Démo 213,contact213@example.com,Société Démo 071,SEO,Industrie,Hauts-de-France,proposition,2026-07-24,8,7,40,11745,6,0,0,62.7,0.0,0.0,2026-07-01,111,90.0,37.4,À réengager,0.0
+LD-0166,Contact Démo 166,contact166@example.com,Société Démo 056,Partenaire,BTP,Occitanie,perdu,2026-07-23,11,20,500,1445,5,2,0,89.83,617.52,617.52,2026-07-01,112,90.0,80.9,Prioritaire,0.0
+LD-0195,Contact Démo 195,contact195@example.com,Société Démo 065,SEO,Logiciels,Île-de-France,nouveau,2026-07-21,22,11,3,2956,5,3,0,50.51,727.51,727.51,2026-07-01,114,90.0,84.3,Prioritaire,0.0
+LD-0012,Contact Démo 012,contact012@example.com,Société Démo 004,LinkedIn,Commerce,Bretagne,qualifie,2026-07-20,25,20,3,5759,16,0,0,181.18,0.0,0.0,2026-07-01,115,90.0,90.8,Prioritaire,0.0
+LD-0117,Contact Démo 117,contact117@example.com,Société Démo 039,SEO,Commerce,Bretagne,proposition,2026-07-20,19,20,40,662,18,7,0,261.79,1793.78,1793.78,2026-07-01,115,90.0,91.5,Prioritaire,0.0
+LD-0186,Contact Démo 186,contact186@example.com,Société Démo 062,LinkedIn,BTP,Occitanie,perdu,2026-07-20,4,14,500,7972,6,2,0,71.01,454.11,454.11,2026-07-01,115,90.0,33.7,À réengager,0.0
+LD-0022,Contact Démo 022,contact022@example.com,Société Démo 008,Partenaire,Commerce,Bretagne,proposition,2026-07-19,4,3,500,6517,17,11,0,214.21,2006.23,2006.23,2026-07-01,116,90.0,58.3,À qualifier,0.0
+LD-0029,Contact Démo 029,contact029@example.com,Société Démo 010,Email,Services,Auvergne-Rhône-Alpes,contacte,2026-07-19,10,17,120,4487,8,0,0,68.54,0.0,0.0,2026-07-01,116,90.0,45.6,À qualifier,0.0
+LD-0108,Contact Démo 108,contact108@example.com,Société Démo 036,LinkedIn,Industrie,Hauts-de-France,nouveau,2026-07-19,18,17,3,10831,21,14,1,202.72,3230.7,3230.7,2026-07-01,116,75.0,57.3,À qualifier,0.0
+LD-0133,Contact Démo 133,contact133@example.com,Société Démo 045,Google Ads,Industrie,Hauts-de-France,qualifie,2026-07-19,21,2,500,7987,16,0,0,182.56,0.0,0.0,2026-07-01,116,75.0,65.8,À qualifier,0.0
+LD-0170,Contact Démo 170,contact170@example.com,Société Démo 057,Meta Ads,Logiciels,Île-de-France,proposition,2026-07-19,16,4,40,3639,10,5,0,102.31,1629.75,1629.75,2026-07-01,116,90.0,58.6,À qualifier,0.0
+LD-0179,Contact Démo 179,contact179@example.com,Société Démo 060,Email,Services,Auvergne-Rhône-Alpes,nouveau,2026-07-18,17,21,15,2712,2,1,0,43.82,309.89,309.89,2026-07-01,117,90.0,69.1,À qualifier,0.0
+LD-0081,Contact Démo 081,contact081@example.com,Société Démo 027,SEO,BTP,Occitanie,gagne,2026-07-17,5,14,40,3987,6,0,0,57.13,0.0,0.0,2026-07-01,118,90.0,57.1,À qualifier,0.0
+LD-0173,Contact Démo 173,contact173@example.com,Société Démo 058,Email,Industrie,Hauts-de-France,perdu,2026-07-17,24,19,40,2894,1,1,0,30.07,270.94,270.94,2026-07-01,118,90.0,72.3,Prioritaire,0.0
+LD-0187,Contact Démo 187,contact187@example.com,Société Démo 063,Google Ads,Commerce,Bretagne,gagne,2026-07-17,7,19,120,8294,18,0,0,202.68,0.0,0.0,2026-07-01,118,90.0,63.3,À qualifier,0.0
+LD-0059,Contact Démo 059,contact059@example.com,Société Démo 020,Email,Services,Auvergne-Rhône-Alpes,qualifie,2026-07-16,20,18,15,3173,7,2,0,78.4,499.1,499.1,2026-07-01,119,90.0,74.6,Prioritaire,0.0
+LD-0064,Contact Démo 064,contact064@example.com,Société Démo 022,Partenaire,Services,Auvergne-Rhône-Alpes,contacte,2026-07-16,22,1,120,10996,7,5,1,81.59,1271.4,1271.4,2026-07-01,119,60.0,87.6,Prioritaire,0.0
+LD-0221,Contact Démo 221,contact221@example.com,Société Démo 074,Email,BTP,Occitanie,qualifie,2026-07-16,19,5,3,5296,7,5,0,111.42,1632.83,1632.83,2026-07-01,119,90.0,67.3,À qualifier,0.0
+LD-0232,Contact Démo 232,contact232@example.com,Société Démo 078,Partenaire,Commerce,Bretagne,nouveau,2026-07-16,14,9,500,11426,8,5,0,112.85,841.3,841.3,2026-07-01,119,90.0,82.9,Prioritaire,0.0
+LD-0005,Contact Démo 005,contact005@example.com,Société Démo 002,Email,Logiciels,Île-de-France,qualifie,2026-07-15,7,10,15,7889,5,0,1,77.8,0.0,0.0,2026-07-01,120,75.0,25.1,À réengager,0.0
+LD-0109,Contact Démo 109,contact109@example.com,Société Démo 037,Google Ads,Services,Auvergne-Rhône-Alpes,nouveau,2026-07-15,2,15,120,1052,8,0,0,106.39,0.0,0.0,2026-07-01,120,90.0,40.6,À réengager,0.0
+LD-0114,Contact Démo 114,contact114@example.com,Société Démo 038,LinkedIn,Services,Auvergne-Rhône-Alpes,perdu,2026-07-15,14,19,3,6570,16,0,0,227.56,0.0,0.0,2026-07-01,120,90.0,64.5,À qualifier,0.0
+LD-0007,Contact Démo 007,contact007@example.com,Société Démo 003,Google Ads,Commerce,Bretagne,qualifie,2026-07-14,4,8,120,5694,17,4,0,134.68,422.23,422.23,2026-07-01,121,90.0,49.4,À qualifier,0.0
+LD-0037,Contact Démo 037,contact037@example.com,Société Démo 013,Google Ads,Commerce,Bretagne,gagne,2026-07-14,22,1,40,2372,16,3,0,141.1,344.68,344.68,2026-07-01,121,75.0,87.7,Prioritaire,0.0
+LD-0003,Contact Démo 003,contact003@example.com,Société Démo 001,SEO,Industrie,Hauts-de-France,contacte,2026-07-13,21,4,40,973,1,1,0,31.89,186.58,186.58,2026-07-01,122,90.0,77.0,Prioritaire,0.0
+LD-0056,Contact Démo 056,contact056@example.com,Société Démo 019,Meta Ads,BTP,Occitanie,perdu,2026-07-13,23,22,500,11691,10,7,0,168.77,779.67,779.67,2026-07-01,122,90.0,87.6,Prioritaire,0.0
+LD-0140,Contact Démo 140,contact140@example.com,Société Démo 047,Meta Ads,Logiciels,Île-de-France,nouveau,2026-07-13,12,13,15,10959,3,2,0,45.11,486.39,486.39,2026-07-01,122,90.0,50.3,À qualifier,0.0
+LD-0224,Contact Démo 224,contact224@example.com,Société Démo 075,Meta Ads,Services,Auvergne-Rhône-Alpes,perdu,2026-07-13,0,14,120,10213,18,0,0,236.59,0.0,0.0,2026-07-01,122,70.0,26.7,À réengager,0.0
+LD-0065,Contact Démo 065,contact065@example.com,Société Démo 022,Email,Logiciels,Île-de-France,proposition,2026-07-12,23,10,120,2455,8,0,1,100.52,0.0,0.0,2026-07-01,123,75.0,70.8,Prioritaire,0.0
+LD-0118,Contact Démo 118,contact118@example.com,Société Démo 040,Partenaire,Industrie,Hauts-de-France,perdu,2026-07-12,6,6,3,7296,20,12,1,285.97,1431.23,1431.23,2026-07-01,123,75.0,43.7,À qualifier,0.0
+LD-0132,Contact Démo 132,contact132@example.com,Société Démo 044,LinkedIn,Commerce,Bretagne,gagne,2026-07-12,18,15,40,9414,5,2,0,50.8,450.45,450.45,2026-07-01,123,90.0,78.8,Prioritaire,0.0
+LD-0209,Contact Démo 209,contact209@example.com,Société Démo 070,Email,Services,Auvergne-Rhône-Alpes,nouveau,2026-07-12,24,14,40,3089,19,0,0,298.32,0.0,0.0,2026-07-01,123,90.0,81.1,Prioritaire,0.0
+LD-0048,Contact Démo 048,contact048@example.com,Société Démo 016,LinkedIn,Industrie,Hauts-de-France,gagne,2026-07-11,25,7,120,2322,17,4,0,227.4,809.54,809.54,2026-07-01,124,90.0,74.1,Prioritaire,0.0
+LD-0116,Contact Démo 116,contact116@example.com,Société Démo 039,Meta Ads,BTP,Occitanie,perdu,2026-07-11,2,12,120,2620,5,0,0,58.28,0.0,90.0,2026-07-01,124,90.0,37.7,À réengager,90.0
+LD-0131,Contact Démo 131,contact131@example.com,Société Démo 044,Email,BTP,Occitanie,qualifie,2026-07-11,6,20,120,4118,5,4,0,92.65,1104.45,1104.45,2026-07-01,124,90.0,41.4,À réengager,0.0
+LD-0236,Contact Démo 236,contact236@example.com,Société Démo 079,Meta Ads,BTP,Occitanie,qualifie,2026-07-11,5,16,500,10530,16,0,0,248.31,0.0,0.0,2026-07-01,124,90.0,43.4,À qualifier,0.0

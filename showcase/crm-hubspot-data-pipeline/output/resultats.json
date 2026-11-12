@@ -1,0 +1,22 @@
+{
+  "sources": 260,
+  "anomalies": 20,
+  "doublons": 12,
+  "rejets_invalides": 8,
+  "contacts_uniques": 240,
+  "deduplication_pct": 4.62,
+  "score_qualite_moyen": 91.44,
+  "segments": 3,
+  "contacts_automatises": 240,
+  "livraisons": 3083,
+  "transformations": 761,
+  "cout_par_lead_eur": 150.98,
+  "litiges": 15,
+  "ecarts_facturation": 8,
+  "ml": {
+    "train_rows": 180,
+    "test_rows": 60,
+    "roc_auc_synthetique": 0.715,
+    "balanced_accuracy_synthetique": 0.655
+  }
+}

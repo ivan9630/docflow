@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="520" viewBox="0 0 950 520">
+<rect width="950" height="520" fill="#f3f7fb"/><rect x="20" y="18" width="910" height="485" rx="14" fill="white" stroke="#d3e0ee"/>
+<text x="46" y="72" font-size="28" font-weight="bold" fill="#193957">CRM HubSpot — Pipeline Data &amp; IA</text>
+<text x="46" y="104" font-size="16" fill="#5b748b">Simulation de leads, scoring &amp; contrôle qualité</text>
+<text x="46" y="144" font-size="19" fill="#315d80">240 contacts validés • 12 doublons • 8 anomalies • 3 segments</text>
+<text x="46" y="177" font-size="20" fill="#173b5b">Répartition par segment</text>
+<text x="48" y="206" font-size="19" fill="#243a50">Prioritaire</text><rect x="240" y="184" width="460" height="31" rx="6" fill="#2573af"/><text x="720" y="206" font-size="19" fill="#243a50">80 leads</text><text x="48" y="282" font-size="19" fill="#243a50">À qualifier</text><rect x="240" y="260" width="460" height="31" rx="6" fill="#2573af"/><text x="720" y="282" font-size="19" fill="#243a50">80 leads</text><text x="48" y="358" font-size="19" fill="#243a50">À réengager</text><rect x="240" y="336" width="460" height="31" rx="6" fill="#2573af"/><text x="720" y="358" font-size="19" fill="#243a50">80 leads</text><text x="46" y="458" font-size="14" fill="#5b748b">Données synthétiques • ROC-AUC calculé sur simulation, pas sur leads réels</text></svg>

@@ -1,0 +1,40 @@
+name: SAS showcase — Python quality gate
+on:
+  push:
+    paths:
+      - 'showcase/pipeline-sas-performance/**'
+      - '.github/workflows/sas-showcase-quality.yml'
+  pull_request:
+    paths:
+      - 'showcase/pipeline-sas-performance/**'
+      - '.github/workflows/sas-showcase-quality.yml'
+  workflow_dispatch:
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: showcase/pipeline-sas-performance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Automated quality tests
+        run: python -m unittest discover -s tests -v
+      - name: Build reports and SQL star schema
+        run: python python/pipeline_marketing.py
+      - name: Validate 600 clean fact rows in SQLite
+        run: |
+          python - <<'PY'
+          import sqlite3
+          from pathlib import Path
+          db = Path("output/pilotage_campagnes.sqlite")
+          assert db.exists()
+          with sqlite3.connect(db) as conn:
+              assert conn.execute("SELECT COUNT(*) FROM fact_campagnes").fetchone()[0] == 600
+              assert not conn.execute("PRAGMA foreign_key_check").fetchall()
+          print("600 rows and foreign keys validated")
+          PY

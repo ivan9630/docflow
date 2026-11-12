@@ -1,0 +1,5 @@
+evenement,declencheur,categorie,action,identifiant_sans_pii,objectif
+page_view,chargement_apres_consentement,Pages,View,page_path,visite
+cta_click,clic_sur_cta,CTA,Click,solution,engagement
+lead_form_submit,soumission_de_demo,Form,Submit,contact_demo,generation_prospects
+conversion_goal,validation_formulaire,Goal,Conversion,objectif_1,lead

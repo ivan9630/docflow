@@ -1,0 +1,8 @@
+Impressions = SUM(fact_performance[impressions])
+Clics = SUM(fact_performance[clics])
+Conversions = SUM(fact_performance[conversions])
+Dépenses = SUM(fact_performance[depenses])
+Revenus = SUM(fact_performance[revenus])
+CTR = DIVIDE([Clics], [Impressions], 0)
+Taux de conversion = DIVIDE([Conversions], [Clics], 0)
+ROI = DIVIDE([Revenus] - [Dépenses], [Dépenses], 0)

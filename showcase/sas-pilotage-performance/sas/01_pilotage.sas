@@ -65,7 +65,7 @@ quit;
 /* Restreindre la periode et exclure les annulations des actions planifiees. */
 data actions_periode;
  set actions;
- if "&debut"d <= date_action <= "&fin"d;
+ if date_action >= "&debut"d and date_action <= "&fin"d;
  mois=intnx('month',date_action,0,'b');
  format mois monyy7.;
  if statut ne 'ANNULEE' then planifiee=1; else planifiee=0;

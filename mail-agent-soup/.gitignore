@@ -1,0 +1,7 @@
+private/
+outputs/
+.venv/
+.env
+credentials.json
+token.json
+__pycache__/
